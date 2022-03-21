@@ -1,0 +1,43 @@
+<html>
+<h1 align=center><font color=#ff6600>Winamp Window</font></h1><p>
+This window gives you a powerful tool to automatically create winamp
+lists (winamp is the most popular mp3 player for Windows systems).<p>
+
+<h2><font color=#ff6600>List and recursion options</font></h2><p>
+In this panel you can select the <B>"recurse subdirectories"</B> option. If this is selected, the selected directories with all the included subdirectories will be scanned and every file with mp3 extension and that is an mp3 file will be included in the output list. The lists that will be generated are printed in the bottom table, with the directory to which they are referred, with the output list path and the path name. The second and third columns are editable and you can change them by double clicking on the cell, even though I think that you will prefer using the <B>"path for output list panel"</B>.<p>
+The <B>"generate a list containing all the other lists"</B> feature does what it says: it generates a list containing all the songs that have been put in all the single directory lists.<p>
+Suppose that you have your files in:<p>
+
+<font color=#006600>"C:\documents\music\"</font><p>
+
+and that here you have organized your files to be put in some CD, so you have the following directories:<p>
+
+<font color=#006600>"C:\documents\music\CD1"</font><p>
+<font color=#006600>"C:\documents\music\CD2"</font><p>
+
+In the first subdirectory you have a folder for every album, something like this:<p>
+
+<font color=#006600>"C:\documents\music\CD1\U2 - Achtung Baby"</font><p>
+<font color=#006600>"C:\documents\music\CD1\U2 - Pop"</font><p>
+<font color=#006600>"C:\documents\music\CD1\U2 - Rattle and Hum"</font><p>
+<font color=#006600>"C:\documents\music\CD1\U2 - All that you can't live behind"</font><p>
+
+... and others. You like to put a list for every directory on your CD so that you can listen to the songs of an album by simply clicking on the file list. You also like to have a list that contains all the songs you put into a CD. All you have to do is:<p>
+
+<ol>
+<li>browse the directories until you reach <font color=#006600>"C:\documents\music\CD1"</li>
+<li>keeping pressed "SHIFT" or "CTRL", select all the directories, and select the "generate a list containing all the other lists" checkbox.</li>
+<li>press the <B>"execute"</B> button.</li>
+</ol>
+
+<B>The directories are scanned in alphabetical order, and the songs are put into the lists in alphabetical order too.</B> It is quite important that you rename your songs in the same way you want them to be played. For example if you want to have a list that follows the same order in which the tracks are played in the original album, name formats like these are all right:<p>
+
+<font color=#006600>"&#60; track > - ..."</font><p>
+<font color=#006600>"&#60; artist > - &#60; track > ..."</font><p>
+
+The following format will not give you the wanted results:</font><p>
+
+<font color=#006600>"&#60; artist > - &#60; title > - ..."</font><p>
+
+since the artist name will be the same for every song of the same album, so the songs will be put into the list following the title alphabetical order.
+Creating lists of such type with winamp is not possible since files are put in the list with the same order they are read from the hard disk, so you have to manually reorder them, and that's a very boring operation ...<p>

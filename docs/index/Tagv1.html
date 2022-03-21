@@ -1,0 +1,24 @@
+<html>
+<h1 align=center><font color=#ff6600>Tag v1</font></h1>
+128 bytes of data written at the end of the file to store some useful
+information about the song. These are the stored fields and their
+range in the 128 bytes:
+
+<ul>
+<li><font color=#0000CC><B>'TAG':</B></font>Indicates that the tag
+version 1 is present. Byte range: 0-2.</li>
+<li><font color=#0000CC><B>title:</B></font> song's title, it can be
+long up to 30 characters. Byte range: 3-32.</li>
+<li><font color=#0000CC><B>artist:</B></font> song's artist name, it can be
+long up to 30 characters. Byte range: 33-62.</li>
+<li><font color=#0000CC><B>album:</B></font> song's album name, it can be
+long up to 30 characters. Byte range: 63-92.</li>
+<li><font color=#0000CC><B>year:</B></font> song's release year, it can be
+long up to 4 characters. Byte range: 93-96.</li>
+<li><font color=#0000CC><B>comment:</B></font> comment field, it can be
+long up to 29 characters. Byte range: 97-125.</li>
+<li><font color=#0000CC><B>track:</B></font> song's track number, one
+byte representing the song number. Byte: 126.</li>
+<li><font color=#0000CC><B>genre:</B></font> song's genre, represented
+with a one-byte code number. Byte: 127.</li>
+</ul>

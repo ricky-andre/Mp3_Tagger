@@ -1,0 +1,33 @@
+<html>
+<h1 align=center><font color=#ff6600>Tag by Name Window</font></h1>
+The "tag by name window" is used to write tags on selected files using
+the file name value. You can perform case conversions, and edit the
+"expected file name format" to face particular cases.<p>
+Read the "configuration examples" in the content window to fully
+understand how this window can be used in all its features.<p>
+
+<h2><font color=#ff6600>Match String</font></h2><p>
+The "match string" represents the string that is used with the file
+names to retrieve the tag values that have to be written.<p>
+For example if the field name is the following one:<p>
+
+<U>File name:</U>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"01 - Kate Bush - Running up that hill.mp3"</font><p>
+
+... the expected file name format must be the following string:<p>
+
+<U>Expected format:</U>&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"&#60; track > - &#60; artist > - &#60; title >"</font><p>
+
+You can do it by hand or you can select the correct fields, putting
+them in the correct order, and selecting the field separator " - ".
+Sometimes it not possible to do it without editing the match
+string. For example in this case:
+
+<U>File name:</U>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"01.Running up that hill.mp3"</font><p>
+
+.. you should select the correct fields and then select the field
+separator "." or " - ". Then edit the match string until it is the
+following one:<p>
+
+<U>Expected format:</U>&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"&#60; track >.&#60; title>"</font><p>
+
+Read also the other configuration examples!!.

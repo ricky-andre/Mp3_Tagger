@@ -1,0 +1,26 @@
+<html>
+<h1 align=center><font color=#ff6600>Options Window</font></h1>
+In the "options window" you can select the read/write tag options, the
+file filters and the file the file warnings.<p>
+
+<h2><font color=#ff6600>Write tag options</font></h2>
+You can select one of four possible write-tag modes. When one or more fields have to be written to a file, the following actions are taken (depending on the selected option):<p>
+<font color=#0000CC><B>only version 1:</B></font> in this case only tag version 1 is written to the file. <U>If tag version 1 does not exists, the tag is created and written.</U><p>
+<font color=#0000CC><B>only version 2:</B></font> in this case only tag version 2 is written to the file. <U>If tag version 2 does not exists, the tag is created and written.</U><p>
+<font color=#0000CC><B>tag version 1 and version 2:</B></font> in this case tag version 1 and tag version 2 are always  written to the file. <U>If they don't exist, they are created.</U><p>
+<font color=#0000CC><B>tag existent:</B></font> if tag version 1 exists, tag version 1 is
+written. If tag version 2 exists, tag version 2 is written. If both
+tag version 1 and tag version 2 exist, both tags are written. <U>If no
+tag exist, only tag version 1 is written.</U><B> (reccomended choice)</B><p>
+
+<font color=#0000CC><B>Avoid information loss when writing tagv1:</B></font> since tag version 1
+fields have limited length while tag version 2 fields have not, if you
+apply this feature <U>the program automatically writes tag version 2
+if you try to set a field longer than what you can do on tag version
+1.</U> The other tag version 1 fields are copied too, but only if the
+destination tag version 2 field is empty.<B> (reccomended choice)</B><p>
+<p>
+<font color=#0000CC><B>Tag version 2 are written from the start of the mp3 file. If the tag is not present, the first time the tag v2 is written the whole file has to be re-written to create the necessary space. This is a quite slow
+operation, and it should be avoided if not strictly necessary. For
+this reason, it is highly reccomended that you choose the above
+reccomended options.</B></font><p>

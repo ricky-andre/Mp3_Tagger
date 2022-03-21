@@ -1,0 +1,48 @@
+<html>
+<h1 align=center><font color=#ff6600>Winamp Window</font></h1><p>
+This window gives you a powerful tool to automatically create winamp
+lists (winamp is the most popular mp3 player for Windows systems).<p>
+
+<h2><font color=#ff6600>List write mode</font></h2><p>
+In this case you will have two possible choices. I will explain you the difference with two examples. You can even open a winamp file list that is simply a text file, so you can open it with a text editor (word, staroffice, emacs, wordpad, ... just the one you prefer!).<p>
+
+With the option <B>"Let winamp read the tags"</B>, the output winamp list
+file will be the following one:<p><p>
+<font color=#006600>#EXTM3U</font><p>
+<font color=#006600>My Compilation\Fleetwood Mac - Albatross.mp3</font><p>
+<font color=#006600>My Compilation\Jefferson Airplane - White Rabbit.mp3</font><p>
+<font color=#006600>My Compilation\Jimi Hendrix - Hey Baby.mp3</font><p>
+<font color=#006600>My Compilation\Miles Davis - Feio.mp3</font><p>
+<font color=#006600>My Compilation\Pink Floyd - Speak To Me, Breath.mp3</font><p>
+<font color=#006600>My Compilation\The Byrds - Eight Miles High.mp3</font><p>
+<font color=#006600>My Compilation\The Move - I Can Hear The Grass Move.mp3</font><p>
+<font color=#006600>My Compilation\Uriah Heep - Easy Living.mp3</font><p>
+<font color=#006600>My Compilation\Velvet Underground - I'm Waiting.mp3</font><p></font><p>
+
+With the option <B>"Write tags and song length"</B>, the output winamp list
+file will be the following one:<p><p>
+<font color=#006600>#EXTM3U</font><p>
+<font color=#006600>#EXTINF:194,Various - Fleetwood Mac - Albatross</font><p>
+<font color=#006600>My Compilation\Fleetwood Mac - Albatross.mp3</font><p>
+<font color=#006600>#EXTINF:153,Various - Jefferson Airplane - White rabbit</font><p>
+<font color=#006600>My Compilation\Jefferson Airplane - White Rabbit.mp3</font><p>
+<font color=#006600>#EXTINF:366,Various - Jimi Hendrix - Hey baby</font><p>
+<font color=#006600>My Compilation\Jimi Hendrix - Hey Baby.mp3</font><p>
+<font color=#006600>#EXTINF:712,Miles Davis - Feio</font><p>
+<font color=#006600>My Compilation\Miles Davis - Feio.mp3</font><p>
+<font color=#006600>#EXTINF:239,Various - Pink Floyd - Speak to me, breath</font><p>
+<font color=#006600>My Compilation\Pink Floyd - Speak To Me, Breath.mp3</font><p>
+<font color=#006600>#EXTINF:215,Various - The Byrds - Eight miles high</font><p>
+<font color=#006600>My Compilation\The Byrds - Eight Miles High.mp3</font><p>
+<font color=#006600>#EXTINF:180,Various - The Move - I can hear the grass move</font><p>
+<font color=#006600>My Compilation\The Move - I Can Hear The Grass Move.mp3</font><p>
+<font color=#006600>#EXTINF:156,Various - Uriah Heep - Easy living</font><p>
+<font color=#006600>My Compilation\Uriah Heep - Easy Living.mp3</font><p>
+<font color=#006600>#EXTINF:277,Various - Velvet Underground - I'm waiting</font><p>
+<font color=#006600>My Compilation\Velvet Underground - I'm Waiting.mp3</font><p><p>
+
+In the first case only the file paths are included in the list. Winamp will read every row and if the file is found, it reads the tags and replaces the file name that appears as the first thing on winamp's window.<p>
+In the second case, the tags and the song length are already put in the rows starting with "#EXTINF", while the song path is wrote on the subsequent line. This list becomes a kind of photography, and is put on winamp's screen as it is. When a song is played, winamp reads the tags, calculates the song length and updates the diaplayed values.<p>
+Since in the second case my program has to read tags and calculate the song length, the process will be slower than what it is if you prefer the first choice.<p>
+
+Just try to see the difference!<p>
