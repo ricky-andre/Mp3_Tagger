@@ -1,0 +1,127 @@
+<html>
+<h1 align=center><font color=#ff6600>Organizer Window</font></h1><p>
+This panel lets you reorganize your files in directories and
+subdirectories with a name that is given by the tag values.<p>
+As usual, the best way to explain things is an example.<p>
+
+<h2><font color=#ff6600>Reorganization example</font></h2>
+Suppose that you have a lot of directories inside the
+following directory:<p>
+
+<font color=#006600>"c:\Documenti\Music\"</font><p>
+
+All the directories have the same name format, something like this:<p>
+
+<font color=#006600>"Bon Jovi - These Days"</font><p>
+<font color=#006600>"Green Day - Compilation"</font><p>
+<font color=#006600>"Mauro Picotto - Trance 2002"</font><p>
+<font color=#006600>"DJ Parade 2002 - Compilation"</font><p>
+<font color=#006600>"U2 - Achtung Baby"</font><p>
+<font color=#006600>"U2 - Rattle And Hum"</font><p>
+<font color=#006600>"U2 - The Joshua Tree"</font><p>
+
+... and many others.<p>
+Suppose now that you don't want to have music of a lot of different
+types in the same root directory (for example disco music in the same
+directory of rock music). Moreover, you
+want to change the directory names so that if you have a lot of albums
+of the same artist, the release year is included in the directory
+name, so that you can order the artist's albums from the oldest to the
+newest one. The directory structure should be something like this:
+
+<ul>
+  <li>
+    <font color=#006600>"genre"</font>
+    <ul>
+       <li>
+       <font color=#006600>"artist"</font>
+       <ul>
+       <li><font color=#006600>"artist - year - album"</font></li>
+       </ul>
+       </li>
+    </ul>
+  </li>
+</ul>
+
+These are the string matches you should select in the "Organizer
+window".<p>
+
+<h2><font color=#ff6600>Reorganize window options</font></h2>
+Select the fields you are interested to on the top of the window, and
+press the <B>"add string"</B> button to add the string listed in the text field.
+You can also <B>edit</B> the match string before adding it to the
+list, to insert fixed fields.
+<p>When you have something like the configuration of the example,
+on the left panel select the directories you want to reorganize.<p>
+On the bottom of the window, select if you want
+the files to be <B>copied</B> or <B>moved</B>, and select the starting
+directory where all the selected files have to be reorganized. As in
+most of the other panels, you can even choose the <B>"recurse
+subdirectories"</B> and and the <B>"apply advanced search"</b> option.
+Before choosing to apply the advanced search, read carefully the description of this
+feature inside the "Database creator window" help files.<p>
+Press the <B>"try"</B> button to have a preview of the way the
+selected files will be reorganized.<p>
+<font color=#0000CC><B>If you press the try button, no file will be
+moved nor copied anywhere.</B></font> "Mp3 Studio" will read the
+tags from the selected directories, <font color=#0000CC><B>only from
+the files that have ".mp3" extension (not case sensitive)</B></font>,
+and will show with a directory tree where the files will be moved or
+copied.<p>
+
+In the above example, if all the files have correct tags, you will see
+that the main directory would be reorganized in the following way:
+<ul>
+<li><font color=#006600>"Rock"</font>
+  <ul>
+      <li><font color=#006600>"Bon Jovi"</font>
+      <ul>
+      <li><font color=#006600>"Bon Jovi - 1998 - These Days"</font></li>
+      </ul>
+      </li>
+      <li><font color=#006600>"Green Day"</font>
+      <ul>
+      <li><font color=#006600>"Green Day - 2000 - Compilation"</font></li>
+      </ul>
+      </li>
+      <li><font color=#006600>"U2"</font>
+      <ul>
+      <li><font color=#006600>"U2 - 1992 - Achtung Baby"</font></li>
+      <li><font color=#006600>"U2 - 1987 - Rattle And Hum"</font></li>
+      <li><font color=#006600>"U2 - 1986 - The Joshua Tree"</font></li>
+      </ul>
+      </li>
+  </ul>
+</li>
+<li><font color=#006600>"Disco"</font>
+  <ul>
+      <li><font color=#006600>"Mauro Picotto"</font>
+      <ul>
+      <li><font color=#006600>"Mauro Picotto - 2002 - Trance 2002"</font></li>
+      </ul>
+      </li>
+      <li><font color=#006600>"DJ Parade"</font>
+      <ul>
+      <li><font color=#006600>"DJ Parade - 2002 - Compilation"</font></li>
+      </ul>
+      </li>
+  </ul>
+</li>
+</ul>
+You can even click the directories of the tree to see what files will
+be put inside it.<p>
+If you are satisfied of the results, you can press
+the <B>"execute"</B> button. The files will be moved/copied, and for
+every file that is processed, a line will be added to the response
+window: a green sphere means that everything has gone right for that
+file, while a red sphere means that an error has occurred for that
+file. A possible reason for a failure could be that the file has invalid characters
+(for example "?" or "/" on windows systems).<p>
+<font color=#0000CC><B>The old directories are not moved nor deleted,
+since inside them you could have ".jpg" images of the covers, and you
+could later on move them in the correct directory.</B></font>
+</html>
+
+
+
+

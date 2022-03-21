@@ -1,0 +1,94 @@
+<html>
+<h1 align=center><font color=#ff6600>Rename Configuration Examples</font></h1><p>
+These are some useful examples that should help to understand how the
+rename window can be used in some real examples. As usual, use the
+<B>"try"</B> button before executing the rename operation, if you are not
+sure of what you are going to do!<p>
+
+<h2><font color=#ff6600>Example 1</font></h2><p>
+Suppose that you have some files, a compilation of songs:<p>
+
+<font color=#006600>"Fleetwood Mac - Albatross.mp3"</font><p>
+<font color=#006600>"Jefferson Airplane - White Rabbit.mp3"</font><p>
+<font color=#006600>"Jimi Hendrix - Hey Baby.mp3"</font><p>
+<font color=#006600>"Pink Floyd - Speak To Me, Breath.mp3"</font><p>
+<font color=#006600>"The Byrds - Eight Miles High.mp3"</font><p>
+<font color=#006600>"The Move - I Can Hear The Grass Move.mp3"</font><p>
+<font color=#006600>"Uriah Heep - Easy Living.mp3"</font><p>
+<font color=#006600>"Velvet Underground - I'm Waiting.mp3"</font><p>
+
+Suppose that you want to add numbers, and you want to change the order of the listed songs. Act on the arrows to move the files in the list until they have the order you want. Then, write the following configuration strings:<p><p>
+
+<B>Insert:</B><font color=#0000CC> " - "</font> at position: <font color=#0000CC>"0"</font><p>
+<B>Insert numbers starting from:</B><font color=#0000CC> "1"</font> at position: <font color=#0000CC>"0"</font><p><p>
+
+You can even select the leading '0' option, if you want. These will be the results:<p>
+
+<B>With leading '0'</B> option selected:<p>
+<font color=#006600>"01 - Fleetwood Mac - Albatross.mp3"</font><p>
+<font color=#006600>"02 - The Byrds - Eight Miles High.mp3"</font><p>
+<font color=#006600>"03 - Uriah Heep - Easy Living.mp3"</font><p>
+<font color=#006600>"04 - Jefferson Airplane - White Rabbit.mp3"</font><p>
+<font color=#006600>"05 - Jimi Hendrix - Hey Baby.mp3"</font><p>
+<font color=#006600>"06 - Velvet Underground - I'm Waiting.mp3"</font><p>
+<font color=#006600>"07 - Pink Floyd - Speak To Me, Breath.mp3"</font><p>
+<font color=#006600>"08 - The Move - I Can Hear The Grass Move.mp3"</font><p>
+
+<B>Without leading '0'</B> option selected:<p>
+<font color=#006600>"1 - Fleetwood Mac - Albatross.mp3"</font><p>
+<font color=#006600>"2 - The Byrds - Eight Miles High.mp3"</font><p>
+<font color=#006600>"3 - Uriah Heep - Easy Living.mp3"</font><p>
+<font color=#006600>"4 - Jefferson Airplane - White Rabbit.mp3"</font><p>
+<font color=#006600>"5 - Jimi Hendrix - Hey Baby.mp3"</font><p>
+<font color=#006600>"6 - Velvet Underground - I'm Waiting.mp3"</font><p>
+<font color=#006600>"7 - Pink Floyd - Speak To Me, Breath.mp3"</font><p>
+<font color=#006600>"8 - The Move - I Can Hear The Grass Move.mp3"</font><p><p>
+
+<h2><font color=#ff6600>Example 2</font></h2><p>
+Suppose that you have a compilation your friend gave to you. Suppose that some songs are missing or you already have them and you have deleted them. This is the situation:<p>
+
+<font color=#006600>"01 - Fleetwood Mac - Albatross.mp3"</font><p>
+<font color=#006600>"02 - The Byrds - Eight Miles High.mp3"</font><p>
+<font color=#006600>"04 - Jefferson Airplane - White Rabbit.mp3"</font><p>
+<font color=#006600>"05 - Jimi Hendrix - Hey Baby.mp3"</font><p>
+<font color=#006600>"07 - Pink Floyd - Speak To Me, Breath.mp3"</font><p>
+<font color=#006600>"08 - The Move - I Can Hear The Grass Move.mp3"</font><p>
+
+Some numbers are not consecutive and you don't like it. Put in this simple configuration:<p><p>
+
+<B>Search string:</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font
+color=#0000CC> "&#60; 1 > - &#60; 2 > - &#60; 3 >.mp3"</font><p>
+<B>Replace string:</B>&nbsp;&nbsp;&nbsp;&nbsp;<font color=#0000CC> "&#60; 2 > - &#60; 3 >.mp3"</font><p>
+<B>Insert:</B><font color=#0000CC> " - "</font> at position: <font color=#0000CC>"0"</font><p>
+<B>Insert numbers starting from:</B><font color=#0000CC> "1"</font> at position <font color=#0000CC>"0"</font><p><p>
+
+The operations are made from top to down and from left to right. After the multireplace feature is applied, the files will have the following names:<p>
+
+<font color=#006600>"Fleetwood Mac - Albatross.mp3"</font><p>
+<font color=#006600>"The Byrds - Eight Miles High.mp3"</font><p>
+<font color=#006600>"Jefferson Airplane - White Rabbit.mp3"</font><p>
+<font color=#006600>"Jimi Hendrix - Hey Baby.mp3"</font><p>
+<font color=#006600>"Pink Floyd - Speak To Me, Breath.mp3"</font><p>
+<font color=#006600>"The Move - I Can Hear The Grass Move.mp3"</font><p>
+
+After the string insertion, that is performed as the second operation, this is the situation:<p>
+
+<font color=#006600>" - Fleetwood Mac - Albatross.mp3"</font><p>
+<font color=#006600>" - The Byrds - Eight Miles High.mp3"</font><p>
+<font color=#006600>" - Jefferson Airplane - White Rabbit.mp3"</font><p>
+<font color=#006600>" - Jimi Hendrix - Hey Baby.mp3"</font><p>
+<font color=#006600>" - Pink Floyd - Speak To Me, Breath.mp3"</font><p>
+<font color=#006600>" - The Move - I Can Hear The Grass Move.mp3"</font><p>
+
+After the number insertion, you will have this final result:<p>
+
+<font color=#006600>"01 - Fleetwood Mac - Albatross.mp3"</font><p>
+<font color=#006600>"02 - The Byrds - Eight Miles High.mp3"</font><p>
+<font color=#006600>"03 - Jefferson Airplane - White Rabbit.mp3"</font><p>
+<font color=#006600>"04 - Jimi Hendrix - Hey Baby.mp3"</font><p>
+<font color=#006600>"05 - Pink Floyd - Speak To Me, Breath.mp3"</font><p>
+<font color=#006600>"06 - The Move - I Can Hear The Grass Move.mp3"</font><p>
+
+That is exactly what you wanted!
+
+

@@ -1,0 +1,136 @@
+<html>
+<h1 align=center><font color=#ff6600>Winamp Window</font></h1><p>
+This window lets you create a lot of winamp lists in a simple way. All
+you have to do is select the directories you are interested to in the left panel, and then press the execute button with the options you prefer. Every option will be explained in detail.<p>
+
+<h2><font color=#ff6600>List and recursion options</font></h2><p>
+In this panel you can select the <B>"recurse subdirectories"</B> option. If this is selected, the selected directories with all the included subdirectories will be scanned and every file with mp3 extension and that is an mp3 file will be included in the output list. The lists that will be generated are printed in the bottom table, with the directory to which they are referred, with the output list path and the path name. The second and third columns are editable and you can change them by double clicking on the cell, even though I think that you will prefer using the <B>"path for output list panel"</B>.<p>
+The <B>"generate a list containing all the other lists"</B> feature does what it says: it generates a list containing all the songs that have been put in all the single directory lists.<p>
+Suppose that you have your files in:<p>
+
+<font color=#006600>"C:\documents\music\"</font><p>
+
+and that here you have organized your files to be put in some CD, so you have the following directories:<p>
+
+<font color=#006600>"C:\documents\music\CD1"</font><p>
+<font color=#006600>"C:\documents\music\CD2"</font><p>
+
+In the first subdirectory you have a folder for every album, something like this:<p>
+
+<font color=#006600>"C:\documents\music\CD1\U2 - Achtung Baby"</font><p>
+<font color=#006600>"C:\documents\music\CD1\U2 - Pop"</font><p>
+<font color=#006600>"C:\documents\music\CD1\U2 - Rattle and Hum"</font><p>
+<font color=#006600>"C:\documents\music\CD1\U2 - All that you can't live behind"</font><p>
+
+... and others. You like to put a list for every directory on your CD so that you can listen to the songs of an album by simply clicking on the file list. You also like to have a list that contains all the songs you put into a CD. All you have to do is:<p>
+
+<ol>
+<li>browse the directories until you reach <font color=#006600>"C:\documents\music\CD1"</li>
+<li>keeping pressed "SHIFT" or "CTRL", select all the directories, and select the "generate a list containing all the other lists" checkbox.</li>
+<li>press the <B>"execute"</B> button.</li>
+</ol>
+
+<B>The directories are scanned in alphabetical order, and the songs are put into the lists in alphabetical order too.</B> It is quite important that you rename your songs in the same way you want them to be played. For example if you want to have a list that follows the same order in which the tracks are played in the original album, name formats like these are all right:<p>
+
+<font color=#006600>"&#60; track > - ..."</font><p>
+<font color=#006600>"&#60; artist > - &#60; track > ..."</font><p>
+
+The following format will not give you the wanted results:</font><p>
+
+<font color=#006600>"&#60; artist > - &#60; title > - ..."</font><p>
+
+since the artist name will be the same for every song of the same album, so the songs will be put into the list following the title alphabetical order.
+Creating lists of such type with winamp is not possible since files are put in the list with the same order they are read from the hard disk, so you have to manually reorder them, and that's a very boring operation ...<p>
+
+<h2><font color=#ff6600>Path for output lists</font></h2><p>
+Does exactly what it says. By clicking on the choices you have, the output path list column will be updated basing on the selected choice. I recommend you to choose the "same level of the directory" option, I think it's the best one.<p>
+
+<h2><font color=#ff6600>List write mode</font></h2><p>
+In this case you will have two possible choices. I will explain you the difference with two examples. You can even open a winamp file list that is simply a text file, so you can open it with a text editor (word, staroffice, emacs, wordpad, ... just the one you prefer!).<p>
+
+With the option <B>"Let winamp read the tags"</B>, the output winamp list
+file will be the following one:<p><p>
+<font color=#006600>#EXTM3U</font><p>
+<font color=#006600>My Compilation\Fleetwood Mac - Albatross.mp3</font><p>
+<font color=#006600>My Compilation\Jefferson Airplane - White Rabbit.mp3</font><p>
+<font color=#006600>My Compilation\Jimi Hendrix - Hey Baby.mp3</font><p>
+<font color=#006600>My Compilation\Miles Davis - Feio.mp3</font><p>
+<font color=#006600>My Compilation\Pink Floyd - Speak To Me, Breath.mp3</font><p>
+<font color=#006600>My Compilation\The Byrds - Eight Miles High.mp3</font><p>
+<font color=#006600>My Compilation\The Move - I Can Hear The Grass Move.mp3</font><p>
+<font color=#006600>My Compilation\Uriah Heep - Easy Living.mp3</font><p>
+<font color=#006600>My Compilation\Velvet Underground - I'm Waiting.mp3</font><p></font><p>
+
+With the option <B>"Write tags and song length"</B>, the output winamp list
+file will be the following one:<p><p>
+<font color=#006600>#EXTM3U</font><p>
+<font color=#006600>#EXTINF:194,Various - Fleetwood Mac - Albatross</font><p>
+<font color=#006600>My Compilation\Fleetwood Mac - Albatross.mp3</font><p>
+<font color=#006600>#EXTINF:153,Various - Jefferson Airplane - White rabbit</font><p>
+<font color=#006600>My Compilation\Jefferson Airplane - White Rabbit.mp3</font><p>
+<font color=#006600>#EXTINF:366,Various - Jimi Hendrix - Hey baby</font><p>
+<font color=#006600>My Compilation\Jimi Hendrix - Hey Baby.mp3</font><p>
+<font color=#006600>#EXTINF:712,Miles Davis - Feio</font><p>
+<font color=#006600>My Compilation\Miles Davis - Feio.mp3</font><p>
+<font color=#006600>#EXTINF:239,Various - Pink Floyd - Speak to me, breath</font><p>
+<font color=#006600>My Compilation\Pink Floyd - Speak To Me, Breath.mp3</font><p>
+<font color=#006600>#EXTINF:215,Various - The Byrds - Eight miles high</font><p>
+<font color=#006600>My Compilation\The Byrds - Eight Miles High.mp3</font><p>
+<font color=#006600>#EXTINF:180,Various - The Move - I can hear the grass move</font><p>
+<font color=#006600>My Compilation\The Move - I Can Hear The Grass Move.mp3</font><p>
+<font color=#006600>#EXTINF:156,Various - Uriah Heep - Easy living</font><p>
+<font color=#006600>My Compilation\Uriah Heep - Easy Living.mp3</font><p>
+<font color=#006600>#EXTINF:277,Various - Velvet Underground - I'm waiting</font><p>
+<font color=#006600>My Compilation\Velvet Underground - I'm Waiting.mp3</font><p><p>
+
+In the first case only the file paths are included in the list. Winamp will read every row and if the file is found, it reads the tags and replaces the file name that appears as the first thing on winamp's window.<p>
+In the second case, the tags and the song length are already put in the rows starting with "#EXTINF", while the song path is wrote on the subsequent line. This list becomes a kind of photography, and is put on winamp's screen as it is. When a song is played, winamp reads the tags, calculates the song length and updates the diaplayed values.<p>
+Since in the second case my program has to read tags and calculate the song length, the process will be slower than what it is if you prefer the first choice.<p>
+
+Just try to see the difference!<p>
+
+<h2><font color=#ff6600>Path write mode</font></h2><p>
+Again, I will show the two lists with the two different options you have, to simply understand the difference. The list type is "let winamp read the tags", and the output path is "on the same level of the directory", so that the output list path is set to the following one: <font color=#006600>"C:\documents\music\CD1\".</font><p>
+
+With the option <B>"relative path"</B>, the output winamp list
+file will be the following one:<p><p>
+
+<font color=#006600>#EXTM3U</font><p>
+<font color=#006600>My Compilation\Fleetwood Mac - Albatross.mp3</font><p>
+<font color=#006600>My Compilation\Jefferson Airplane - White Rabbit.mp3</font><p>
+<font color=#006600>My Compilation\Jimi Hendrix - Hey Baby.mp3</font><p>
+<font color=#006600>My Compilation\Miles Davis - Feio.mp3</font><p>
+<font color=#006600>My Compilation\Pink Floyd - Speak To Me, Breath.mp3</font><p>
+<font color=#006600>My Compilation\The Byrds - Eight Miles High.mp3</font><p>
+<font color=#006600>My Compilation\The Move - I Can Hear The Grass Move.mp3</font><p>
+<font color=#006600>My Compilation\Uriah Heep - Easy Living.mp3</font><p>
+<font color=#006600>My Compilation\Velvet Underground - I'm Waiting.mp3</font><p><p>
+
+With the option <B>"absolute path"</B>, the output winamp list
+file will be the following one:<p><p>
+<font color=#006600>#EXTM3U</font><p>
+<font color=#006600>C:\documents\music\CD1\My Compilation\Fleetwood Mac - Albatross.mp3</font><p>
+<font color=#006600>C:\documents\music\CD1\My Compilation\Jefferson Airplane - White Rabbit.mp3</font><p>
+<font color=#006600>C:\documents\music\CD1\My Compilation\Jimi Hendrix - Hey Baby.mp3</font><p>
+<font color=#006600>C:\documents\music\CD1\My Compilation\Miles Davis - Feio.mp3</font><p>
+<font color=#006600>C:\documents\music\CD1\My Compilation\Pink Floyd - Speak To Me, Breath.mp3</font><p>
+<font color=#006600>C:\documents\music\CD1\My Compilation\The Byrds - Eight Miles High.mp3</font><p>
+<font color=#006600>C:\documents\music\CD1\My Compilation\The Move - I Can Hear The Grass Move.mp3</font><p>
+<font color=#006600>C:\documents\music\CD1\My Compilation\Uriah Heep - Easy Living.mp3</font><p>
+<font color=#006600>C:\documents\music\CD1\My Compilation\Velvet Underground - I'm Waiting.mp3</font><p><p>
+
+The absolute path list inserts the full file path, so that you can
+copy  this list everywhere on your hard disk, and things will work
+again.  You can even put the list on another partition of your hard disk.
+But if you are going to put the list on a CD, it will not work because
+winamp will try to find the songs not on the CD, but still on your
+hard disk path! So this is the reason to have a relative path mode:
+paths are written respect to the directory in which the list is put
+in. You can put it in on your CD without changing the relative
+position  of the list respect to the directory.<p>
+
+<font color=#0000CC><B>If the output file list name does not have
+"m3u" extension, the extension "m3u" is added and the file is written
+with this extension. If any of the output file already exists, "Mp3
+Studio" will ask you if you want to overwrite that file before
+creating the new list and destroying the old one.</B></font><p>

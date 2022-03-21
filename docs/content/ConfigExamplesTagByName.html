@@ -1,0 +1,57 @@
+<html>
+<h1 align=center><font color=#ff6600>Tag By Name Examples</font></h1><p>
+This is a collection of useful examples to understand in what way
+special cases can be handled to face strange file names.<p>
+
+<h2><font color=#ff6600>Example 1</font></h2><p>
+
+<U>File name:</U>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"01 - Kate Bush - Running up that hill - www.downloadsite.com.mp3"</font><p>
+<U>Expected format:</U>&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"&#60; track > - &#60; artist > - &#60; title >"</font><p>
+
+Sometimes it happens that some sites include their url in the downloadable file name. If you press the "try" button, you can observe that the program would set the following fields and values:<p>
+
+<U>Track:</U>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"01"</font><p>
+<U>Artist:</U>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"Kate Bush"</font><p>
+<U>Title:</U>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"Running up that hill - www.downloadsite.com"</font><p>
+
+This is obviously an error. To solve this situation you have to use the trash field!. Push the "add trash" button, the expected format now becomes the following one:<p>
+
+<U>File name:</U>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"01 - Kate Bush - Running up that hill - www.downloadsite.com.mp3"</font><p>
+<U>Expected format:</U>&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"&#60; track > - &#60; artist > - &#60; title> - &#60; trash >"</font><p>
+
+If you press the try button you will now have the expected and correct behaviour. You can later perform a rename by tag operation to erase from the filename the download site.<p>
+
+<h2><font color=#ff6600>Example 2</font></h2><p>
+
+If some fields have already been set and you only want to set one of the fields in the file name, you can use again the "trash" field.<p>
+
+<U>File name:</U>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"Kate Bush - 01 - Running up that hill - www.downloadsite.com.mp3"</font><p>
+<U>Expected format:</U>&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"&#60; trash > - &#60; track > - &#60; trash>"</font><p>
+
+In this way you will set only the track field. As you can understand, you can add more than one "trash" field to have the desired behaviour.<p>
+
+<h2><font color=#ff6600>Example 3</font></h2><p>
+
+Suppose that you have the following file name "01.Running up that hill.mp3". In this case, it is necessary to change the field separator: change it from the set value to the string "." . Select the "track" and "title" fields, to have the following situation:<p>
+
+<U>File name:</U>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"01.Running up that hill.mp3"</font><p>
+<U>Expected format:</U>&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"&#60; track >.&#60; title>"</font><p>
+
+<h2><font color=#ff6600>Example 4</font></h2><p>
+
+Suppose that you have the following file name "01. Kate Bush - Running
+up that hill.mp3". In this case, it is not possible to solve the
+problem by simply changing the "field separator" string. You can set
+the string "." or the string " - " as field separator string, it's the
+same. Once you have inserted the "track", "artist", "title" fields
+with the correct order you will have the following situation:<p>
+
+<U>File name:</U>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"01. Kate Bush - Running up that hill.mp3"</font><p>
+<U>Expected format:</U>&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"&#60; track > - &#60; artist > - &#60; title >"</font><p>
+
+Now press the edit expected format (if it is not already selected), and type the expected format field until it is set as represented here:<p>
+
+<U>File name:</U>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"01. Kate Bush - Running up that hill.mp3"</font><p>
+<U>Expected format:</U>&nbsp;&nbsp;&nbsp;&nbsp;<font color=#006600>"&#60; track >. &#60; artist > - &#60; title >"</font><p>
+
+.. and the trick is done! Simple, isn't it?

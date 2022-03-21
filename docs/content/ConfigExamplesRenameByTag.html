@@ -1,0 +1,59 @@
+On the top of the window, you can select the fields you want to write by using the file names. The selected fields are put one after the other on the top-table, but you can change the order of them by selecting the fields on the table and clicking on the "move up" or "move down" icons: the expected file name format is updated immediately.
+You can also modify the "field separator", even though for most of the files you will use the separator " - ". The expected file name format suggests the way the tag fields are retrieved from the file names, from the left to the right.
+To avoid mistakes and unwanted behaviours, I always suggest you to press the "try" button to observe the fields that will be set on the selected files, as is represented in Figure 3-3.1.
+In the warning panel you will observe the result of the tagging operation and the mode operation (try or execute). The successfully tagged files are signed with a green sphere, while the files that experienced some problems are signed with a red sphere. The problem can be one of the following ones:
+the file is read-only, and it cannot be tagged
+the file has a name format that does not match the selected one
+the field you are trying to set is not correct (for example if you are trying to set the track field, it obviously must be a number)
+When you have tagged a lot of files, probably you will want to finish your work with those files that have a different format from the one you have selected and used for the last tag operation, the files signed with a red sphere in the warning panel: press the "remove success" button to remove from the table all the files that have been successfully tagged performing the last "execute" operation.
+The "add trash" button function is explained in the examples paragraph.
+You have to understand carefully how the program works to avoid unwanted behaviours, so look carefullty at the following examples.
+
+Example number 1:
+
+File name:  "01 - Kate Bush - Running up that hill - www.downloadsite.com.mp3"
+Expected format:  "< track > - < artist > - < title>"
+
+Sometimes it happens that some sites include their url in the downloadable file name. 
+If you press the "try" button, you can observe that the program would set the following fields and values:
+
+Track: "01"
+Artist: "Kate Bush"
+Title: "Running up that hill - www.downloadsite.com"
+
+This is obviously an error. To solve this situation you have to use the trash field!. Push the "add trash" button, the expected format now becomes the following one:
+
+File name:  "01 - Kate Bush - Running up that hill - www.downloadsite.com.mp3"
+Expected format:  "< track > - < artist > - < title> - < trash >"
+
+If you press the try button you will now have the expected and correct behaviour. You can later perform a rename by tag operation to erase from the filename the download site.
+
+Example number 2:
+
+If some fields have already been set and you only want to set one of the fields in the file name, you can use again the "trash" field.
+
+File name:  "Kate Bush - 01 - Running up that hill - www.downloadsite.com.mp3"
+Expected format:  "< trash > - < track > - < trash>"
+
+In this way you will set only the track field. As you can understand, you can add more than one "trash" field to have the desired behaviour.
+
+Example number 3:
+
+Suppose that you have the following file name "01.Running up that hill.mp3". In this case, it is necessary to change the field separator: change it from the set value to the string "." . Select the "track" and "title" fields, to have the following situation:
+
+File name:  "01.Running up that hill.mp3"
+Expected format:  "< track >.< title>"
+
+Example number 4:
+
+Suppose that you have the following file name "01. Kate Bush - Running up that hill.mp3". In this case, it is not possible to solve the problem by simply changing the "field separator" string. In this case you can set the string "." Or the string " - " as field separator string, it's the same. Onve you have inserted the "track", "artis", "title" fields with the correct order you have the following situation:
+
+File name:  "01. Kate Bush - Running up that hill.mp3"
+Expected format:  "< track > - < artist > - < title>"
+
+Now press the edit expected format (if it is not already selected), and type the expected format field until it is set as represented here:
+
+File name:  "01. Kate Bush - Running up that hill.mp3"
+Expected format:  "< track >. < artist > - < title>"
+
+.. and the trick is done! Simple, isn't it?

@@ -1,0 +1,61 @@
+<html>
+<h1 align=center><font color=#ff6600>CD Recording Optimizer Window</font></h1><p>
+This window stays on the bottom-half side of the "other" tabbed pane of
+the "Utils window".<p>
+If you have a lot of directories that have already been tagged and you
+want to put them on some CD to free some hard disk space, you can use
+this "Mp3 Studio" feature to move the folders in one or more directory
+that you can include to create your CD.<p>
+<font color=#0000CC><B>"Mp3 Studio" finds out what is the best
+distribution to fill up the CD(s) space.</B></font><p>
+
+<h2><font color=#ff6600>CD recording optimizer options</font></h2>
+You can select the <B>"recurse subdirectories"</B> option if you want
+to consider also all the subdirectories of the folders selected on the
+left side of the window.<p>
+Select the number of CD you think that you could fill up by pressing
+the . You can easily change the CD capacity by clicking on the combo box inside the
+table. You can also click on the <B>"brose dir"</B> button to choose
+an existing directory. In this case, the directory is scanned with all
+its subdirs and the occupied space is showed, as a percentual number,
+in the last column of the table.<p>
+On the left panel you can't select directories that are already
+contained into the existent directories present in the table: if you
+want to do this you have to place them somewhere else.
+<font color=#0000CC><B>In  any case "Mp3 Studio" will check all these things
+and will warn you if wrong configurations have been set.</B></font>
+If you have not selected any existent directory, "Mp3 Studio" will
+create the directories for you with the name specified by the <B>"dir
+name"</B> column, and will create these new dirs as subdirectories of
+the folder you have selected in the bottom of the panel, in the
+<B>"create unexistent dirs starting from this directory"</B> combo box.
+Again, you can select if you want the files to be <B>moved</B> or to
+be <B>copied</B> in the destination directories.<p>
+
+The problem of calculating the way to distribute a certain number of
+items, each with a specified weight, in a container of a certain
+capacity is known as the "knapsack algorithm". In this case there is a
+generalization since the number of the containers can be higher than
+one, so that it could be called the "multiple knapsack
+algorithm". This explains also the icon, that could be strange to most
+of the users!<p>
+
+Press the <B>"try"</B> button to execute the multiple knapsack algorithm.<p>
+
+<h2><font color=#ff6600>CD recording optimizer results</font></h2>
+If you press the "try" button, a new window will open as usual, and
+all the report information will be listed there.<p>
+<font color=#0000CC><B>If you press the try button, no file will be
+moved nor copied anywhere.</B></font> "Mp3 Studio" will show you where
+the selected directories will be put and how much the "knapsacks" will
+be filled up. <font color=#0000CC><B>If you selected 8 containers, the
+algorithm can be quite slow, but the progress bar shows you how many
+containers have been completely filled, and how much unused space
+remains. If you are satisifed, press "cancel" and the current solution
+will be kept as good.</B></font><p>
+If you are satisfied, press the <B>"execute"</B> button to move or
+copy the directories. If something goes wrong, "Mp3 Studio" will warn
+you about it, and an error message will be printed to the output.
+</html>
+
+
