@@ -1,0 +1,138 @@
+<html>
+<h1 align=center><font color=#ff6600>Advanced Database Window</font></h1><p>
+Suppose that you have already a lot of CD with your mp3 songs. You
+want to use "Mp3 Studio" to create your database, but you couldn't use
+this program before so you know that some songs have no tags,
+and you could think that you are lost because this program will put an
+empty value in your "artist", "title" or "album" columns. You are
+wrong.<p>
+The advanced search window gives you the power to retrieve some
+information from the file name or from the folder name in which the
+file is contained, and will let you decide if these information have
+to be retrieved from the file names or the folder names before reading
+the tag values.<p>
+
+<h2><font color=#ff6600>Artist Advanced Search Options</font></h2><p>
+I will describe you the artist panel, because the others are very similar.
+You can first decide if the advanced search has to be applied for the
+artist field. If you are sure that all your mp3 are tagged probably
+you don't need to use the advanced search panel.<p>
+Then you can decide if the "artist" field has to be retrieved with the
+advanced search before tags are read (checkbox selected), or after it
+(checkbox unselected).<p>
+The last choice exists only for the artis field: it asks you if in the
+retrieved artist field you want the leading word "the " to be
+cut. When your collection will become huge, you will discover that you
+will have some songs of "Beatles" and other songs of "The Beatles",
+some songs of "Cranberries" and some songs of "The Cranberries" ... you
+can cut the leading "The" to avoid this (probably undesired) thing.<p>
+
+<h2><font color=#ff6600>Artist Advanced Search String Matches</font></h2><p>
+The mechanism is very similar to the one I described to you before
+talking about the tag by name window, so I strongly recommend you to
+read that paragraph again. All you have to do is inserting all the
+possible formats in which the files can be found. Let's make a quite
+complex, but easy to understand, example.<p>
+Suppose that when you have a full album you always have files in the
+following format:<p>
+
+<font color=#006600>"track - artist - title" (ex. "01 - U2 - Where the streets have no name")</font><p>
+
+The folder name in which you put the files belonging to the same album has the following name format:<p>
+
+<font color=#006600>"artist - album" (ex. "U2 - The Joshua Tree")</font><p>
+
+This is true when you have full albums. Sometimes you have
+compilations you made by yourself, so in that case you didn't insert
+track numbers in file names. So the format of that kind of songs is
+the following one:<p>
+
+<font color=#006600>"artist - title" (ex. "Inxs - Need you tonight")</font><p>
+
+These files are put in a directory with a simple name:<p>
+
+<font color=#006600>"Compilation"</font><p>
+
+So, summarizing up the things, the possible file name formats are the following:<p>
+
+<font color=#006600>"track - artist - title"</font><p>
+<font color=#006600>"artist - title"</font><p>
+
+... and the possible folder name formats are the following ones:<p>
+
+<font color=#006600>"artist - album"</font><p>
+<font color=#006600>"album"</font><p>
+
+Now look at the artist advanced window. You can retrieve the "artist" name by the folder name or the file name in three different ways:<p>
+
+<font color=#006600>"trash - artist - trash"&nbsp;&nbsp;&nbsp;&nbsp;</font><U>source:</U><font color=#006600> &nbsp;&nbsp;&nbsp;"file name"</font><p>
+<font color=#006600>"artist - trash"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><U>source:</U><font color=#006600> &nbsp;&nbsp;&nbsp;"file name"</font><p>
+<font color=#006600>"artist - trash"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><U>source:</U><font color=#006600> &nbsp;&nbsp;&nbsp;"folder name"</font><p>
+
+As you should have learned before, "trash" is a field of no
+interest. Since we are only interested to the "artist" field, every
+other field is "trash". Note that the order of the strings is very
+important: the search is performed in the same order you put the
+strings in the table, from the first string to the last one. So the
+folder name will be considered to retrieve "artist" value only if all
+the previous searches have failed. The order is very important also for
+another reason. Let's make an example. Suppose that you inserted the
+strings not in the above (correct) order, but in the following
+order:<p>
+
+<font color=#006600>"artist - trash"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><U>source:</U><font color=#006600> &nbsp;&nbsp;&nbsp;"file name"</font><p>
+<font color=#006600>"trash - artist - trash"&nbsp;&nbsp;&nbsp;</font><U>source:</U><font color=#006600> &nbsp;&nbsp;&nbsp;"file name"</font><p>
+<font color=#006600>"artist - trash"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><U>source:</U><font color=#006600> &nbsp;&nbsp;&nbsp;"folder name"</font><p>
+
+Now suppose that you are creating a database. The file name considered
+is the following one:<p>
+
+<font color=#006600>"01 - U2 - Where the streets have no name"</font><p>
+
+Suppose that this file has no tags, so "Mp3 Studio" applies the advanced
+search. The first match string is considered:<p>
+
+<font color=#006600>"artist - trash"</font><p>
+
+This search string applied to the above file name, gives the following results:<p>
+
+<font color=#006600>artist: "01"</font><p>
+<font color=#006600>trash:  "U2 - Where the streets have no name"</font><p>
+
+... and this is obviously wrong! <B><font color=#0000CC>The error lies on the order the
+"match strings" have been put in the table. Follow this rule and you
+will never make mistakes: always put the match strings with the higher
+number of fields before the others.</font></B> In our case, you had to put the
+string with the three fields before the other one, as I did before.
+Obviously, if you have files with different name formats, for
+example:<p>
+
+<font color=#006600>"01 - U2 - Where the streets have no name"</font><p>
+
+and:<p>
+
+<font color=#006600>"U2 - 03 - Desire"</font><p>
+
+... I cannot solve you the problem ... you had to rename the files all
+in the same format, or you had to tag all your files ... you can in
+any case change the settings and configurations to apply it to the
+file names of the selected directory, than you change the settings,
+select another directory and produce a new database and so on ...<p>
+
+Now let's finish our example. The match strings for the album name:<p>
+
+<font color=#006600>"trash - album"&nbsp;&nbsp;&nbsp;&nbsp;</font><U>source:</U><font color=#006600> &nbsp;&nbsp;&nbsp;"folder name"</font><p>
+<font color=#006600>"album"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><U>source:</U><font color=#006600> &nbsp;&nbsp;&nbsp;"folder name"</font><p>
+
+(look at the order ... the string with 2 fields is put before the one with 1 field!)<p>
+
+The match strings for the title name are the following:<p>
+
+<font color=#006600>"trash - trash -
+title"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><U>source:</U><font
+color=#006600>&nbsp;&nbsp;&nbsp; "file name"</font><p>
+<font color=#006600>"trash - title"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><U>source:</U><font color=#006600> &nbsp;&nbsp;&nbsp;"file name"</font><p>
+
+In any case, the best way to understand things is .. try! For any
+doubt or request about these things, don't hesitate, contact me!<p>
+</html>

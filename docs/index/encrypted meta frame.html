@@ -1,0 +1,10 @@
+<h1 align=center><font color=#ff6600>Tag v2</font></h1><p>
+This is one of the frames introduced by tag version 2 standard.<p>
+Tag version 2 technical specifications can be found at "www.id3.org".<p>Not all the frames defined by this standard are yet supported by
+"Mp3 studio", but most of them are described here for completeness reasons.
+You can set the supported frames using the "Advanced
+mass tag window" or the "Advanced edit tag window". <p><h2><font color=#ff6600 align=center>Encrypted meta frame</font></h2><p>
+MCDI
+
+This frame is intended for music that comes from a CD, so that the CD can be identified in databases such as the CDDB. The frame consists of a binary dump of the Table Of Contents, TOC, from the CD, which is a header of 4 bytes and then 8 bytes/track on the CD plus 8 bytes for the 'lead out' making a maximum of 804 bytes. The offset to the beginning of every track on the CD should be described with a four bytes absolute CD-frame address per track, and not with absolute time. This frame requires a present and valid "TRCK" frame, even if the CD's only got one track. There may only be one "MCDI" frame in each tag. 
+
