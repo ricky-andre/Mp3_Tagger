@@ -12,13 +12,13 @@ git clone "https://github.com/ricky-andre/Mp3_Tagger"
 (the above command will create an Mp3_Tagger directory)
 
 The 'Tagger.jar' file should be double-clickable on windows, otherwise create a '.bat' file:
-cd <path to Mp3_Tagger>\Mp3_Tagger
+cd c:\path_to_Mp3_Tagger\Mp3_Tagger
 "C:\Program Files\Java\jre1.8.0_321\bin\java.exe" -jar tagger.jar
 
 If you wish to compile the source files and launch the software, remember to install also
 the JDK (Java Development Kit to have 'javac' command) and not only the JRE.
 
-cd <path to Mp3_Tagger>\Mp3_Tagger\src
+cd c:\path_to_Mp3_Tagger\Mp3_Tagger\src
 javac -d ..\ tagger\MainClass.java
 cd ..
 java tagger.MainClass
