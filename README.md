@@ -18,7 +18,7 @@ cd c:\path_to_Mp3_Tagger\Mp3_Tagger
 If you wish to compile the source files and launch the software, remember to install also
 the JDK (Java Development Kit to have 'javac' command) and not only the JRE.
 
-cd c:\path_to_Mp3_Tagger\Mp3_Tagger\src
-javac -d ..\ tagger\MainClass.java
-cd ..
-java tagger.MainClass
+cd c:\path_to_Mp3_Tagger\Mp3_Tagger\src<p>
+javac -d ..\ tagger\MainClass.java<p>
+cd ..<p>
+java tagger.MainClass<p>
