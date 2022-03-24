@@ -182,7 +182,7 @@ public class JdbcDatabase implements DatabaseInterface
     {
 	try
 	    {
-		Class.forName(driver).newInstance();
+		Class.forName(driver).getDeclaredConstructor().newInstance();
 		conn=DriverManager.getConnection("jdbc:mysql://"+hostname+"/test"+"?user="+username+"&password="+passwd);
 		statement = conn.createStatement(
                                       ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -363,7 +363,7 @@ public class JdbcDatabase implements DatabaseInterface
 		if (row>getrowlowindex && row<getrowhighindex)
 		    {
 			// retrieve the row from the hashtable stored in memory
-			String retvect[]=(String[])getallrowHash.get(new Integer(row));
+			String retvect[]=(String[])getallrowHash.get(Integer.valueOf(row));
 			if (retvect==null)
 			    {
 				System.out.println("Empty entry in hash, should not occur row "+row);
@@ -391,7 +391,7 @@ public class JdbcDatabase implements DatabaseInterface
 					    {
 						attempts++;
 						Thread.sleep(1000);
-						ret=(String[])getallrowHash.get(new Integer(row));
+						ret=(String[])getallrowHash.get(Integer.valueOf(row));
 						if (attempts==5)
 						    {
 							System.out.println("Failed to get row "+row);
@@ -430,7 +430,7 @@ public class JdbcDatabase implements DatabaseInterface
 					    {
 						attempts++;
 						Thread.sleep(1000);
-						ret=(String[])getallrowHash.get(new Integer(row));
+						ret=(String[])getallrowHash.get(Integer.valueOf(row));
 						if (attempts==5)
 						    {
 							System.out.println("Failed to get row "+row);
@@ -561,7 +561,7 @@ public class JdbcDatabase implements DatabaseInterface
 	    {
                 if (getValueAtLastRowIndex==row && getValueAtLastRow!=null)
                     return getValueAtLastRow[col];
-		String ret[]=(String[])getValueAtHash.get(new Integer(row));
+		String ret[]=(String[])getValueAtHash.get(Integer.valueOf(row));
 		if (ret!=null)
 		    {
 			/*
@@ -596,7 +596,7 @@ public class JdbcDatabase implements DatabaseInterface
 					    {
 						attempts++;
 						Thread.sleep(2000);
-						ret=(String[])getValueAtHash.get(new Integer(row));
+						ret=(String[])getValueAtHash.get(Integer.valueOf(row));
                                                 System.out.println("ret "+ret+" att "+attempts+" row "+row);
 						if (attempts==100)
 						    {
@@ -677,7 +677,7 @@ public class JdbcDatabase implements DatabaseInterface
 					    {
 						attempts++;
 						Thread.sleep(2000);
-						ret=(String[])getValueAtHash.get(new Integer(row));
+						ret=(String[])getValueAtHash.get(Integer.valueOf(row));
                                                 System.out.println("second task ret "+ret+" att "+attempts+" row "+row);
 						if (attempts==100)
 						    {
@@ -1065,9 +1065,9 @@ public class JdbcDatabase implements DatabaseInterface
 					    for (int i=0;i<values.length;i++)
 						values[i]=tmpresult.getString(columns[i]);
 					    if (process.equals("genericget"))
-						getallrowHash.put(new Integer(counter),values);
+						getallrowHash.put(Integer.valueOf(counter),values);
 					    else
-						getValueAtHash.put(new Integer(counter),values);
+						getValueAtHash.put(Integer.valueOf(counter),values);
 					    counter++;
 					}
                                     if (filterquery.length()>0)

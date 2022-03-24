@@ -882,7 +882,7 @@ public class Help extends JFrame implements ActionListener, TreeExpansionListene
 		indexNodesArray.add(son);
 		if (!letter.equals(lastLetter))
 		    {
-			indexLetterToArrayIndex.put(letter,new Integer(indexNodesArray.size()-1));
+			indexLetterToArrayIndex.put(letter,Integer.valueOf(indexNodesArray.size()-1));
 			lastLetter=letter;
 		    }
 

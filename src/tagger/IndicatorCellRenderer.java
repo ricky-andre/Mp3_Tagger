@@ -12,16 +12,16 @@ public class IndicatorCellRenderer extends JProgressBar implements TableCellRend
 
     IndicatorCellRenderer()
     {
-	super(JProgressBar.HORIZONTAL);
-	setBorderPainted(false);
-	setStringPainted(true);
+		super(JProgressBar.HORIZONTAL);
+		setBorderPainted(false);
+		setStringPainted(true);
     }
 
     IndicatorCellRenderer(int min, int max)
     {
-	super(JProgressBar.HORIZONTAL, min, max);
-	setBorderPainted(false);
-	setStringPainted(true);
+		super(JProgressBar.HORIZONTAL, min, max);
+		setBorderPainted(false);
+		setStringPainted(true);
     }
 
     public Component getTableCellRendererComponent(JTable table, Object value,
@@ -74,8 +74,8 @@ public class IndicatorCellRenderer extends JProgressBar implements TableCellRend
 	    int i;
 	    for (i=0;i<limitValues.length;i++) {
 		if (limitValues[i] < value) {
-		    color = (Color)limitColors.get(new Integer(limitValues[i]));
-		}
+		    	color = (Color)limitColors.get(Integer.valueOf(limitValues[i]));
+			}
 	    }
 	}
 	return color;

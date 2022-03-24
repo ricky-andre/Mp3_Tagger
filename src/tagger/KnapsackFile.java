@@ -158,7 +158,7 @@ public class KnapsackFile extends MyFile implements KnapsackItem, ContainerItem,
                           tmp2=new MyFile(destpath+File.separator+tmp.rel_path);
                       else
                           tmp2=new MyFile(destpath+File.separator);
-                      dirstodelete.put(new Integer(-1*tmp.rec_level),new File(getAbsolutePath()+File.separator+tmp.rel_path));
+                      dirstodelete.put(Integer.valueOf(-1*tmp.rec_level),new File(getAbsolutePath()+File.separator+tmp.rel_path));
                       // remember in an hash the directory this.getAbsolutePath+tmp.rel_path,
                       // then try to delete all the inserted directories ... if they are
                       // empty because all the files have been moved, the directory

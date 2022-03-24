@@ -13,7 +13,7 @@ public abstract class JdbcUtils
     {
 	try
 	    {
-		Class.forName("com.mysql.jdbc.Driver").newInstance();
+		Class.forName("com.mysql.jdbc.Driver").getDeclaredConstructor().newInstance();
 		String request=null;
 		if (pwd.trim().length()>0 && user.trim().length()>0)
 		    request="jdbc:mysql://"+host+"/"+db+"?user="+user+"&password="+pwd;
