@@ -2,26 +2,18 @@ package tagger;
 
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
 import javax.swing.Timer;
-import javax.swing.tree.*;
 import javax.swing.event.*;
-import javax.swing.JSplitPane.*;
-
 import java.io.*;
-
-import javax.swing.JFileChooser.*;
-
 import java.util.*;
-
 import javax.swing.border.*;
 
 public class DatabaseWindow extends JFrame implements ActionListener, ItemListener, TaskExecuter, TableModelListener {
 	private DatabaseWindow myself = null;
 	private MainWindow window = null;
 
-	private Hashtable confighash = new Hashtable();
+	private Hashtable<String, MyCombo> confighash = new Hashtable<String, MyCombo>();
 	private ProgramConfig config = Utils.config;
 
 	private DatabaseFilter dbfilter = new DatabaseFilter();
@@ -30,7 +22,7 @@ public class DatabaseWindow extends JFrame implements ActionListener, ItemListen
 	private orderOptions orderoptions = null;
 	private filterOptions filteroptions = null;
 
-	private DatabaseTableModel model = null;
+	// private DatabaseTableModel model = null;
 	private DatabaseTable table = null;
 	private DatabaseInterface dbinterface = null;
 	private Database textDatabase = null;
@@ -635,10 +627,10 @@ public class DatabaseWindow extends JFrame implements ActionListener, ItemListen
 		dbfilter.setConfigString(config.getConfigString("6.dbfilter"));
 		setOrderConfigString(config.getConfigString("6.dborder"));
 
-		Set set = confighash.entrySet();
-		Iterator iterator = set.iterator();
+		Set<Map.Entry<String, MyCombo>> set = confighash.entrySet();
+		Iterator<Map.Entry<String, MyCombo>> iterator = set.iterator();
 		while (iterator.hasNext()) {
-			Map.Entry elem = (Map.Entry) iterator.next();
+			Map.Entry<String, MyCombo> elem = (Map.Entry<String, MyCombo>) iterator.next();
 			config.getObjectConfig((String) elem.getKey(), elem.getValue());
 		}
 	}
@@ -695,10 +687,10 @@ public class DatabaseWindow extends JFrame implements ActionListener, ItemListen
 		config.setConfigString("6.dbfilter", dbfilter.getConfigString());
 		config.setConfigString("6.dborder", getOrderConfigString());
 
-		Set set = confighash.entrySet();
-		Iterator iterator = set.iterator();
+		Set<Map.Entry<String, MyCombo>> set = confighash.entrySet();
+		Iterator<Map.Entry<String, MyCombo>> iterator = set.iterator();
 		while (iterator.hasNext()) {
-			Map.Entry elem = (Map.Entry) iterator.next();
+			Map.Entry<String, MyCombo> elem = (Map.Entry<String, MyCombo>) iterator.next();
 			config.setObjectConfig((String) elem.getKey(), elem.getValue());
 		}
 	}
@@ -707,9 +699,9 @@ public class DatabaseWindow extends JFrame implements ActionListener, ItemListen
 	 * Class to set the order options
 	 */
 	public class orderOptions extends JDialog implements ActionListener {
-		private ArrayList panels = new ArrayList();
-		private ArrayList cols = new ArrayList();
-		private ArrayList ordermode = new ArrayList();
+		private ArrayList<JPanel> panels = new ArrayList<JPanel>();
+		private ArrayList<MyCombo> cols = new ArrayList<MyCombo>();
+		private ArrayList<MyCombo> ordermode = new ArrayList<MyCombo>();
 
 		private JPanel optionscontainer = null;
 		private JPanel mainPanel = null;
@@ -719,7 +711,7 @@ public class DatabaseWindow extends JFrame implements ActionListener, ItemListen
 			setResizable(false);
 			setTitle("Database reorder options");
 
-			JPanel tmp2, globalpanel;
+			JPanel tmp2;
 			Container content = getContentPane();
 
 			mainPanel = new JPanel();
@@ -846,7 +838,7 @@ public class DatabaseWindow extends JFrame implements ActionListener, ItemListen
 			if (cols.size() >= ((EditableTableModel) table.getModel()).getColumns().length)
 				return;
 
-			JPanel tmp, tmp2, tmp3, tmp4;
+			JPanel tmp, tmp2;
 			tmp = new JPanel();
 			tmp.setLayout(new BoxLayout(tmp, BoxLayout.X_AXIS));
 			tmp.setAlignmentX(JComponent.LEFT_ALIGNMENT);
@@ -988,13 +980,13 @@ public class DatabaseWindow extends JFrame implements ActionListener, ItemListen
 	 * Class to set the filter options
 	 */
 	public class filterOptions extends JDialog implements ActionListener {
-		private ArrayList panels = new ArrayList();
+		private ArrayList<JPanel> panels = new ArrayList<JPanel>();
 		// contains the cols
-		private ArrayList combos = new ArrayList();
+		private ArrayList<MyCombo> combos = new ArrayList<MyCombo>();
 		// contains the options combos
-		private ArrayList optioncombos = new ArrayList();
+		private ArrayList<MyCombo> optioncombos = new ArrayList<MyCombo>();
 		// contains the jtextfields
-		private ArrayList values = new ArrayList();
+		private ArrayList<JTextField> values = new ArrayList<JTextField>();
 
 		private JPanel mainPanel = null;
 		private JCheckBox alltrue = new JCheckBox();
@@ -1359,7 +1351,7 @@ public class DatabaseWindow extends JFrame implements ActionListener, ItemListen
 			int offset = 0;
 			int dbsize = dbinterface.getRowCount();
 			// this variable contains the letter index of the list ...
-			TreeMap pagesRefs = new TreeMap();
+			TreeMap<String, Integer> pagesRefs = new TreeMap<String, Integer>();
 
 			boolean dbReordered = false;
 			String newordercols[] = null;
@@ -1458,10 +1450,10 @@ public class DatabaseWindow extends JFrame implements ActionListener, ItemListen
 
 				StringBuffer otherlinks = new StringBuffer();
 				otherlinks.append("\n<h3 align=center>");
-				Set set = pagesRefs.entrySet();
-				Iterator iterator = set.iterator();
+				Set<Map.Entry<String, Integer>> set = pagesRefs.entrySet();
+				Iterator<Map.Entry<String, Integer>> iterator = set.iterator();
 				while (iterator.hasNext()) {
-					Map.Entry elem = (Map.Entry) iterator.next();
+					Map.Entry<String, Integer> elem = (Map.Entry<String, Integer>) iterator.next();
 					String key = (String) elem.getKey();
 					if (!(key.equals("0-9") || key.equals("other"))) {
 						int val = ((Integer) elem.getValue()).intValue();

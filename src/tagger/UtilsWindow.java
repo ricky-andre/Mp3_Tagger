@@ -4,20 +4,17 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
-import javax.swing.JFileChooser.*;
 import javax.swing.border.*;
 import javax.swing.Timer;
 import javax.swing.tree.*;
 import javax.swing.table.*;
 import javax.swing.event.*;
-import javax.swing.JSplitPane.*;
-
 import java.io.*;
 import java.util.*;
 
 public class UtilsWindow extends JFrame implements TreeModelListener {
 	private UtilsWindow myself = null;
-	private Hashtable confighash = new Hashtable();
+	private Hashtable<String, Object> confighash = new Hashtable<String, Object>();
 
 	private MainWindow window;
 	private boolean taskActive;
@@ -41,14 +38,14 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 	ImageIcon insfiles = Utils.getImage("warnpanel", "insfiles");
 
 	// list of the selected dirs in alphabetical order!
-	private ArrayList filelist = null;
+	private ArrayList<selectedDir> filelist = null;
 
 	// used when scanning directories to remember the files!
 	public class selectedDir {
 		String absolutepath = null;
 		String outputlistpath = null;
 		String outputlistname = null;
-		ArrayList files = new ArrayList();
+		ArrayList<MyFile> files = new ArrayList<MyFile>();
 
 		selectedDir() {
 		}
@@ -69,7 +66,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 		JCheckBox recursesubdirs = new JCheckBox();
 		Object data[][] = null;
 		DirectoryTreePanel dirtree = null;
-		int totselected = 0;
+		// int totselected = 0;
 		String tablecolumns[];
 		// JPanel treepanel;
 		// mouseHandler mousehandler=new mouseHandler ();
@@ -112,10 +109,10 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 		WinampWindow() {
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 			JTextField tmptxt;
-			JTextArea tmparea;
+			// JTextArea tmparea;
 			ButtonGroup buttongroup = new ButtonGroup();
 			JPanel tmp, grid, mainPanel, tmp2;
-			MyButton button;
+			// MyButton button;
 
 			mainPanel = new JPanel();
 			mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -442,7 +439,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 			} else
 				return false;
 
-			filelist = new ArrayList();
+			filelist = new ArrayList<selectedDir>();
 			for (int i = 0; i < paths.length; i++) {
 				File file = null;
 				String name = null;
@@ -502,25 +499,16 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 					taskOutput.append("<html><font color=black size=-1> Scanning directory <font color=blue>\"" +
 							paths[i] + "\"</font> ...");
 					taskOutput.addline(WarnPanel.OK);
-					ArrayList tempgetfiles = null;
+					ArrayList<MyFile> tempgetfiles = null;
 					if (recursesubdirs.isSelected())
-						tempgetfiles = scanDirs(abs_path, 1000, progressmonitor);
+						tempgetfiles = (ArrayList<MyFile>) scanDirs(abs_path, 1000, progressmonitor);
 					else
-						tempgetfiles = scanDirs(abs_path, 0, progressmonitor);
+						tempgetfiles = (ArrayList<MyFile>) scanDirs(abs_path, 0, progressmonitor);
 
 					MyFile tmpmyfile;
 					for (int j = 0; j < tempgetfiles.size(); j++) {
 						tmpmyfile = (MyFile) (tempgetfiles.get(j));
 						if (!tmpmyfile.getName().toLowerCase().endsWith(".mp3")) {
-							/*
-							 * label=new
-							 * JLabel("<html><font size=-1 color=black> file <font color=blue>\""+tmpmyfile.
-							 * getName()+"\"</font> not inserted, no mp3 extension!",danger,SwingConstants.
-							 * LEFT);
-							 * label.setBackground(Color.white);
-							 * label.setBorder(BorderFactory.createEmptyBorder(2,40,2,0));
-							 * taskOutput.addline(label);
-							 */
 						} else {
 							dir.files.add(tmpmyfile);
 						}
@@ -541,7 +529,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 				// progressmonitor.setProgress(current);
 			}
 
-			int totalfiles = 0;
+			// int totalfiles = 0;
 			tasklength = 0;
 			for (int i = 0; i < filelist.size(); i++)
 				tasklength += ((selectedDir) (filelist.get(i))).files.size();
@@ -563,7 +551,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 				MyFile myfile;
 				boolean generateall = false;
 				StringBuffer alllist = new StringBuffer("");
-				String outputlistpath;
+				// String outputlistpath;
 
 				if (generateAllFile.isSelected())
 					generateall = true;
@@ -830,7 +818,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 		private Database db = null;
 
 		advancedSearch advancedsearch = null;
-		final String advsearchfields[] = Utils.config.advsearchfields;
+		final String advsearchfields[] = ProgramConfig.advsearchfields;
 
 		MyButton execbutton = null;
 		MyJTable table = null;
@@ -840,10 +828,10 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 		MyCombo ordercombo[] = new MyCombo[] { gimmeOrderCombo(), gimmeOrderCombo(), gimmeOrderCombo() };
 		Object data[][] = null;
 		DirectoryTreePanel dirtree = null;
-		int totselected = 0;
+		// int totselected = 0;
 		String tablecolumns[] = null;
 		// JPanel treepanel=null;
-		JScrollPane dirtreescrollpane = null;
+		// JScrollPane dirtreescrollpane = null;
 		// mouseHandler mousehandler=new mouseHandler ();
 		OrderableList list = null;
 
@@ -851,13 +839,13 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 		// identify
 		// the elements that have to be desumed from the tags (artist, title, year ...)
 
-		Hashtable tagnames = new Hashtable();
-		private Hashtable buttonhash = new Hashtable();
+		Hashtable<String, String> tagnames = new Hashtable<String, String>();
+		private Hashtable<String, JCheckBox> buttonhash = new Hashtable<String, JCheckBox>();
 		private String tagelems[] = new String[] { "artist", "title", "album", "year", "genre", "comment", "track" };
 		private String buttonnames[] = Database.getOtherFields();
 
 		// private JCheckBox fields[]=new JCheckBox[names.length+othernames.length];
-		private String separator = null;
+		// private String separator = null;
 
 		private JTextField outputformat = null;
 		private JTextField fieldseparator = null;
@@ -885,7 +873,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 
 		DatabaseWindow() {
 			JTextField tmptxt;
-			ButtonGroup buttongroup = new ButtonGroup();
+			// ButtonGroup buttongroup = new ButtonGroup();
 			JPanel tmp, tmp2, tmp3, tmp4;
 			MyButton button;
 
@@ -1100,8 +1088,8 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 		}
 
 		private void checkConfig() {
-			Hashtable fields = Database.getOtherFieldsHash();
-			Hashtable ins = new Hashtable();
+			Hashtable<String, String> fields = Database.getOtherFieldsHash();
+			Hashtable<String, String> ins = new Hashtable<String, String>();
 			String val = null;
 			int count = 0;
 			for (int i = 0; i < list.gimmeSize(); i++) {
@@ -1200,7 +1188,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 		}
 
 		private void updateTable() {
-			int totpaths = 0;
+			// int totpaths = 0;
 
 			int dirname = getCol("directory");
 			int dircol = getCol("output file dir");
@@ -1324,9 +1312,9 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 					list.removeSelected();
 
 					String tmp[] = list.getList();
-					JCheckBox key = null;
+					// JCheckBox key = null;
 
-					Enumeration hashKeys = buttonhash.keys();
+					Enumeration<String> hashKeys = buttonhash.keys();
 
 					while (hashKeys.hasMoreElements()) {
 						String tmpstr = (String) hashKeys.nextElement();
@@ -1388,12 +1376,12 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 			}
 
 			public class advFieldSearchPanel extends JPanel implements ActionListener, DocumentListener {
-				Hashtable confighash = new Hashtable();
+				Hashtable<String, Object> confighash = new Hashtable<String, Object>();
 
 				private String field = null;
 				private int index = -1;
 
-				private JCheckBox editMatchString = null;
+				// private JCheckBox editMatchString = null;
 				private JTextField separator = null, matchString = null;
 				private OrderableList list = new OrderableList(6);
 				private MyJTable table = null;
@@ -1474,7 +1462,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 						tmp.add(tmp2);
 					}
 
-					JTextField tmptxt;
+					// JTextField tmptxt;
 					tmp2 = new JPanel();
 					tmp2.setLayout(new BoxLayout(tmp2, BoxLayout.X_AXIS));
 					tmp2.setBorder(BorderFactory.createTitledBorder("Field separator"));
@@ -1571,15 +1559,17 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 					updateMatchString();
 				}
 
-				private MyCombo createCombo(String elems[]) {
-					MyCombo combo = new MyCombo();
-					combo.setBackground(Color.white);
-					combo.setEditable(false);
-					combo.setLightWeightPopupEnabled(false);
-					for (int i = 0; i < elems.length; i++)
-						combo.addItem(elems[i]);
-					return combo;
-				}
+				/*
+				 * private MyCombo createCombo(String elems[]) {
+				 * MyCombo combo = new MyCombo();
+				 * combo.setBackground(Color.white);
+				 * combo.setEditable(false);
+				 * combo.setLightWeightPopupEnabled(false);
+				 * for (int i = 0; i < elems.length; i++)
+				 * combo.addItem(elems[i]);
+				 * return combo;
+				 * }
+				 */
 
 				private void updateMatchString() {
 					String tmp[];
@@ -1598,7 +1588,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 							advbeforetags.setEnabled(false);
 					} else if (command.startsWith("table")) {
 						int min = lsm.getMinSelectionIndex();
-						int max = lsm.getMaxSelectionIndex();
+						// int max = lsm.getMaxSelectionIndex();
 						// perform commands on the table!
 						if (command.endsWith("move up")) {
 							if (min != -1 && min != 0) {
@@ -1615,7 +1605,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 								tablemodel.removeRows(min);
 							}
 						} else if (command.endsWith("add string")) {
-							ArrayList tmp = new ArrayList();
+							ArrayList<String> tmp = new ArrayList<String>();
 							tmp.add(matchString.getText());
 							tmp.add("file name");
 							tablemodel.addRow(tmp);
@@ -1665,10 +1655,10 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 				}
 
 				public void writeConfig() {
-					Set set = confighash.entrySet();
-					Iterator iterator = set.iterator();
+					Set<Map.Entry<String, Object>> set = confighash.entrySet();
+					Iterator<Map.Entry<String, Object>> iterator = set.iterator();
 					while (iterator.hasNext()) {
-						Map.Entry elem = (Map.Entry) iterator.next();
+						Map.Entry<String, Object> elem = (Map.Entry<String, Object>) iterator.next();
 						config.setObjectConfig((String) elem.getKey(), elem.getValue());
 					}
 
@@ -1688,10 +1678,10 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 				}
 
 				public void readConfig() {
-					Set set = confighash.entrySet();
-					Iterator iterator = set.iterator();
+					Set<Map.Entry<String, Object>> set = confighash.entrySet();
+					Iterator<Map.Entry<String, Object>> iterator = set.iterator();
 					while (iterator.hasNext()) {
-						Map.Entry elem = (Map.Entry) iterator.next();
+						Map.Entry<String, Object> elem = (Map.Entry<String, Object>) iterator.next();
 						config.getObjectConfig((String) elem.getKey(), elem.getValue());
 					}
 					if (!apply.isSelected())
@@ -1731,7 +1721,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 
 		private String[] getOrderList() {
 			if (orderoutput.isSelected()) {
-				ArrayList tmparr = new ArrayList();
+				ArrayList<String> tmparr = new ArrayList<String>();
 				for (int i = 0; i < ordercombo.length; i++) {
 					String tmp = (String) ordercombo[i].getSelectedItem();
 					if (!tmp.equals(""))
@@ -1758,7 +1748,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 			int namecol = 0;
 			String paths[] = null;
 			boolean perform = true;
-			JLabel label = null;
+			// JLabel label = null;
 
 			paths = dirtree.getSelectedDirs(databasewindow.recursesubdirs.isSelected());
 			pathcol = databasewindow.getCol("output file dir");
@@ -1867,7 +1857,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 				if (dbfile.exists() && newdbexists) {
 					db.checkHeader();
 					String frstfld[] = Utils.split(db.getFirstRow(), db.getSeparator());
-					ArrayList miss = new ArrayList();
+					ArrayList<String> miss = new ArrayList<String>();
 					if (frstfld.length == 0) {
 						error = true;
 					} else {
@@ -1877,9 +1867,9 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 						// example, old list: title, artist, comment, user
 						// new : artist, title, length, filename, user field
 						// out : artist, title, length, filename, user field, comment
-						Hashtable fixedfields = db.getOtherFieldsHash();
-						Hashtable inserted = new Hashtable();
-						ArrayList outformat = new ArrayList();
+						Hashtable<String, String> fixedfields = Database.getOtherFieldsHash();
+						Hashtable<String, String> inserted = new Hashtable<String, String>();
+						ArrayList<String> outformat = new ArrayList<String>();
 						for (int c = 0; c < fields.length; c++) {
 							if (fixedfields.containsKey(fields[c])) {
 								inserted.put(fields[c], "");
@@ -1959,7 +1949,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 					boolean fatalerror = false;
 					db.checkHeader();
 					String frstfld[] = Utils.split(db.getFirstRow(), db.getSeparator());
-					Hashtable fld = new Hashtable();
+					Hashtable<String, String> fld = new Hashtable<String, String>();
 					for (int j = 0; j < frstfld.length; j++)
 						fld.put(frstfld[j], "1");
 
@@ -2038,13 +2028,11 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 			JLabel label = null;
 			boolean generateall = false;
 
-			String pathmode = null;
-
 			// read the fields to be considered and the separator!
 			boolean calculatelen = false;
 			String fields[] = list.getList();
 			String userfield = null;
-			Hashtable fixedfields = Database.getOtherFieldsHash();
+			Hashtable<String, String> fixedfields = Database.getOtherFieldsHash();
 			for (int c = 0; c < fields.length; c++) {
 				if (!fixedfields.containsKey(fields[c])) {
 					userfield = fields[c];
@@ -2054,7 +2042,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 						calculatelen = true;
 				}
 			}
-			Hashtable taghash = tagnames;
+			Hashtable<String, String> taghash = tagnames;
 
 			boolean perform = true;
 			boolean refresh = false;
@@ -2076,11 +2064,11 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 				progressmonitor.setTitle("Scanning selected directories ...");
 			}
 
-			filelist = new ArrayList();
+			filelist = new ArrayList<selectedDir>();
 			for (int i = 0; i < paths.length; i++) {
 
 				File file = null;
-				String name = null;
+				// String name = null;
 				dir = new selectedDir();
 				boolean error = false;
 				abs_path = paths[i];
@@ -2113,7 +2101,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 					taskOutput.append("<html><font color=black size=-1> Scanning directory <font color=blue>\"" +
 							paths[i] + "\"</font> ...");
 					taskOutput.addline(WarnPanel.OK);
-					ArrayList tempgetfiles = null;
+					ArrayList<MyFile> tempgetfiles = null;
 					if (recursesubdirs.isSelected())
 						tempgetfiles = scanDirs(abs_path, 1000, progressmonitor);
 					else
@@ -2122,15 +2110,6 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 					for (int j = 0; j < tempgetfiles.size(); j++) {
 						tmpmyfile = (MyFile) (tempgetfiles.get(j));
 						if (!tmpmyfile.getName().toLowerCase().endsWith(".mp3")) {
-							/*
-							 * label=new
-							 * JLabel("<html><font size=-1 color=black> file <font color=blue>\""+tmpmyfile.
-							 * getName()+"\"</font> not inserted, no mp3 extension!",danger,SwingConstants.
-							 * LEFT);
-							 * label.setBackground(Color.white);
-							 * label.setBorder(BorderFactory.createEmptyBorder(2,40,2,0));
-							 * taskOutput.addline(label);
-							 */
 						} else {
 							dir.files.add(tmpmyfile);
 						}
@@ -2289,7 +2268,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 						for (int k = 0; k < fields.length; k++) {
 							// if the field is a tag, than write it ...
 							if (taghash.containsKey(fields[k])) {
-								int advindex = -1;
+								// int advindex = -1;
 								// be careful ... advanced search is applied only to the following fields
 								seldbdata[current + 1][k] = getFieldByAdvSearch(fields[k], myfile);
 								if (config.optionwincfg.cutthe &&
@@ -2640,23 +2619,23 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 	} // end of Database window
 
 	public class OrganizerWindow extends JPanel implements ActionListener, DocumentListener, TaskExecuter {
-		private JCheckBox editMatchString = null;
+		// private JCheckBox editMatchString = null;
 		private JTextField separator = null;
 		private AddremoveCombo matchString = new AddremoveCombo();
 		private MyJTable table = null, casetable = null;
 		private DinamicTableModel tablemodel = null;
 		private ListSelectionModel lsm = null;
-		private Hashtable casehash = new Hashtable();
-		private int tablesize = 0;
+		private Hashtable<Object, Object> casehash = new Hashtable<Object, Object>();
+		// private int tablesize = 0;
 		private JRadioButton copyrename[] = new JRadioButton[] { new JRadioButton(""), new JRadioButton("") };
 		private JCheckBox recursesubdirs = new JCheckBox();
 		private String buttonnames[] = new String[] { "artist", "album", "year", "genre", "comment" };
 		private OrderableList list = new OrderableList(buttonnames.length);
-		private Hashtable buttonhash = new Hashtable();
+		private Hashtable<String, JCheckBox> buttonhash = new Hashtable<String, JCheckBox>();
 		private MyCombo outputpath = new MyCombo();
 		private JCheckBox applyadvsearch = new JCheckBox();
 
-		private TreeMap hashtree = null;
+		private TreeMap<String, TreeMap<MyFile, String>> hashtree = null;
 		private JTree tree = null;
 
 		private DirectoryTreePanel dirtree = null;
@@ -2737,7 +2716,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 				tmp.add(tmp2);
 			}
 
-			JTextField tmptxt;
+			// JTextField tmptxt;
 			tmp2 = new JPanel();
 			tmp2.setLayout(new BoxLayout(tmp2, BoxLayout.X_AXIS));
 			tmp2.setBorder(BorderFactory.createTitledBorder("Field separator"));
@@ -2812,7 +2791,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 			// add an explanation to the following table!
 			table = new MyJTable(new String[] { "output directory / subdirectory name" });
 			tablemodel = (DinamicTableModel) table.getModel();
-			tablemodel.setSaveConfig(tablemodel.SAVE_DATA);
+			tablemodel.setSaveConfig(DinamicTableModel.SAVE_DATA);
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table.setToolTipText(0, "these folders will be created (2nd row subfolder of the 1st one!)");
 			lsm = table.getSelectionModel();
@@ -2834,7 +2813,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 			casetable.setEditableColumn(1, true);
 			casetable.setColumnEditor(1,
 					new String[] { "", "Large Case", "UPPER CASE", "lower case", "First capitalized" });
-			casetable.setSaveConfig(tablemodel.SAVE_DATA);
+			casetable.setSaveConfig(DinamicTableModel.SAVE_DATA);
 			casetable.setColsToBeSaved("1");
 			tablescroll = new JScrollPane(casetable);
 			tablescroll.getViewport().setBackground(Color.white);
@@ -2983,15 +2962,17 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 			organizersplitpane.setLeftComponent(dirtree);
 		}
 
-		private MyCombo createCombo(String elems[]) {
-			MyCombo combo = new MyCombo();
-			combo.setBackground(Color.white);
-			combo.setEditable(false);
-			combo.setLightWeightPopupEnabled(false);
-			for (int i = 0; i < elems.length; i++)
-				combo.addItem(elems[i]);
-			return combo;
-		}
+		/*
+		 * private MyCombo createCombo(String elems[]) {
+		 * MyCombo combo = new MyCombo();
+		 * combo.setBackground(Color.white);
+		 * combo.setEditable(false);
+		 * combo.setLightWeightPopupEnabled(false);
+		 * for (int i = 0; i < elems.length; i++)
+		 * combo.addItem(elems[i]);
+		 * return combo;
+		 * }
+		 */
 
 		private void updateMatchString() {
 			String tmp[];
@@ -3181,9 +3162,11 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 
 			if (processId.equals("organizerexecute")) {
 				// iterations variables
-				TreeMap treeorg = null, files = null;
-				Set set = null, set2 = null;
-				Iterator iterator = null, iterator2 = null;
+				TreeMap<MyFile, String> files = null;
+				Set<Map.Entry<String, TreeMap<MyFile, String>>> set = null;
+				Set<Map.Entry<MyFile, String>> set2 = null;
+				Iterator<Map.Entry<String, TreeMap<MyFile, String>>> iterator = null;
+				Iterator<Map.Entry<MyFile, String>> iterator2 = null;
 				boolean copy = copyrename[0].isSelected();
 
 				progressmonitor.setNote("Calculating task length ...");
@@ -3191,8 +3174,9 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 				set = hashtree.entrySet();
 				iterator = set.iterator();
 				while (iterator.hasNext()) {
-					Map.Entry elem = (Map.Entry) iterator.next();
-					files = (TreeMap) elem.getValue();
+					Map.Entry<String, TreeMap<MyFile, String>> elem = (Map.Entry<String, TreeMap<MyFile, String>>) iterator
+							.next();
+					files = (TreeMap<MyFile, String>) elem.getValue();
 					tasklength += files.size();
 				}
 
@@ -3215,7 +3199,8 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 					set = hashtree.entrySet();
 					iterator = set.iterator();
 					while (iterator.hasNext()) {
-						Map.Entry elem = (Map.Entry) iterator.next();
+						Map.Entry<String, TreeMap<MyFile, String>> elem = (Map.Entry<String, TreeMap<MyFile, String>>) iterator
+								.next();
 						String filepath = startingpath + (String) elem.getKey();
 						// toggle the separator
 						filepath = filepath.substring(0, filepath.length() - 1);
@@ -3234,11 +3219,11 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 							}
 						}
 						// stores the temporary path
-						files = (TreeMap) elem.getValue();
+						files = (TreeMap<MyFile, String>) elem.getValue();
 						set2 = files.entrySet();
 						iterator2 = set2.iterator();
 						while (iterator2.hasNext()) {
-							Map.Entry elem2 = (Map.Entry) iterator2.next();
+							Map.Entry<MyFile, String> elem2 = (Map.Entry<MyFile, String>) iterator2.next();
 							MyFile file = (MyFile) elem2.getKey();
 							// now rename the file to the new file that is
 							File renamedfile = new File(filepath + file.getName());
@@ -3318,10 +3303,10 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 				label.setBorder(BorderFactory.createEmptyBorder(10, 0, 25, 0));
 				taskOutput.addline(label);
 
-				filelist = new ArrayList();
+				filelist = new ArrayList<selectedDir>();
 				for (int i = 0; i < paths.length; i++) {
 					File file = null;
-					String name = null;
+					// String name = null;
 					dir = new selectedDir();
 					boolean error = false;
 					abs_path = paths[i];
@@ -3355,7 +3340,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 						taskOutput.append("<html><font color=black size=-1> Scanning directory <font color=blue>\"" +
 								paths[i] + "\"</font> ...");
 						taskOutput.addline(WarnPanel.OK);
-						ArrayList tempgetfiles = null;
+						ArrayList<MyFile> tempgetfiles = null;
 						if (recursesubdirs.isSelected())
 							tempgetfiles = scanDirs(abs_path, 1000, progressmonitor);
 						else
@@ -3390,7 +3375,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 					// progressmonitor.setProgress(current);
 				}
 
-				int totalfiles = 0;
+				// int totalfiles = 0;
 				tasklength = 0;
 				for (int i = 0; i < filelist.size(); i++)
 					tasklength += ((selectedDir) (filelist.get(i))).files.size();
@@ -3414,7 +3399,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 						for (int j = 0; j < dir.files.size(); j++) {
 							myfile = (MyFile) (dir.files.get(j));
 							myfile.mp3 = new Mp3info(myfile.getAbsolutePath(), Mp3info.READONLYTAGS);
-							Mp3info mp3 = myfile.mp3;
+							// Mp3info mp3 = myfile.mp3;
 							current++;
 							statMessage = "Reading tags from file \"" + myfile.getName() + "\" ...";
 							progressmonitor.setNote(statMessage);
@@ -3444,7 +3429,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 					// compose the dirs and subdirs, and put the total subdir
 					// in a hash where an arraylist contains the myfiles elements
 					// that will be put there ...
-					ArrayList folders = new ArrayList();
+					ArrayList<String> folders = new ArrayList<String>();
 					for (int i = 0; i < table.getRowCount(); i++)
 						folders.add((String) table.getValueAt(i, 0));
 
@@ -3455,16 +3440,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 						for (int j = 0; j < allfolders[i].length; j++)
 							allfolders[i][j] = tmp[j][0];
 					}
-					// now folders[i] contains a vector with the fields to be requested,
-					// for example "album","artist","genre"
-					// folders contains the folders and subfolders, for example
-					// folder(0)="< genre >",folder(1)="< artist > - < album >" ...
-					// now cicle on all the files and build up the output directory!
-					//
-					// use getFieldByTag(String field,Mp3info mp3)
-					// and getFieldByAdvSearch (String field,MyFile file)
-					// these two functions already look at the configuration values ...
-					hashtree = new TreeMap();
+					hashtree = new TreeMap<String, TreeMap<MyFile, String>>();
 					StringBuffer tmpfolder = new StringBuffer();
 					String tmpsubfolder = null;
 					String fieldvalue = null;
@@ -3493,10 +3469,11 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 							// else create a new array and add the file to it!
 							String tmppath = tmpfolder.toString();
 							if (hashtree.containsKey(tmppath)) {
-								TreeMap tmp = (TreeMap) hashtree.get(tmppath);
+								// <String, TreeMap<MyFile, String>>
+								TreeMap<MyFile, String> tmp = (TreeMap<MyFile, String>) hashtree.get(tmppath);
 								tmp.put(myfile, "1");
 							} else {
-								TreeMap tmp = new TreeMap();
+								TreeMap<MyFile, String> tmp = new TreeMap<MyFile, String>();
 								tmp.put(myfile, "1");
 								hashtree.put(tmppath, tmp);
 							}
@@ -3516,12 +3493,13 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 					newtree.setCellRenderer(DirectoryTree.treerenderer);
 					tree = newtree;
 					// now start from the root
-					ArrayList nodememory = new ArrayList();
-					Set set = hashtree.entrySet();
-					Iterator iterator = set.iterator();
+					ArrayList<DefaultMutableTreeNode> nodememory = new ArrayList<DefaultMutableTreeNode>();
+					Set<Map.Entry<String, TreeMap<MyFile, String>>> set = hashtree.entrySet();
+					Iterator<Map.Entry<String, TreeMap<MyFile, String>>> iterator = set.iterator();
 					while (iterator.hasNext()) {
 						DefaultMutableTreeNode tmpnode = null;
-						Map.Entry elem = (Map.Entry) iterator.next();
+						Map.Entry<String, TreeMap<MyFile, String>> elem = (Map.Entry<String, TreeMap<MyFile, String>>) iterator
+								.next();
 						// stores the temporary path
 						String path = (String) elem.getKey();
 						// retrieve the single subdirs names, retrieve
@@ -3540,6 +3518,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 							} else
 								nodememory.remove(i);
 						}
+
 						if (i == -1)
 							i = 0;
 						// now start from position i to add the nodes
@@ -3554,11 +3533,11 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 						}
 						// now take the last leaf and add all the files, then remove the last leaf!
 						tmpnode = (DefaultMutableTreeNode) nodememory.get(nodememory.size() - 1);
-						TreeMap files = (TreeMap) elem.getValue();
-						Set set2 = files.entrySet();
-						Iterator iterator2 = set2.iterator();
+						TreeMap<MyFile, String> files = (TreeMap<MyFile, String>) elem.getValue();
+						Set<Map.Entry<MyFile, String>> set2 = files.entrySet();
+						Iterator<Map.Entry<MyFile, String>> iterator2 = set2.iterator();
 						while (iterator2.hasNext()) {
-							Map.Entry elem2 = (Map.Entry) iterator2.next();
+							Map.Entry<MyFile, String> elem2 = (Map.Entry<MyFile, String>) iterator2.next();
 							MyFile file = (MyFile) elem2.getKey();
 							tmpnode.add(new DefaultMutableTreeNode(file.getName()));
 						}
@@ -3570,7 +3549,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 					DefaultTreeModel treemodel = (DefaultTreeModel) tree.getModel();
 					DefaultMutableTreeNode node = (DefaultMutableTreeNode) treemodel.getRoot();
 					DefaultMutableTreeNode node2 = null;
-					Enumeration depthfirst = node.depthFirstEnumeration();
+					Enumeration<TreeNode> depthfirst = node.depthFirstEnumeration();
 					while (depthfirst.hasMoreElements()) {
 						node = (DefaultMutableTreeNode) depthfirst.nextElement();
 						if (node.getChildCount() > 0) {
@@ -3601,7 +3580,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 					panel.setBackground(Color.white);
 					panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
 					panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-					String buttonstr[] = new String[] { "ok", "cancel" };
+					// String buttonstr[] = new String[] { "ok", "cancel" };
 					MyButton button = new MyButton("execute", Utils.getImage("organizer", "execute"), this);
 					button.setBackground(Color.white);
 					button.setToolTipText("ok, reorganize files!");
@@ -3662,7 +3641,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 		private MyCombo optimizerstartdir = new MyCombo();
 		private JRadioButton copyrename[] = new JRadioButton[] { new JRadioButton(""), new JRadioButton("") };
 
-		private ArrayList filecontainers = new ArrayList();
+		private ArrayList<File> filecontainers = new ArrayList<File>();
 		private KnapsackFile knapitems[] = null;
 		private KnapsackFile currentcontainer = null;
 		private Knapsack zaino = null;
@@ -3681,7 +3660,8 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 			JPanel tmp = null, tmp2 = null, tmp3 = null, tmp4 = null, tmp5 = null;
-			String butstr[] = null, commands[] = null, iconsid[] = null, tooltip[] = null;
+			// String butstr[] = null, commands[] = null, iconsid[] = null, tooltip[] =
+			// null;
 			MyButton button = null;
 			JScrollPane tablescroll = null;
 
@@ -3738,7 +3718,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 			DinamicTableModel tablemodel = new DinamicTableModel(new String[] { "directory", "file name" });
 			tabledbfiles = new MyJTable(tablemodel);
 			tabledbfiles.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-			tabledbfiles.setSaveConfig(tablemodel.SAVE_DATA);
+			tabledbfiles.setSaveConfig(DinamicTableModel.SAVE_DATA);
 			tablescroll = new JScrollPane(tabledbfiles);
 			tablescroll.getViewport().setBackground(Color.white);
 			tmp2.add(tablescroll);
@@ -3899,7 +3879,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 			containerslist.setColumnRenderer(browseindex, new ColumnMultiRenderer());
 			containerslist.setColumnEditor(browseindex, new ColumnMultiEditor());
 			IndicatorCellRenderer indicator = new IndicatorCellRenderer();
-			Hashtable limitColors = new Hashtable();
+			Hashtable<Integer, Color> limitColors = new Hashtable<Integer, Color>();
 			limitColors.put(Integer.valueOf(0), Color.yellow);
 			limitColors.put(Integer.valueOf(99), Color.green);
 			limitColors.put(Integer.valueOf(101), Color.red);
@@ -3907,7 +3887,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 			indicator.setBackground(containerslist.getBackground());
 			containerslist.setColumnRenderer(filledindex, indicator);
 			containerslist.setColumnEditor(capindex, new String[] { "650", "700" });
-			tablemodel.setSaveConfig(tablemodel.SAVE_DATA);
+			tablemodel.setSaveConfig(DinamicTableModel.SAVE_DATA);
 			containerslist.setToolTipText(browseindex,
 					"click on the browse button to select an existing directory you want to fill!");
 			tablescroll = new JScrollPane(containerslist);
@@ -4000,7 +3980,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 		public void checkConfig() {
 			int size = ((DinamicTableModel) containerslist.getModel()).size();
 			JButton button = null;
-			filecontainers = new ArrayList();
+			filecontainers = new ArrayList<File>();
 			for (int i = 0; i < size; i++) {
 				button = new MyButton(MyButton.NORMAL_BUTTON, null, null, Utils.getImage("main", "browsedir"), null);
 				button.setBackground(Color.white);
@@ -4308,31 +4288,34 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 			}
 		}
 
-		private void fixColumns() {
-			// calculate the minimum width of all the columns
-			// if it is higher than the screen size, set the autoresize off and
-			// set the minimum column size
-			// else set the autoresize subsequent and set the minimum size of the
-			// columns!
-
-			int colsnumber = doublestable.getColumnCount();
-			int bitrate = doublestable.getColumnIndex("bit rate");
-			int minsize = (colsnumber - 2) * 100 + 200 + doublestable.getColumnModel().getColumn(bitrate).getMaxWidth();
-			if (minsize > doublestable.getWidth()) {
-				doublestable.setAutoResizeMode(MyJTable.AUTO_RESIZE_OFF);
-				for (int i = 0; i < colsnumber; i++) {
-					String colname = doublestable.getColumnName(i);
-					TableColumn columns = doublestable.getColumnModel().getColumn(i);
-					if (!colname.startsWith("bit rate")) {
-						if (colname.startsWith("file name"))
-							columns.setPreferredWidth(200);
-						else
-							columns.setPreferredWidth(100);
-					}
-				}
-			} else
-				doublestable.setAutoResizeMode(MyJTable.AUTO_RESIZE_ALL_COLUMNS);
-		}
+		/*
+		 * private void fixColumns() {
+		 * // calculate the minimum width of all the columns
+		 * // if it is higher than the screen size, set the autoresize off and
+		 * // set the minimum column size
+		 * // else set the autoresize subsequent and set the minimum size of the
+		 * // columns!
+		 * 
+		 * int colsnumber = doublestable.getColumnCount();
+		 * int bitrate = doublestable.getColumnIndex("bit rate");
+		 * int minsize = (colsnumber - 2) * 100 + 200 +
+		 * doublestable.getColumnModel().getColumn(bitrate).getMaxWidth();
+		 * if (minsize > doublestable.getWidth()) {
+		 * doublestable.setAutoResizeMode(MyJTable.AUTO_RESIZE_OFF);
+		 * for (int i = 0; i < colsnumber; i++) {
+		 * String colname = doublestable.getColumnName(i);
+		 * TableColumn columns = doublestable.getColumnModel().getColumn(i);
+		 * if (!colname.startsWith("bit rate")) {
+		 * if (colname.startsWith("file name"))
+		 * columns.setPreferredWidth(200);
+		 * else
+		 * columns.setPreferredWidth(100);
+		 * }
+		 * }
+		 * } else
+		 * doublestable.setAutoResizeMode(MyJTable.AUTO_RESIZE_ALL_COLUMNS);
+		 * }
+		 */
 
 		public boolean canExecute(String process) {
 			JFrame frame = taskmanager.getFrame();
@@ -4509,7 +4492,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 				progressmonitor.setTitle("Scanning selected directories ...");
 			}
 
-			filelist = new ArrayList();
+			filelist = new ArrayList<selectedDir>();
 			boolean error = false;
 
 			for (int i = 0; i < paths.length; i++) {
@@ -4624,7 +4607,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 							;
 					} else if (processId.equals("doublesfind")) {
 						dir = new selectedDir();
-						ArrayList tempgetfiles = null;
+						ArrayList<MyFile> tempgetfiles = null;
 						if (recursesubdirs.isSelected())
 							tempgetfiles = scanDirs(abs_path, 1000, progressmonitor);
 						else
@@ -4977,7 +4960,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 					// some useful fields of the table ... if the song is
 					// a file in memory retrieve it by the song,
 					// else call a function db.getRowField(int ind,String field)
-					ArrayList Databases = new ArrayList();
+					ArrayList<Database> Databases = new ArrayList<Database>();
 					// build up an object table with songs info
 					if (totalfiles > 0) {
 						statMessage = "Creating scanned dirs Database ...";
@@ -5148,9 +5131,10 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 							progressmonitor.setMaximum(db1.getRowCount() - 1);
 							progressmonitor.setProgress(current);
 
-							ArrayList tmparr = null;
+							ArrayList<String> tmparr = null;
 							Object tmptablefields[] = new Object[tablefields.length];
-							ArrayList fieldstodisk = new ArrayList();
+							// String tmptablefields[] = new String[tablefields.length];
+							ArrayList<String> fieldstodisk = new ArrayList<String>();
 							ImageIcon icon = Utils.getImage("doubles", "cancelfile");
 							MyButton button = null;
 
@@ -5169,7 +5153,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 									Database dbarr[] = new Database[] { db1, db2 };
 									int dbrowind[] = new int[] { k, n };
 									for (int l = 0; l < dbarr.length; l++) {
-										tmparr = new ArrayList();
+										tmparr = new ArrayList<String>();
 										for (int m = 0; m < tablefields.length; m++) {
 											// discriminate between the fields, if the absolute path is empty get the
 											// simple path, if the absolute path exists, put the delete button to cancel
@@ -5198,20 +5182,20 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 													tmptablefields[m] = dbarr[l].getRowField(dbrowind[l], "file name");
 											} else
 												tmptablefields[m] = dbarr[l].getRowField(dbrowind[l], tablefields[m]);
-											tmparr.add(tmptablefields[m]);
+											tmparr.add((String) tmptablefields[m]);
 											if ((tmptablefields[m].getClass()).equals(String.class))
-												fieldstodisk.add(tmptablefields[m]);
+												fieldstodisk.add((String) tmptablefields[m]);
 										}
-										doublemodel.addRow(tmparr);
+										doublemodel.addRow((ArrayList<String>) tmparr);
 										if (savetodisk) {
 											String toput[] = new String[fieldstodisk.size()];
 											for (int x = 0; x < toput.length; x++)
 												toput[x] = (String) fieldstodisk.get(x);
 											outputfile.append(Utils.join(toput, "\t") + "\n");
-											fieldstodisk = new ArrayList();
+											fieldstodisk = new ArrayList<String>();
 										}
 									}
-									tmparr = new ArrayList();
+									tmparr = new ArrayList<String>();
 									doublemodel.addRow(tmparr);
 									if (savetodisk)
 										outputfile.append("\n");
@@ -5437,93 +5421,98 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 		}
 	}
 
-	private String fixOldDatabase(String db, String outfmt[], String oldfmt[], WarnPanel taskOutput) {
-		// old format equals the new one!
-		String rows[] = Utils.split(db, "\n");
-		String table[][] = null;
-		String fieldsep = databasewindow.getFieldSeparator();
-		String fixlenstring = "";
-
-		if (outfmt.length > oldfmt.length) {
-			String fixfieldnumber[] = new String[outfmt.length - oldfmt.length];
-			for (int i = 0; i < fixfieldnumber.length; i++)
-				fixfieldnumber[i] = "";
-			fixlenstring = new String(fieldsep + Utils.join(fixfieldnumber, fieldsep));
-		}
-
-		int rowcounter = 0;
-		// check the number of columns for every row is the same ... else db corrupted!
-		for (int i = 0; i < rows.length; i++) {
-			// if the number of occurences is not correct
-			if (Utils.occurences(rows[i], fieldsep) != (oldfmt.length - 1)) {
-				// check if the line is empty, in this case skip it!
-				if (rows[i].trim().length() == 0)
-					continue;
-				// append something in the task output!
-				JLabel label = gimmeLabel();
-				label.setText(
-						"<html><font size=-1 color=black>The existing Database seems to be corrupted, corrupted line:");
-				taskOutput.addline(label);
-				taskOutput.addline(WarnPanel.ERROR, label);
-				label = gimmeLabel();
-				label.setText("<html><font size=-1 color=blue>\"" + rows[i] + "\"");
-				taskOutput.addline(label);
-				taskOutput.addline(WarnPanel.ERROR, label);
-				return null;
-			} else if (fixlenstring.length() > 0) {
-				rows[i] = rows[i] + fixlenstring;
-			}
-			rowcounter++;
-		}
-
-		table = new String[rowcounter][];
-		// and all the columns for every row ...
-		for (int i = 0; i < rowcounter; i++) {
-			if (rows[i].trim().length() != 0)
-				table[i] = Utils.split(rows[i], fieldsep);
-		}
-
-		String tmp = null;
-		for (int i = 0; i < outfmt.length; i++) {
-			for (int j = 0; j < oldfmt.length; j++)
-				if (outfmt[i].equals(oldfmt[j]) && i != j) {
-					// System.out.println("changing col "+i+" "+oldfmt[i]+" and col "+j+"
-					// "+oldfmt[j]);
-					// System.out.println("before :");
-					// for (int z=0;z<oldfmt.length;z++)
-					// System.out.print(oldfmt[z]+" ");
-					tmp = oldfmt[i];
-					oldfmt[i] = oldfmt[j];
-					oldfmt[j] = tmp;
-					// System.out.println("after :");
-					// for (int z=0;z<oldfmt.length;z++)
-					// System.out.println(oldfmt[z]+" ");
-
-					// row j has to be copied to row i
-					for (int k = 0; k < rowcounter; k++) {
-						tmp = table[k][i];
-						table[k][i] = table[k][j];
-						table[k][j] = tmp;
-					}
-				}
-		}
-		for (int i = 0; i < rowcounter; i++)
-			rows[i] = (Utils.join(table[i], fieldsep));
-		StringBuffer res = new StringBuffer();
-		for (int i = 0; i < rowcounter; i++)
-			res.append(rows[i] + "\n");
-		return res.toString();
-	}
+	/*
+	 * private String fixOldDatabase(String db, String outfmt[], String oldfmt[],
+	 * WarnPanel taskOutput) {
+	 * // old format equals the new one!
+	 * String rows[] = Utils.split(db, "\n");
+	 * String table[][] = null;
+	 * String fieldsep = databasewindow.getFieldSeparator();
+	 * String fixlenstring = "";
+	 * 
+	 * if (outfmt.length > oldfmt.length) {
+	 * String fixfieldnumber[] = new String[outfmt.length - oldfmt.length];
+	 * for (int i = 0; i < fixfieldnumber.length; i++)
+	 * fixfieldnumber[i] = "";
+	 * fixlenstring = new String(fieldsep + Utils.join(fixfieldnumber, fieldsep));
+	 * }
+	 * 
+	 * int rowcounter = 0;
+	 * // check the number of columns for every row is the same ... else db
+	 * corrupted!
+	 * for (int i = 0; i < rows.length; i++) {
+	 * // if the number of occurences is not correct
+	 * if (Utils.occurences(rows[i], fieldsep) != (oldfmt.length - 1)) {
+	 * // check if the line is empty, in this case skip it!
+	 * if (rows[i].trim().length() == 0)
+	 * continue;
+	 * // append something in the task output!
+	 * JLabel label = gimmeLabel();
+	 * label.setText(
+	 * "<html><font size=-1 color=black>The existing Database seems to be corrupted, corrupted line:"
+	 * );
+	 * taskOutput.addline(label);
+	 * taskOutput.addline(WarnPanel.ERROR, label);
+	 * label = gimmeLabel();
+	 * label.setText("<html><font size=-1 color=blue>\"" + rows[i] + "\"");
+	 * taskOutput.addline(label);
+	 * taskOutput.addline(WarnPanel.ERROR, label);
+	 * return null;
+	 * } else if (fixlenstring.length() > 0) {
+	 * rows[i] = rows[i] + fixlenstring;
+	 * }
+	 * rowcounter++;
+	 * }
+	 * 
+	 * table = new String[rowcounter][];
+	 * // and all the columns for every row ...
+	 * for (int i = 0; i < rowcounter; i++) {
+	 * if (rows[i].trim().length() != 0)
+	 * table[i] = Utils.split(rows[i], fieldsep);
+	 * }
+	 * 
+	 * String tmp = null;
+	 * for (int i = 0; i < outfmt.length; i++) {
+	 * for (int j = 0; j < oldfmt.length; j++)
+	 * if (outfmt[i].equals(oldfmt[j]) && i != j) {
+	 * // System.out.println("changing col "+i+" "+oldfmt[i]+" and col "+j+"
+	 * // "+oldfmt[j]);
+	 * // System.out.println("before :");
+	 * // for (int z=0;z<oldfmt.length;z++)
+	 * // System.out.print(oldfmt[z]+" ");
+	 * tmp = oldfmt[i];
+	 * oldfmt[i] = oldfmt[j];
+	 * oldfmt[j] = tmp;
+	 * // System.out.println("after :");
+	 * // for (int z=0;z<oldfmt.length;z++)
+	 * // System.out.println(oldfmt[z]+" ");
+	 * 
+	 * // row j has to be copied to row i
+	 * for (int k = 0; k < rowcounter; k++) {
+	 * tmp = table[k][i];
+	 * table[k][i] = table[k][j];
+	 * table[k][j] = tmp;
+	 * }
+	 * }
+	 * }
+	 * for (int i = 0; i < rowcounter; i++)
+	 * rows[i] = (Utils.join(table[i], fieldsep));
+	 * StringBuffer res = new StringBuffer();
+	 * for (int i = 0; i < rowcounter; i++)
+	 * res.append(rows[i] + "\n");
+	 * return res.toString();
+	 * }
+	 */
 
 	// this function receives a file with the list, that is supposed to be
 	// separated by lines "\n", and the fields by the separator character
 	private String orderList(String list, String fields[], int pos[]) {
 		StringBuffer res = new StringBuffer("");
 
-		TreeMap treemap = null;
-		Set set = null;
-		Iterator iterator = null;
-		Hashtable first = new Hashtable();
+		TreeMap<String[], Integer> treemap = null;
+		Set<Map.Entry<String[], Integer>> set = null;
+		Iterator<Map.Entry<String[], Integer>> iterator = null;
+		// Hashtable first = new Hashtable();
 
 		// find all the rows ...
 		String rows[] = Utils.split(list, "\n");
@@ -5596,7 +5585,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 			}
 		}
 		long init = System.currentTimeMillis();
-		treemap = new TreeMap(new myComp());
+		treemap = new TreeMap<String[], Integer>(new myComp());
 		statMessage = "Reordering Database ...";
 		progressmonitor.setNote(statMessage);
 		for (int i = 0; i < rowcounter; i++) {
@@ -5620,7 +5609,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 		progressmonitor.setNote(statMessage);
 		String sep = databasewindow.getFieldSeparator();
 		while (iterator.hasNext()) {
-			Map.Entry elem = (Map.Entry) iterator.next();
+			Map.Entry<String[], Integer> elem = (Map.Entry<String[], Integer>) iterator.next();
 			res.append(Utils.join(table[((Integer) (elem.getValue())).intValue()], sep) + "\n");
 			current++;
 		}
@@ -5634,11 +5623,11 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 		return tm;
 	}
 
-	private ArrayList scanDirs(String startpath, int reclevel, MyProgressMonitor monitor) {
-		LinkedList dirlist = new LinkedList();
-		char separator = File.separatorChar;
-		Hashtable ins_dirs = new Hashtable();
-		ArrayList filelist = new ArrayList();
+	private ArrayList<MyFile> scanDirs(String startpath, int reclevel, MyProgressMonitor monitor) {
+		LinkedList<MyFile> dirlist = new LinkedList<MyFile>();
+		// char separator = File.separatorChar;
+		Hashtable<String, String> ins_dirs = new Hashtable<String, String>();
+		ArrayList<MyFile> filelist = new ArrayList<MyFile>();
 
 		MyFile dir_elem = new MyFile(startpath);
 		dir_elem.rec_level = 0;
@@ -5653,8 +5642,8 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 				if (dir_elem.isDirectory() && !ins_dirs.containsKey(abs_path)) {
 					ins_dirs.put(abs_path, "1");
 					String s[] = dir_elem.list();
-					TreeMap files = new TreeMap();
-					TreeMap dirs = new TreeMap();
+					TreeMap<String, MyFile> files = new TreeMap<String, MyFile>();
+					TreeMap<String, MyFile> dirs = new TreeMap<String, MyFile>();
 					for (int i = 0; i < s.length; i++) {
 						MyFile elem = new MyFile(abs_path + "/" + s[i]);
 						if (elem.isDirectory()) {
@@ -5669,10 +5658,10 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 						}
 					}
 					// insert in alphabetical order files and dirs!
-					Set set = dirs.entrySet();
-					Iterator i = set.iterator();
+					Set<Map.Entry<String, MyFile>> set = dirs.entrySet();
+					Iterator<Map.Entry<String, MyFile>> i = set.iterator();
 					while (i.hasNext()) {
-						Map.Entry item = (Map.Entry) i.next();
+						Map.Entry<String, MyFile> item = (Map.Entry<String, MyFile>) i.next();
 						MyFile elem = (MyFile) (item.getValue());
 						dirlist.add(elem);
 					}
@@ -5680,7 +5669,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 					set = files.entrySet();
 					i = set.iterator();
 					while (i.hasNext()) {
-						Map.Entry item = (Map.Entry) i.next();
+						Map.Entry<String, MyFile> item = (Map.Entry<String, MyFile>) i.next();
 						MyFile elem = (MyFile) (item.getValue());
 						filelist.add(elem);
 					}
@@ -6039,10 +6028,10 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 				doubleswindow.doublessplitpane.setDividerLocation(valuex.intValue());
 		}
 
-		Set set = confighash.entrySet();
-		Iterator iterator = set.iterator();
+		Set<Map.Entry<String, Object>> set = confighash.entrySet();
+		Iterator<Map.Entry<String, Object>> iterator = set.iterator();
 		while (iterator.hasNext()) {
-			Map.Entry elem = (Map.Entry) iterator.next();
+			Map.Entry<String, Object> elem = (Map.Entry<String, Object>) iterator.next();
 			if (((String) elem.getKey()).equals("5.4.mulknaptable")) {
 				System.out.print("");
 			}
@@ -6100,10 +6089,10 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 		config.setConfigString("5.4.startpath", doubleswindow.dirtree.getRoot());
 		config.setConfigInt("5.selectedtab", jtabbed.getSelectedIndex());
 
-		Set set = confighash.entrySet();
-		Iterator iterator = set.iterator();
+		Set<Map.Entry<String, Object>> set = confighash.entrySet();
+		Iterator<Map.Entry<String, Object>> iterator = set.iterator();
 		while (iterator.hasNext()) {
-			Map.Entry elem = (Map.Entry) iterator.next();
+			Map.Entry<String, Object> elem = (Map.Entry<String, Object>) iterator.next();
 			// Utils.debug(Utils.TABLESCONFIGREAD,(String)elem.getKey());
 			if (((String) elem.getKey()).equals("5.4.createpath") ||
 					((String) elem.getKey()).equals("5.4.doublefile")) {
@@ -6167,8 +6156,8 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 				winampwindow.dirtree.removeListener();
 				databasewindow.dirtree.removeListener();
 				organizerwindow.dirtree.removeListener();
-				ComboSyncronizer.removeListener(databasewindow.patheditcombo);
-				ComboSyncronizer.removeListener(organizerwindow.outputpath);
+				ComboSyncronizer.removeListener((JComboBox<String>) databasewindow.patheditcombo);
+				ComboSyncronizer.removeListener((JComboBox<String>) organizerwindow.outputpath);
 
 				writeConfig();
 				window.windowOpen[windowId] = false;

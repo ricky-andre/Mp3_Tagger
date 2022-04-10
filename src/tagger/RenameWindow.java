@@ -5,10 +5,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.Timer;
-import javax.swing.tree.*;
 import javax.swing.event.*;
-import javax.swing.JSplitPane.*;
-
 import java.io.*;
 import java.util.*;
 
@@ -18,7 +15,7 @@ public class RenameWindow extends JFrame implements ActionListener, ItemListener
 	private RenameWindow myself = null;
 	private MyProgressMonitor taskmanager = new MyProgressMonitor();
 
-	private Hashtable confighash = new Hashtable();
+	private Hashtable<String, Object> confighash = new Hashtable<String, Object>();
 	private ProgramConfig config = null;
 
 	private File selFiles[] = null;
@@ -139,7 +136,7 @@ public class RenameWindow extends JFrame implements ActionListener, ItemListener
 			table = newTable;
 			fileScrollPane = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			JViewport jvp = fileScrollPane.getViewport();
+			// JViewport jvp = fileScrollPane.getViewport();
 		}
 		ListSelectionModel lsm = table.getSelectionModel();
 		lsm.addListSelectionListener(tablehandler);
@@ -397,11 +394,11 @@ public class RenameWindow extends JFrame implements ActionListener, ItemListener
 
 		initializeFileVector();
 
-		int warn_num = 0;
+		// int warn_num = 0;
 		Container contentPane = getContentPane();
 		Border bord;
-		JLabel tmptext;
-		JTextField tmptext2;
+		// JLabel tmptext;
+		// JTextField tmptext2;
 		JPanel panel, filebuttons, tmp, tmp2, tmp3, tmp4;
 		MyButton button;
 
@@ -665,7 +662,6 @@ public class RenameWindow extends JFrame implements ActionListener, ItemListener
 	}
 
 	private void initConfigHash() {
-		Object obj[] = null;
 		confighash.put("4.multisearch", multisearch);
 		confighash.put("4.multireplace", multireplace);
 		confighash.put("4.replace", replaced);
@@ -702,10 +698,10 @@ public class RenameWindow extends JFrame implements ActionListener, ItemListener
 		}
 
 		createFilePanelWindow = config.getConfigBoolean("4.createfilepanel");
-		Set set = confighash.entrySet();
-		Iterator iterator = set.iterator();
+		Set<Map.Entry<String, Object>> set = confighash.entrySet();
+		Iterator<Map.Entry<String, Object>> iterator = set.iterator();
 		while (iterator.hasNext()) {
-			Map.Entry elem = (Map.Entry) iterator.next();
+			Map.Entry<String, Object> elem = (Map.Entry<String, Object>) iterator.next();
 			config.getObjectConfig((String) elem.getKey(), elem.getValue());
 		}
 	}
@@ -719,16 +715,16 @@ public class RenameWindow extends JFrame implements ActionListener, ItemListener
 		config.setConfigInt("4.div1", renameSplitPane.getDividerLocation());
 		config.setConfigInt("4.div2", filewarningSplitPane.getDividerLocation());
 
-		Set set = confighash.entrySet();
-		Iterator iterator = set.iterator();
+		Set<Map.Entry<String, Object>> set = confighash.entrySet();
+		Iterator<Map.Entry<String, Object>> iterator = set.iterator();
 		while (iterator.hasNext()) {
-			Map.Entry elem = (Map.Entry) iterator.next();
+			Map.Entry<String, Object> elem = (Map.Entry<String, Object>) iterator.next();
 			config.setObjectConfig((String) elem.getKey(), elem.getValue());
 		}
 	}
 
 	private void removeSuccess() {
-		ArrayList filelist = new ArrayList();
+		ArrayList<File> filelist = new ArrayList<File>();
 		File selected[] = null;
 
 		for (int i = 0; i < successFiles.length; i++) {
@@ -751,21 +747,17 @@ public class RenameWindow extends JFrame implements ActionListener, ItemListener
 	}
 
 	/*
-	 * private void tryRename (String command)
-	 * {
-	 * 
+	 * private void clearAllFields() {
+	 * multisearch.setText("");
+	 * multireplace.setText("");
+	 * replaced.setText("");
+	 * replacewith.setText("");
+	 * insert.setText("");
+	 * position.setText("");
+	 * numberpos.setText("");
+	 * number.setText("");
 	 * }
 	 */
-	private void clearAllFields() {
-		multisearch.setText("");
-		multireplace.setText("");
-		replaced.setText("");
-		replacewith.setText("");
-		insert.setText("");
-		position.setText("");
-		numberpos.setText("");
-		number.setText("");
-	}
 
 	private void changeElems(int i, int j) {
 		File tmpfile = selFiles[i];
@@ -794,7 +786,7 @@ public class RenameWindow extends JFrame implements ActionListener, ItemListener
 			int oldnamecol = getCol("File name");
 
 			String filepath;
-			Hashtable fileshash = new Hashtable();
+			Hashtable<String, File> fileshash = new Hashtable<String, File>();
 
 			error = false;
 			warningArea.append("File ");
@@ -1045,8 +1037,7 @@ public class RenameWindow extends JFrame implements ActionListener, ItemListener
 				for (int i = 0; i < rows; i++)
 					selFiles[i] = new File(MyFileList.getElem(i).getAbsolutePath());
 			} else {
-				ArrayList selectedFiles = new ArrayList();
-				int count = 0;
+				ArrayList<MyFile> selectedFiles = new ArrayList<MyFile>();
 				for (int i = 0; i < rows; i++) {
 					if (lsm.isSelectedIndex(i))
 						selectedFiles.add(MyFileList.getElem(i));
@@ -1183,7 +1174,6 @@ public class RenameWindow extends JFrame implements ActionListener, ItemListener
 				if (process.equals("rename")) {
 					int col = getCol("New name");
 					selectedrows = getSelectedRows();
-					ListSelectionModel lsm = table.getSelectionModel();
 					for (int i = 0; i < selFiles.length; i++)
 						data[i][col] = "";
 					table.repaint();

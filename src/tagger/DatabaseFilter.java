@@ -17,9 +17,9 @@ public class DatabaseFilter {
 			"contains", "starts with", "ends with", "equals", "is higher then", "is lower than"
 	};
 
-	private ArrayList cols = new ArrayList();
-	private ArrayList types = new ArrayList();
-	private ArrayList values = new ArrayList();
+	private ArrayList<String> cols = new ArrayList<String>();
+	private ArrayList<Integer> types = new ArrayList<Integer>();
+	private ArrayList<String> values = new ArrayList<String>();
 
 	private int mode = ALL_TRUE;
 
@@ -118,9 +118,9 @@ public class DatabaseFilter {
 	}
 
 	public void removeAllFilters() {
-		cols = new ArrayList();
-		types = new ArrayList();
-		values = new ArrayList();
+		cols = new ArrayList<String>();
+		types = new ArrayList<Integer>();
+		values = new ArrayList<String>();
 	}
 
 	public int size() {

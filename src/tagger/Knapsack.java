@@ -209,7 +209,7 @@ public class Knapsack implements TaskExecuter {
         float filled = 0;
         float gain = 0;
         ContainerItem container = null;
-        ArrayList item = null; // list of the Knapsacknodes that have to be put in this container
+        ArrayList<Knapsacknode> item = null; // list of the Knapsacknodes that have to be put in this container
     }
 
     private class multipleSolution {
@@ -217,8 +217,8 @@ public class Knapsack implements TaskExecuter {
         float totalgain = -1;
         int allfilled = 0;
         int itemsinserted = 0;
-        private ArrayList containersfilled = new ArrayList();
-        private Hashtable hash = new Hashtable();
+        private ArrayList<Object> containersfilled = new ArrayList<Object>();
+        private Hashtable<Object, Object> hash = new Hashtable<Object, Object>();
 
         public void put(Object key, Object value) {
             singleSolution tmp = (singleSolution) value;
@@ -282,7 +282,7 @@ public class Knapsack implements TaskExecuter {
                         tmp.filled = weight;
                         tmp.gain = last.gain;
                         tmp.remains = tmp.container.getCapacity() - weight;
-                        last.item = new ArrayList();
+                        last.item = new ArrayList<Knapsacknode>();
                         last.gain = 0;
                         last.filled = 0;
                         last.remains = 0;
@@ -313,7 +313,7 @@ public class Knapsack implements TaskExecuter {
             nowsolution.container = container;
             nowsolution.gain = nowgain;
             nowsolution.filled = nowweight;
-            nowsolution.item = new ArrayList();
+            nowsolution.item = new ArrayList<Knapsacknode>();
             while (lastnode.father != null) {
                 nowsolution.item.add(lastnode);
                 lastnode = lastnode.father;
@@ -322,7 +322,7 @@ public class Knapsack implements TaskExecuter {
         if (nowgain > nowsolution.gain) {
             nowsolution.gain = nowgain;
             nowsolution.filled = nowweight;
-            nowsolution.item = new ArrayList();
+            nowsolution.item = new ArrayList<Knapsacknode>();
             while (lastnode.father != null) {
                 nowsolution.item.add(lastnode);
                 lastnode = lastnode.father;
@@ -350,7 +350,7 @@ public class Knapsack implements TaskExecuter {
     // be reordered and only a part of them could be reordered!
     private class combinationScrambler {
         private int size = -1;
-        private Hashtable inserted = null;
+        private Hashtable<Integer, String> inserted = null;
         private combinationNode root = null;
         private combinationNode lastleaf = null;
 
@@ -412,7 +412,7 @@ public class Knapsack implements TaskExecuter {
         int[] next() {
             if (inserted == null) {
                 root = new combinationNode(0);
-                inserted = new Hashtable();
+                inserted = new Hashtable<Integer, String>();
                 root.add();
             } else {
                 lastleaf.remove();
@@ -484,8 +484,7 @@ public class Knapsack implements TaskExecuter {
                 for (int j = 0; j < nowcontainers.length && !finished; j++) {
                     container = nowcontainers[j];
 
-                    if (false)// oldcontainers!=null && container.equals(oldcontainers[j]))
-                    {
+                    if (oldcontainers != null && container.equals(oldcontainers[j])) {
                         // put in the old solution
                         nowmulsolution.put(container, oldmulsolution.get(container));
                     } else {
@@ -499,11 +498,11 @@ public class Knapsack implements TaskExecuter {
                     }
                     // the solution has been calculated, now remove
                     // the inserted elements from the item array!
-                    ArrayList sol = ((singleSolution) nowmulsolution.get(container)).item;
+                    ArrayList<Knapsacknode> sol = ((singleSolution) nowmulsolution.get(container)).item;
 
                     if (sol != null) {
-                        ArrayList tmp = new ArrayList();
-                        Hashtable tmphash = new Hashtable();
+                        ArrayList<KnapsackItem> tmp = new ArrayList<KnapsackItem>();
+                        Hashtable<KnapsackItem, String> tmphash = new Hashtable<KnapsackItem, String>();
                         for (int i = 0; i < sol.size(); i++)
                             tmphash.put(((Knapsacknode) sol.get(i)).thisitem, "");
                         for (int i = 0; i < items.length; i++)

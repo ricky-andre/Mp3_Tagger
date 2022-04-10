@@ -22,3 +22,4 @@ cd c:\path_to_Mp3_Tagger\Mp3_Tagger\src<p>
 javac -d ..\ tagger\MainClass.java<p>
 cd ..<p>
 java tagger.MainClass<p>
+

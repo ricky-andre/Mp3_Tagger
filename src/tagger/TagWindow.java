@@ -5,17 +5,11 @@ import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.tree.*;
 import javax.swing.table.*;
 import javax.swing.event.*;
 import javax.swing.Timer;
-import javax.swing.JSplitPane.*;
-
-import java.io.*;
 import java.util.*;
 import java.awt.Toolkit;
-
-import javax.swing.text.*;
 
 // this is the class that creates the tagging windows
 public class TagWindow extends JFrame {
@@ -24,7 +18,7 @@ public class TagWindow extends JFrame {
 	// a
 	// string format is associated to the relative code for id3 registering
 
-	Hashtable confighash = new Hashtable();
+	Hashtable<String, Object> confighash = new Hashtable<String, Object>();
 
 	// reference to the main wondow
 	private TagWindow myself = null;
@@ -66,7 +60,7 @@ public class TagWindow extends JFrame {
 	private JSplitPane masstagSplitPane = null;
 	private JSplitPane edittagSplitPane = null;
 
-	private Hashtable lastmodifiedfiles = null;
+	private Hashtable<MyFile, MyFile> lastmodifiedfiles = null;
 
 	// task variables, used by every window!
 	int current = 0;
@@ -89,17 +83,16 @@ public class TagWindow extends JFrame {
 	}
 
 	// this function takes a hash and a myfile object and sets all the fields in the
-	// hash
-	// than it checks for unsupported fields (version 2.4) and asks if conversion is
-	// wanted
-	// if the answer is yes, checks if some fields will be lost, and if yes asks
-	// if it's ok
-	// than it writes all the fields
-	private boolean setAdvancedFields(MyFile file, Hashtable fields) {
+	// hash than it checks for unsupported fields (version 2.4) and asks if
+	// conversion is
+	// wanted, if the answer is yes, checks if some fields will be lost, and if yes
+	// asks
+	// if it's ok than it writes all the fields
+	private boolean setAdvancedFields(MyFile file, Hashtable<String, Object> fields) {
 		Mp3info mp3 = file.mp3;
 		if (mp3 == null)
 			return false;
-		Enumeration keys = fields.keys();
+		Enumeration<String> keys = fields.keys();
 		String fld = null;
 		mp3.id3v2.removeLostFields();
 		while (keys.hasMoreElements()) {
@@ -143,7 +136,7 @@ public class TagWindow extends JFrame {
 	private class TagByName extends JPanel implements ActionListener, DocumentListener, TaskExecuter {
 		private AddremoveCombo matchString = new AddremoveCombo();
 		private JTextField separator = null;
-		private Hashtable fields = new Hashtable();
+		private Hashtable<String, JCheckBox> fields = new Hashtable<String, JCheckBox>();
 
 		private OrderableList list = null;
 		private JCheckBox editMatchString = new JCheckBox();
@@ -155,13 +148,13 @@ public class TagWindow extends JFrame {
 		private JScrollPane warningScrollPane = null;
 		private JSplitPane filewarning = null;
 		private Object data[][];
-		private ListSelectionModel lsm;
+		// private ListSelectionModel lsm;
 		private String tablecolumns[];
 
 		private boolean successFiles[];
 		private MyFile selFiles[];
 
-		private Hashtable casehash = new Hashtable();
+		private Hashtable<Object, Object> casehash = new Hashtable<Object, Object>();
 
 		TagByName() {
 			super();
@@ -177,7 +170,7 @@ public class TagWindow extends JFrame {
 			JPanel mainPanel = new JPanel();
 			mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-			JPanel tmp, tmp2, tmp3, tmp4, tmp5;
+			JPanel tmp, tmp2, tmp3;
 			tmp = new JPanel();
 			tmp.setLayout(new BoxLayout(tmp, BoxLayout.X_AXIS));
 			tmp.setAlignmentX(JComponent.LEFT_ALIGNMENT);
@@ -252,7 +245,7 @@ public class TagWindow extends JFrame {
 			tmp2.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 20));
 			tmp.add(tmp2);
 
-			JTextField tmptxt;
+			// JTextField tmptxt;
 			tmp2 = new JPanel();
 			tmp2.setLayout(new BoxLayout(tmp2, BoxLayout.X_AXIS));
 			tmp2.setBorder(BorderFactory.createTitledBorder("Field separator"));
@@ -390,7 +383,6 @@ public class TagWindow extends JFrame {
 			TableColumn columns = null;
 			DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 			renderer.setHorizontalAlignment(JTextField.CENTER);
-			String str = null;
 			int filenamesize = 250;
 			table.setAutoResizeMode(MyJTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 			// table.setAutoResizeMode(MyJTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -464,7 +456,7 @@ public class TagWindow extends JFrame {
 				warningArea.clear();
 				// System.out.println("entered");
 
-				Hashtable fields = new Hashtable();
+				Hashtable<String, String> fields = new Hashtable<String, String>();
 				String text = matchString.getText();
 				int nfs = text.indexOf("< ");
 				int nfe = text.indexOf(" >");
@@ -478,7 +470,7 @@ public class TagWindow extends JFrame {
 
 				String col[] = new String[fields.size() + 1];
 				col[0] = new String("File name");
-				Enumeration tmp = fields.keys();
+				Enumeration<String> tmp = fields.keys();
 				int i = 1;
 				while (tmp.hasMoreElements()) {
 					boolean exist = false;
@@ -522,12 +514,14 @@ public class TagWindow extends JFrame {
 			}
 		}
 
-		private int getCol(String str) {
-			for (int i = 0; i < tablecolumns.length; i++)
-				if (str.equals(tablecolumns[i]))
-					return i;
-			return -1;
-		}
+		/*
+		 * private int getCol(String str) {
+		 * for (int i = 0; i < tablecolumns.length; i++)
+		 * if (str.equals(tablecolumns[i]))
+		 * return i;
+		 * return -1;
+		 * }
+		 */
 
 		boolean tagelembyname(int i, String command) {
 			// check selection of the element
@@ -749,15 +743,6 @@ public class TagWindow extends JFrame {
 					table.setValueAt(selFiles[i].getName(), i, filename);
 				}
 		}
-	}
-
-	// this functions changes the fields identifiers
-	// such as "artist", "track" and so on adding the version
-	// that has to be tagged, basing upon the values of the
-	// configuration parameters and basing on the values that has
-	// to be set!
-	private void addVersionToFields() {
-
 	}
 
 	private void setGenreInTable(int row, int col, String genre) {
@@ -987,7 +972,7 @@ public class TagWindow extends JFrame {
 	private class RenameByTag extends JPanel implements ActionListener, DocumentListener, TaskExecuter {
 		private JTextField separator = null;
 		private AddremoveCombo matchString = new AddremoveCombo();
-		private Hashtable fields = new Hashtable();
+		private Hashtable<String, JCheckBox> fields = new Hashtable<String, JCheckBox>();
 		private OrderableList list = null;
 		private JCheckBox editMatchString = new JCheckBox();
 		private JCheckBox leading0 = new JCheckBox();
@@ -1003,11 +988,8 @@ public class TagWindow extends JFrame {
 
 		private boolean successFiles[];
 		private MyFile selFiles[];
-
-		private Hashtable casehash = new Hashtable();
-
-		private ArrayList validfields;
-		private ListSelectionModel lsm;
+		private Hashtable<Object, Object> casehash = new Hashtable<Object, Object>();
+		private ArrayList<String> validfields;
 
 		RenameByTag() {
 			super();
@@ -1145,7 +1127,7 @@ public class TagWindow extends JFrame {
 			tmp.add(tmp2);
 			mainPanel.add(tmp);
 
-			JTextField tmptxt;
+			// JTextField tmptxt;
 			tmp2 = new JPanel();
 			tmp2.setLayout(new BoxLayout(tmp2, BoxLayout.X_AXIS));
 			tmp2.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -1304,8 +1286,8 @@ public class TagWindow extends JFrame {
 						successFiles[i] = false;
 
 				warningArea.clear();
-				Hashtable fields = new Hashtable();
-				validfields = new ArrayList();
+				Hashtable<String, String> fields = new Hashtable<String, String>();
+				validfields = new ArrayList<String>();
 				String text = matchString.getText();
 				int nfs = text.indexOf("< ");
 				int nfe = text.indexOf(" >");
@@ -1316,7 +1298,7 @@ public class TagWindow extends JFrame {
 					nfe = text.indexOf(" >");
 				}
 
-				Enumeration tmp = fields.keys();
+				Enumeration<String> tmp = fields.keys();
 				int i = 1;
 				while (tmp.hasMoreElements()) {
 					boolean exist = false;
@@ -1336,7 +1318,6 @@ public class TagWindow extends JFrame {
 					}
 				}
 
-				String col[] = null;
 				if (command.equals("try"))
 					tablecolumns = new String[] { "New name", "File name" };
 				else
@@ -1355,13 +1336,6 @@ public class TagWindow extends JFrame {
 			}
 		}
 
-		private int getCol(String str) {
-			for (int i = 0; i < tablecolumns.length; i++)
-				if (str.equals(tablecolumns[i]))
-					return i;
-			return -1;
-		}
-
 		public boolean setRenamedValue(int i, String command) {
 			boolean update = true;
 			if (update) {
@@ -1375,21 +1349,21 @@ public class TagWindow extends JFrame {
 				warningArea.append("\"" + selFiles[i].getName() + "\"", Color.blue);
 				if (!selFiles[i].exists()) {
 					warningArea.append(", has been renamed or removed, cannot perform operation!");
-					warningArea.addline(warningArea.ERROR);
+					warningArea.addline(WarnPanel.ERROR);
 					if (firsterrorindex == -1)
 						firsterrorindex = i;
 					return true;
 				}
 				if (!selFiles[i].mp3.isMp3()) {
 					warningArea.append(", seems not to be an mp3 file!");
-					warningArea.addline(warningArea.ERROR);
+					warningArea.addline(WarnPanel.ERROR);
 					if (firsterrorindex == -1)
 						firsterrorindex = i;
 					return true;
 				}
 				if (!selFiles[i].canWrite()) {
 					warningArea.append(", is a READ-ONLY file can't write tag!");
-					warningArea.addline(warningArea.ERROR);
+					warningArea.addline(WarnPanel.ERROR);
 					if (firsterrorindex == -1)
 						firsterrorindex = i;
 					return true;
@@ -1522,12 +1496,6 @@ public class TagWindow extends JFrame {
 			statMessage = "Completed " + current +
 					" out of " + tasklength + ".";
 
-			Mp3info tmpmp3 = null;
-			MyFile tmpfilelist[] = null;
-			String colnames[] = null;
-			int namecol = -1;
-			int nowpos = 0;
-
 			while (current < tasklength && !finished) {
 				// if (renamebytag.setRenamedValue(selectedrows[current],processId))
 				if (selectedrows.length == 0)
@@ -1614,7 +1582,7 @@ public class TagWindow extends JFrame {
 
 		private boolean writeadvancedpanel = false;
 
-		private Hashtable advfieldsconfig = new Hashtable();
+		private Hashtable<String, Object> advfieldsconfig = new Hashtable<String, Object>();
 		AdvancedTagWindow advfields = null;
 		private WindowAdapter advwinlistener = new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -1650,7 +1618,6 @@ public class TagWindow extends JFrame {
 		private String fieldsToSet[] = null;
 		private int fieldsToSetIndexes[] = null;
 
-		private ListSelectionModel lsm;
 		// Represents the number of fields that has to be set for a mass tag
 		// operation. It is returned by the function gimmeSelectedValues,
 		// it is called before launching the task that perform operation!
@@ -1730,8 +1697,7 @@ public class TagWindow extends JFrame {
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 			Border border = null;
 			MyButton button;
-			JPanel mainPanel, tmp, tmp2, tmp3, tmp4, tmp5;
-			JTextField tmptxt;
+			JPanel mainPanel, tmp, tmp3, tmp4, tmp5;
 
 			// create button to open the advanced fields window
 			advfieldbutton = new MyButton(MyButton.NORMAL_BUTTON, "advanced window", "advancedwindow", null, this);
@@ -2007,9 +1973,9 @@ public class TagWindow extends JFrame {
 					if (advfields != null) // && advfields.isVisible())
 					{
 						if (action.startsWith("mass"))
-							advfields.setMode(advfields.MASSSET);
+							advfields.setMode(AdvancedTagWindow.MASSSET);
 						else
-							advfields.setMode(advfields.MASSCLEAR);
+							advfields.setMode(AdvancedTagWindow.MASSCLEAR);
 					}
 				} else {
 					fieldpanels[i].remove(advfieldbutton);
@@ -2069,7 +2035,7 @@ public class TagWindow extends JFrame {
 		private void fixColumns(String command) {
 			int columnslimit = 9;
 			int filenamesize = 200;
-			int othercolumnssize = 400;
+			// int othercolumnssize = 400;
 			int smallertotalsize = 0;
 			int smallercounter = 0;
 			int size = 0;
@@ -2078,7 +2044,7 @@ public class TagWindow extends JFrame {
 			TableColumn columns = null;
 			DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 			renderer.setHorizontalAlignment(JTextField.CENTER);
-			String str = null;
+			// String str = null;
 			// AUTO_RESIZE_ALL_COLUMNS
 			if (tablecolumns.length < columnslimit)
 				table.setAutoResizeMode(MyJTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -2092,10 +2058,10 @@ public class TagWindow extends JFrame {
 							smallercounter++;
 						}
 				}
-				int dim = (int) table.getPreferredScrollableViewportSize().getHeight();
+				// int dim = (int) table.getPreferredScrollableViewportSize().getHeight();
 				size = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-				int minimumsize = filenamesize + smallertotalsize
-						+ (tablecolumns.length - smallercounter - 1) * othercolumnssize;
+				// int minimumsize = filenamesize + smallertotalsize
+				// + (tablecolumns.length - smallercounter - 1) * othercolumnssize;
 				// table.setPreferredScrollableViewportSize(new
 				// Dimension(Math.max(size,minimumsize),dim));
 			}
@@ -2158,13 +2124,13 @@ public class TagWindow extends JFrame {
 				warningArea.clear();
 				// col represents the fields that has to be set in this operation,
 				// this array is later copied to fieldsToSet array
-				ArrayList col = new ArrayList();
+				ArrayList<String> col = new ArrayList<String>();
 
 				// used as a temporary variable to set the fieldsToSet vector ....
 				String allfields[] = new String[] { "title", "artist", "album", "year", "genre", "comment", "track" };
 				// generic controls about ismp3 and is read-only!
 				if (actiontodo.startsWith("mass")) {
-					ArrayList tmp = new ArrayList();
+					// ArrayList tmp = new ArrayList();
 					// see what columns must be written in try mode!
 					for (int i = 0; i < fieldstr.length; i++)
 						if (checkfield[i].isSelected()) {
@@ -2259,7 +2225,7 @@ public class TagWindow extends JFrame {
 		// only fields of type v1 and not eventually other fields
 		// that exist only with tag v2!
 		private String[] gimmeSelectedFields(String type) {
-			ArrayList tmpfield = new ArrayList();
+			ArrayList<String> tmpfield = new ArrayList<String>();
 			// ArrayList tmpval=new ArrayList();
 			for (int i = 0; i < checkfield.length; i++)
 				if (checkfield[i].isSelected()) {
@@ -2473,13 +2439,6 @@ public class TagWindow extends JFrame {
 			}
 		}
 
-		private int getCol(String str) {
-			for (int i = 0; i < tablecolumns.length; i++)
-				if (str.equals(tablecolumns[i]))
-					return i;
-			return -1;
-		}
-
 		private void updateFieldsToSetIndexes() {
 			if (actiontodo.startsWith("remove") ||
 					actiontodo.startsWith("clear") ||
@@ -2517,21 +2476,21 @@ public class TagWindow extends JFrame {
 				warningArea.append("\"" + name + "\"", Color.blue);
 				if (!selFiles[i].exists()) {
 					warningArea.append(", has been renamed or removed, cannot perform operation!");
-					warningArea.addline(warningArea.ERROR);
+					warningArea.addline(WarnPanel.ERROR);
 					if (firsterrorindex == -1)
 						firsterrorindex = i;
 					return true;
 				}
 				if (!selFiles[i].mp3.isMp3()) {
 					warningArea.append(", seems not to be an mp3 file");
-					warningArea.addline(warningArea.ERROR);
+					warningArea.addline(WarnPanel.ERROR);
 					if (firsterrorindex == -1)
 						firsterrorindex = i;
 					return true;
 				}
 				if (!selFiles[i].canWrite()) {
 					warningArea.append(", is a READ-ONLY file can't write tag");
-					warningArea.addline(warningArea.ERROR);
+					warningArea.addline(WarnPanel.ERROR);
 					if (firsterrorindex == -1)
 						firsterrorindex = i;
 					return true;
@@ -2546,8 +2505,8 @@ public class TagWindow extends JFrame {
 					// to substitute with if action is mass tag!
 					if (actiontodo.startsWith("mass")) {
 						// compose an hash
-						ArrayList validfields = new ArrayList();
-						ArrayList validvalues = new ArrayList();
+						ArrayList<String> validfields = new ArrayList<String>();
+						ArrayList<String> validvalues = new ArrayList<String>();
 						for (int j = 0; j < fieldsToSet.length; j++)
 							for (int k = 0; k < fieldstr.length; k++)
 								if (fieldsToSet[j].equals(fieldstr[k])) {
@@ -2645,7 +2604,7 @@ public class TagWindow extends JFrame {
 							}
 							if (exec) {
 								if (writeadvancedpanel) {
-									Enumeration keys = advfieldsconfig.keys();
+									Enumeration<String> keys = advfieldsconfig.keys();
 									String fld = null;
 									while (keys.hasMoreElements()) {
 										fld = (String) keys.nextElement();
@@ -2990,38 +2949,40 @@ public class TagWindow extends JFrame {
 
 		private MyFile selFiles[] = null;
 		private ListSelectionModel lsm = null;
-		private Hashtable elements = new Hashtable();
+		private Hashtable<Mp3info, String> elements = new Hashtable<Mp3info, String>();
 		private JScrollPane fileScrollPane = null;
 
-		private JPanel mp3panel = null;
+		// private JPanel mp3panel = null;
 		private JPanel tagv1panel = null;
 		private JPanel Tagv2panel = null;
 
-		private String mp3fieldsnames[] = new String[] { "bytes length", "song length", "version", "rate", "sync byte",
-				"frames", "sample rate", "emphasys", "copyright", "original", "crc" };
-		private Hashtable mp3fields = new Hashtable();
+		// private String mp3fieldsnames[] = new String[] { "bytes length", "song
+		// length", "version", "rate", "sync byte",
+		// "frames", "sample rate", "emphasys", "copyright", "original", "crc" };
+		private Hashtable<String, JLabel> mp3fields = new Hashtable<String, JLabel>();
 
 		private int tagv1lengths[] = new int[] { 30, 30, 30, 4, 0, 30, 3 };
-		private Hashtable tagv1fields = new Hashtable();
+		private Hashtable<String, Object> tagv1fields = new Hashtable<String, Object>();
 		private MyCombo genre = new MyCombo(Mp3info.orderedGenreList);
 
 		private String tagv2fieldsnames[] = new String[] { "title", "artist", "album", "year", "genre", "comment",
 				"track" };
 
-		private Hashtable tagv2fields = new Hashtable();
+		private Hashtable<String, Object> tagv2fields = new Hashtable<String, Object>();
 		private MyCombo genre2 = new MyCombo(Mp3info.orderedGenreList);
-		private MyCombo tagv2otherfields1 = new MyCombo(), tagv2otherfields2 = new MyCombo();
-		private JTextField tagv2othval1 = null, tagv2othval2 = null;
+		// private MyCombo tagv2otherfields1 = new MyCombo(), tagv2otherfields2 = new
+		// MyCombo();
+		// private JTextField tagv2othval1 = null, tagv2othval2 = null;
 		private JTextField singlerename = new JTextField();
 		private JPanel tagv2otherfields = null, tagv2otherfieldsson = null;
-		private ArrayList v2otherfieldsins = new ArrayList();
+		private ArrayList<String> v2otherfieldsins = new ArrayList<String>();
 		private Mp3info mp3elem = null;
 		private MyFile fileelem = null;
 
 		private JCheckBox writeadvpanel = new JCheckBox();
 
 		// has for the advanced window and advanced window
-		private Hashtable advfieldsconfig = new Hashtable();
+		private Hashtable<String, Object> advfieldsconfig = new Hashtable<String, Object>();
 		private AdvancedTagWindow advfields = null;
 		// this is the listener that sets advfields to null when
 		// the advanced window is closed !!!
@@ -3098,7 +3059,7 @@ public class TagWindow extends JFrame {
 		}
 
 		private JPanel mp3panel() {
-			JPanel tmp2, tmp3;
+			JPanel tmp3;
 			JPanel titled = new JPanel();
 			titled.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Mp3 file info",
 					TitledBorder.LEFT, TitledBorder.TOP));
@@ -3326,59 +3287,60 @@ public class TagWindow extends JFrame {
 			return rowpanel;
 		}
 
-		// this panel will not exist no more!!!
-		private JPanel createotherfieldspanel() {
-			int dimy = 30;
-			int dimx = 180;
-
-			tagv2otherfields1.addItem(new String(""));
-			tagv2otherfields2.addItem(new String(""));
-			// String fields[]=Mp3info.tagv2otherfields;
-			String fields[] = new String[0];
-			for (int i = 0; i < fields.length; i++) {
-				tagv2otherfields1.addItem(fields[i]);
-				tagv2otherfields2.addItem(fields[i]);
-			}
-			JPanel tmp = new JPanel();
-			tmp.setLayout(new BoxLayout(tmp, BoxLayout.X_AXIS));
-			tmp.setMaximumSize(new Dimension(0x7fffffff, dimy + 2));
-			tmp.setPreferredSize(new Dimension(0, dimy + 2));
-			tmp.setMinimumSize(new Dimension(0, dimy + 2));
-			JPanel tmp2 = new JPanel();
-			tmp2.setLayout(new BoxLayout(tmp2, BoxLayout.X_AXIS));
-			tmp2.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
-			tmp2.setMaximumSize(new Dimension(dimx, dimy));
-			tmp2.setPreferredSize(new Dimension(dimx, dimy));
-			tmp2.setMinimumSize(new Dimension(dimx, dimy));
-			tmp2.add(tagv2otherfields1);
-			tmp.add(tmp2);
-			tmp2 = new JPanel();
-			tmp2.setLayout(new BoxLayout(tmp2, BoxLayout.X_AXIS));
-			tmp2.setBorder(BorderFactory.createEmptyBorder(4, 5, 4, 10));
-			tagv2othval1 = new JTextField();
-			tmp2.add(tagv2othval1);
-			tmp.add(tmp2);
-			tmp2 = new JPanel();
-			tmp2.setLayout(new BoxLayout(tmp2, BoxLayout.X_AXIS));
-			tmp2.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
-			tmp2.setMaximumSize(new Dimension(dimx, dimy));
-			tmp2.setPreferredSize(new Dimension(dimx, dimy));
-			tmp2.setMinimumSize(new Dimension(dimx, dimy));
-			tmp2.add(tagv2otherfields2);
-			tmp.add(tmp2);
-			tmp2 = new JPanel();
-			tmp2.setLayout(new BoxLayout(tmp2, BoxLayout.X_AXIS));
-			tmp2.setBorder(BorderFactory.createEmptyBorder(4, 5, 4, 0));
-			tagv2othval2 = new JTextField();
-			tmp2.add(tagv2othval2);
-			tmp.add(tmp2);
-			return tmp;
-		}
+		/*
+		 * private JPanel createotherfieldspanel() {
+		 * int dimy = 30;
+		 * int dimx = 180;
+		 * 
+		 * tagv2otherfields1.addItem(new String(""));
+		 * tagv2otherfields2.addItem(new String(""));
+		 * // String fields[]=Mp3info.tagv2otherfields;
+		 * String fields[] = new String[0];
+		 * for (int i = 0; i < fields.length; i++) {
+		 * tagv2otherfields1.addItem(fields[i]);
+		 * tagv2otherfields2.addItem(fields[i]);
+		 * }
+		 * JPanel tmp = new JPanel();
+		 * tmp.setLayout(new BoxLayout(tmp, BoxLayout.X_AXIS));
+		 * tmp.setMaximumSize(new Dimension(0x7fffffff, dimy + 2));
+		 * tmp.setPreferredSize(new Dimension(0, dimy + 2));
+		 * tmp.setMinimumSize(new Dimension(0, dimy + 2));
+		 * JPanel tmp2 = new JPanel();
+		 * tmp2.setLayout(new BoxLayout(tmp2, BoxLayout.X_AXIS));
+		 * tmp2.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
+		 * tmp2.setMaximumSize(new Dimension(dimx, dimy));
+		 * tmp2.setPreferredSize(new Dimension(dimx, dimy));
+		 * tmp2.setMinimumSize(new Dimension(dimx, dimy));
+		 * tmp2.add(tagv2otherfields1);
+		 * tmp.add(tmp2);
+		 * tmp2 = new JPanel();
+		 * tmp2.setLayout(new BoxLayout(tmp2, BoxLayout.X_AXIS));
+		 * tmp2.setBorder(BorderFactory.createEmptyBorder(4, 5, 4, 10));
+		 * tagv2othval1 = new JTextField();
+		 * tmp2.add(tagv2othval1);
+		 * tmp.add(tmp2);
+		 * tmp2 = new JPanel();
+		 * tmp2.setLayout(new BoxLayout(tmp2, BoxLayout.X_AXIS));
+		 * tmp2.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
+		 * tmp2.setMaximumSize(new Dimension(dimx, dimy));
+		 * tmp2.setPreferredSize(new Dimension(dimx, dimy));
+		 * tmp2.setMinimumSize(new Dimension(dimx, dimy));
+		 * tmp2.add(tagv2otherfields2);
+		 * tmp.add(tmp2);
+		 * tmp2 = new JPanel();
+		 * tmp2.setLayout(new BoxLayout(tmp2, BoxLayout.X_AXIS));
+		 * tmp2.setBorder(BorderFactory.createEmptyBorder(4, 5, 4, 0));
+		 * tagv2othval2 = new JTextField();
+		 * tmp2.add(tagv2othval2);
+		 * tmp.add(tmp2);
+		 * return tmp;
+		 * }
+		 */
 
 		private JPanel Tagv2panel() {
 			// to be finished
-			JTextField txtfield;
-			JLabel label = null;
+			// JTextField txtfield;
+			// JLabel label = null;
 			JPanel titled = new JPanel();
 			titled.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Tag version 2",
 					TitledBorder.LEFT, TitledBorder.TOP));
@@ -3668,7 +3630,7 @@ public class TagWindow extends JFrame {
 				}
 
 				if ((command.equals("writev2") || command.equals("writeall")) && fileelem.canWrite()) {
-					String sel = null;
+					// String sel = null;
 					for (int i = 0; i < tagv2fieldsnames.length; i++) {
 						if (!tagv2fieldsnames[i].equals("genre"))
 							mp3elem.id3v2.setElem(tagv2fieldsnames[i],
@@ -3679,29 +3641,6 @@ public class TagWindow extends JFrame {
 								mp3elem.id3v2.setElem("genre", String.valueOf(n));
 						}
 					}
-					// have also to write the other fields that have been added!
-					/*
-					 * for (int i=0;i<v2otherfieldsins.size();i++)
-					 * {
-					 * String fld=(String)v2otherfieldsins.get(i);
-					 * mp3elem.id3v2.setElem(fld,((JTextField)tagv2fields.get(fld)).getText());
-					 * }
-					 * 
-					 * sel=(String)tagv2otherfields1.getSelectedItem();
-					 * if (!sel.equals(""))
-					 * {
-					 * mp3elem.id3v2.setElem(sel,tagv2othval1.getText());
-					 * tagv2otherfields1.setSelectedItem("");
-					 * tagv2othval1.setText("");
-					 * }
-					 * sel=(String)tagv2otherfields2.getSelectedItem();
-					 * if (!sel.equals(""))
-					 * {
-					 * mp3elem.id3v2.setElem(sel,tagv2othval2.getText());
-					 * tagv2otherfields2.setSelectedItem("");
-					 * tagv2othval2.setText("");
-					 * }
-					 */
 
 					// write also the advanced panel if it is selected !!!
 					if (writeadvpanel.isSelected()) {
@@ -3715,7 +3654,7 @@ public class TagWindow extends JFrame {
 
 				if ((command.equals("writev1") || command.equals("writeall") ||
 						command.equals("writev2")) && fileelem.canWrite()) {
-					lastmodifiedfiles = new Hashtable();
+					lastmodifiedfiles = new Hashtable<MyFile, MyFile>();
 					lastmodifiedfiles.put(selFiles[selrows[0]], selFiles[selrows[0]]);
 					masstag.updateTable();
 				}
@@ -3769,7 +3708,7 @@ public class TagWindow extends JFrame {
 								data[i][namecol] = file.getName();
 								table.repaint();
 								// update the other tables!
-								lastmodifiedfiles = new Hashtable();
+								lastmodifiedfiles = new Hashtable<MyFile, MyFile>();
 								lastmodifiedfiles.put(selFiles[i], file);
 								masstag.updateTable();
 								tagbyname.updateTable();
@@ -3821,53 +3760,56 @@ public class TagWindow extends JFrame {
 						JOptionPane.ERROR_MESSAGE);
 		}
 
-		private void updatetagv2othfieldpanel() {
-			// remove the old field from the hash ...
-			for (int i = 0; i < v2otherfieldsins.size(); i++)
-				tagv2fields.remove((String) v2otherfieldsins.get(i));
-			// field added to the hash are again 0, so create a new hash!
-			v2otherfieldsins = new ArrayList();
-			// tagv2otherfields,tagv2otherfieldsson;
-			int div = edittagSplitPane.getDividerLocation();
-			tagv2otherfields.remove(tagv2otherfieldsson);
-			tagv2otherfieldsson = new JPanel();
-			tagv2otherfieldsson.setLayout(new BoxLayout(tagv2otherfieldsson, BoxLayout.Y_AXIS));
-			// String elems[]=Mp3info.tagv2otherfields;
-			String elems[] = new String[0];
-			String tmpelems[] = new String[2];
-			String tmpfield[] = new String[2];
-			int counter = 0;
-			int rows = 0;
-			for (int i = 0; i < elems.length; i++) {
-				tmpelems[counter] = mp3elem.id3v2.getElem(elems[i]).getValue();
-				tmpfield[counter] = elems[i];
-				if (tmpelems[counter].trim().length() > 0) {
-					v2otherfieldsins.add(elems[i]);
-					counter++;
-					if (counter == 2) {
-						// here it is added the new row ...
-						tagv2otherfieldsson.add(tagv2row(tmpfield));
-						((JTextField) tagv2fields.get(tmpfield[0])).setText(tmpelems[0]);
-						((JTextField) tagv2fields.get(tmpfield[1])).setText(tmpelems[1]);
-						counter = 0;
-						rows++;
-					}
-				}
-			}
-			if (counter == 1) {
-				tagv2otherfieldsson.add(tagv2row(new String[] { tmpfield[0] }));
-				((JTextField) tagv2fields.get(tmpfield[0])).setText(tmpelems[0]);
-				rows++;
-			}
-			tagv2otherfields.setMaximumSize(new Dimension(0x7fffffff, 30 * rows));
-			tagv2otherfields.setPreferredSize(new Dimension(0, 30 * rows));
-			tagv2otherfields.setMinimumSize(new Dimension(0, 30 * rows));
-			tagv2otherfields.add(tagv2otherfieldsson);
-			updateUI();
-			tagv2otherfields.updateUI();
-			tagv2otherfieldsson.updateUI();
-			edittagSplitPane.setDividerLocation(div);
-		}
+		/*
+		 * private void updatetagv2othfieldpanel() {
+		 * // remove the old field from the hash ...
+		 * for (int i = 0; i < v2otherfieldsins.size(); i++)
+		 * tagv2fields.remove((String) v2otherfieldsins.get(i));
+		 * // field added to the hash are again 0, so create a new hash!
+		 * v2otherfieldsins = new ArrayList<String>();
+		 * // tagv2otherfields,tagv2otherfieldsson;
+		 * int div = edittagSplitPane.getDividerLocation();
+		 * tagv2otherfields.remove(tagv2otherfieldsson);
+		 * tagv2otherfieldsson = new JPanel();
+		 * tagv2otherfieldsson.setLayout(new BoxLayout(tagv2otherfieldsson,
+		 * BoxLayout.Y_AXIS));
+		 * // String elems[]=Mp3info.tagv2otherfields;
+		 * String elems[] = new String[0];
+		 * String tmpelems[] = new String[2];
+		 * String tmpfield[] = new String[2];
+		 * int counter = 0;
+		 * int rows = 0;
+		 * for (int i = 0; i < elems.length; i++) {
+		 * tmpelems[counter] = mp3elem.id3v2.getElem(elems[i]).getValue();
+		 * tmpfield[counter] = elems[i];
+		 * if (tmpelems[counter].trim().length() > 0) {
+		 * v2otherfieldsins.add(elems[i]);
+		 * counter++;
+		 * if (counter == 2) {
+		 * // here it is added the new row ...
+		 * tagv2otherfieldsson.add(tagv2row(tmpfield));
+		 * ((JTextField) tagv2fields.get(tmpfield[0])).setText(tmpelems[0]);
+		 * ((JTextField) tagv2fields.get(tmpfield[1])).setText(tmpelems[1]);
+		 * counter = 0;
+		 * rows++;
+		 * }
+		 * }
+		 * }
+		 * if (counter == 1) {
+		 * tagv2otherfieldsson.add(tagv2row(new String[] { tmpfield[0] }));
+		 * ((JTextField) tagv2fields.get(tmpfield[0])).setText(tmpelems[0]);
+		 * rows++;
+		 * }
+		 * tagv2otherfields.setMaximumSize(new Dimension(0x7fffffff, 30 * rows));
+		 * tagv2otherfields.setPreferredSize(new Dimension(0, 30 * rows));
+		 * tagv2otherfields.setMinimumSize(new Dimension(0, 30 * rows));
+		 * tagv2otherfields.add(tagv2otherfieldsson);
+		 * updateUI();
+		 * tagv2otherfields.updateUI();
+		 * tagv2otherfieldsson.updateUI();
+		 * edittagSplitPane.setDividerLocation(div);
+		 * }
+		 */
 
 		public void valueChanged(ListSelectionEvent e) {
 			boolean isAdjusting = e.getValueIsAdjusting();
@@ -4017,7 +3959,7 @@ public class TagWindow extends JFrame {
 		// in that case exit. Elsewhere, perform function
 		// and create a table with only the file name!
 
-		ArrayList filelist = new ArrayList();
+		ArrayList<MyFile> filelist = new ArrayList<MyFile>();
 		MyFile selected[] = null;
 		boolean success[] = null;
 		MyJTable tmptable = null;
@@ -4246,9 +4188,9 @@ public class TagWindow extends JFrame {
 		void go() {
 			final SwingWorker tagTask = new SwingWorker() {
 				public Object construct() {
-					lastmodifiedfiles = new Hashtable();
+					lastmodifiedfiles = new Hashtable<MyFile, MyFile>();
 					// to be updated even for edittag window
-					boolean ready = false;
+					// boolean ready = false;
 					try {
 						obj.taskExecute(processId);
 					} catch (Exception e) {
@@ -4267,7 +4209,7 @@ public class TagWindow extends JFrame {
 		private MyProgressMonitor progressMonitor = null;
 		private Timer timer = null;
 		private taggingLongTask task = null;
-		private String proc;
+		// private String proc;
 		private myJFrame warningwindow = null;
 		private TaskExecuter taskobject = null;
 
@@ -4487,8 +4429,8 @@ public class TagWindow extends JFrame {
 			for (int i = 0; i < rows; i++)
 				selFiles[i] = MyFileList.getElem(i);
 		} else {
-			ArrayList selectedFiles = new ArrayList();
-			int count = 0;
+			ArrayList<MyFile> selectedFiles = new ArrayList<MyFile>();
+			// int count = 0;
 			for (int i = 0; i < rows; i++) {
 				if (lsm.isSelectedIndex(i)) {
 					selectedFiles.add(MyFileList.getElem(i));
@@ -4575,7 +4517,7 @@ public class TagWindow extends JFrame {
 
 		MyFileList = window.filteredList;
 
-		int warn_num = 0;
+		// int warn_num = 0;
 		contentPane = getContentPane();
 
 		jtabbed = new JTabbedPane();
@@ -4740,10 +4682,10 @@ public class TagWindow extends JFrame {
 			}
 			;
 		}
-		Set set = confighash.entrySet();
-		Iterator iterator = set.iterator();
+		Set<Map.Entry<String, Object>> set = confighash.entrySet();
+		Iterator<Map.Entry<String, Object>> iterator = set.iterator();
 		while (iterator.hasNext()) {
-			Map.Entry elem = (Map.Entry) iterator.next();
+			Map.Entry<String, Object> elem = (Map.Entry<String, Object>) iterator.next();
 			if (elem.getValue() != null)
 				config.getObjectConfig((String) elem.getKey(), elem.getValue());
 			else
@@ -4770,10 +4712,10 @@ public class TagWindow extends JFrame {
 		config.setConfigInt("3.posy", getY());
 		config.setConfigInt("3.selectedtab", jtabbed.getSelectedIndex());
 
-		Set set = confighash.entrySet();
-		Iterator iterator = set.iterator();
+		Set<Map.Entry<String, Object>> set = confighash.entrySet();
+		Iterator<Map.Entry<String, Object>> iterator = set.iterator();
 		while (iterator.hasNext()) {
-			Map.Entry elem = (Map.Entry) iterator.next();
+			Map.Entry<String, Object> elem = (Map.Entry<String, Object>) iterator.next();
 			config.setObjectConfig((String) elem.getKey(), elem.getValue());
 		}
 

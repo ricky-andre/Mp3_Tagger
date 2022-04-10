@@ -1,7 +1,5 @@
 package tagger;
 
-import javax.swing.*;
-import javax.swing.event.*;
 import javax.swing.table.*;
 import java.util.*;
 
@@ -43,33 +41,11 @@ public abstract class EditableTableModel extends AbstractTableModel {
     }
 
     // get class definitions
-    Hashtable classes = new Hashtable();
-
-    /*
-     * public Class getColumnClass (int c)
-     * {
-     * Class classe=null;
-     * classe=(Class)classes.get(Integer.valueOf(c));
-     * if (classe!=null)
-     * return classe;
-     * else
-     * return String.class;
-     * }
-     * 
-     * public void setColumnClass (int col,Class classe)
-     * {
-     * if (col<columnNames.length)
-     * classes.put(Integer.valueOf(col),classe);
-     * else
-     * System.out.println("Tryng to set class for wrong column "+col+" max "
-     * +columnNames.length);
-     * }
-     */
-
+    // Hashtable classes = new Hashtable();
     boolean editable = false;
-    Hashtable editrow = new Hashtable();
-    Hashtable editcolumn = new Hashtable();
-    Hashtable editcells = new Hashtable();
+    Hashtable<Integer, String> editrow = new Hashtable<Integer, String>();
+    Hashtable<Integer, String> editcolumn = new Hashtable<Integer, String>();
+    Hashtable<String, String> editcells = new Hashtable<String, String>();
 
     public int getColumnIndex(String name) {
         System.out.println("This function should have been overriden!");
@@ -127,9 +103,9 @@ public abstract class EditableTableModel extends AbstractTableModel {
 
     public void setTableEditable(boolean val) {
         if (!val) {
-            editrow = new Hashtable();
-            editcolumn = new Hashtable();
-            editcells = new Hashtable();
+            editrow = new Hashtable<Integer, String>();
+            editcolumn = new Hashtable<Integer, String>();
+            editcells = new Hashtable<String, String>();
             editable = false;
         } else
             editable = true;

@@ -3,10 +3,8 @@ package tagger;
 import java.io.*;
 import java.util.*;
 
-import javax.swing.*;
-
 public class Database implements DatabaseInterface {
-	private final static Hashtable fields = new Hashtable();
+	private final static Hashtable<String, String> fields = new Hashtable<String, String>();
 	private final static String orderedfields[] = new String[] {
 			"artist", "title", "album", "year", "genre", "comment",
 			"track", "file name", "song length", "bit rate",
@@ -35,14 +33,13 @@ public class Database implements DatabaseInterface {
 	private String existentfields[] = new String[0];
 	// the data in the Database is an arraylist, every
 	// element is a string array with the fields values
-	private ArrayList data = null;
-
-	private ArrayList filterdata = null;
+	private ArrayList<Object> data = null;
+	private ArrayList<String[]> filterdata = null;
 	private DatabaseFilter lastfilter = null;
 
 	private String separator = null;
 	private boolean headerok = false;
-	private Hashtable index = null;
+	private Hashtable<Object, Object> index = null;
 	private int artistindex = -1;
 	private int titleindex = -1;
 	private int lengthindex = -1;
@@ -64,10 +61,10 @@ public class Database implements DatabaseInterface {
 	private final static int TITLE_MATCH = 6;
 
 	private final static int VERY_FAST = 0;
-	private final static int FAST = 0;
+	// private final static int FAST = 0;
 	private static int hashmode = VERY_FAST;
 
-	private final static Hashtable dontput = new Hashtable();
+	private final static Hashtable<String, String> dontput = new Hashtable<String, String>();
 	static {
 		dontput.put("&", "1");
 		dontput.put("and", "1");
@@ -79,7 +76,7 @@ public class Database implements DatabaseInterface {
 		return orderedfields;
 	}
 
-	final static Hashtable getOtherFieldsHash() {
+	final static Hashtable<String, String> getOtherFieldsHash() {
 		return fields;
 	}
 
@@ -226,8 +223,8 @@ public class Database implements DatabaseInterface {
 			tasklength = 100;
 			current = 0;
 
-			long len = -1;
-			data = new ArrayList();
+			// long len = -1;
+			data = new ArrayList<Object>();
 			RandomAccessFile filetoread = new RandomAccessFile(name.getAbsolutePath(), "r");
 			/*
 			 * check if there are memory problems to load the database!
@@ -444,7 +441,7 @@ public class Database implements DatabaseInterface {
 		for (int i = 0; i < datas[0].length; i++)
 			existentfields[i] = datas[0][i];
 
-		data = new ArrayList();
+		data = new ArrayList<Object>();
 		for (int i = 0; i < existentfields.length; i++) {
 			if (!fields.containsKey(existentfields[i]) &&
 					!existentfields[i].equals("user field")) {
@@ -513,11 +510,11 @@ public class Database implements DatabaseInterface {
 			// more one for the user field ...
 			int index[] = new int[fields.size() + 1];
 			int firstfieldlen = -1;
-			Set set = fields.entrySet();
-			Iterator iter = set.iterator();
+			Set<Map.Entry<String, String>> set = fields.entrySet();
+			Iterator<Map.Entry<String, String>> iter = set.iterator();
 			int count = 0;
 			while (iter.hasNext()) {
-				Map.Entry elem = (Map.Entry) iter.next();
+				Map.Entry<String, String> elem = (Map.Entry<String, String>) iter.next();
 				String tmpfield = (String) elem.getKey();
 				index[count] = str.indexOf(tmpfield);
 				if (index[count] == 0)
@@ -657,9 +654,9 @@ public class Database implements DatabaseInterface {
 			String artist = (fixField(origartist.toLowerCase().trim())).toString();
 			String letter = null;
 			String words[] = null;
-			Hashtable hashindex = null;
-			Set set = null;
-			Iterator iterator = null;
+			Hashtable<Object, Object> hashindex = null;
+			Set<Map.Entry<Object, Object>> set = null;
+			Iterator<Map.Entry<Object, Object>> iterator = null;
 			int rowindex = 0;
 
 			words = Utils.split(artist, " ");
@@ -669,13 +666,13 @@ public class Database implements DatabaseInterface {
 				if (!dontput.containsKey(words[j]) && words[j].length() > 0) {
 					if (hashmode == VERY_FAST) {
 						letter = words[j].substring(0, Math.min(words[j].length(), ARTIST_MATCH));
-						hashindex = (Hashtable) index.get(letter);
+						hashindex = (Hashtable<Object, Object>) index.get(letter);
 						if (hashindex == null)
 							continue;
 						set = hashindex.entrySet();
 						iterator = set.iterator();
 						while (iterator.hasNext()) {
-							Map.Entry elem = (Map.Entry) iterator.next();
+							Map.Entry<Object, Object> elem = (Map.Entry<Object, Object>) iterator.next();
 							rowindex = ((Integer) elem.getKey()).intValue();
 							if (checkRow(rowindex, origtitle)) {
 								return rowindex;
@@ -683,13 +680,13 @@ public class Database implements DatabaseInterface {
 						}
 					} else {
 						letter = words[j].substring(0, 1);
-						hashindex = (Hashtable) index.get(letter);
+						hashindex = (Hashtable<Object, Object>) index.get(letter);
 						if (hashindex == null)
 							continue;
 						set = hashindex.entrySet();
 						iterator = set.iterator();
 						while (iterator.hasNext()) {
-							Map.Entry elem = (Map.Entry) iterator.next();
+							Map.Entry<Object, Object> elem = (Map.Entry<Object, Object>) iterator.next();
 							rowindex = ((Integer) elem.getKey()).intValue();
 							if (checkRow(rowindex, artist, origtitle)) {
 								return rowindex;
@@ -762,8 +759,8 @@ public class Database implements DatabaseInterface {
 			StringBuffer artist = null;
 			String words[] = null;
 			String letter = null;
-			Hashtable rowindex = null;
-			index = new Hashtable();
+			Hashtable<Integer, String> rowindex = null;
+			index = new Hashtable<Object, Object>();
 			for (int i = 0; i < data.size(); i++) {
 				// fix the artist name, cut initial "the " and all that is
 				// not a letter, a digit or a space!
@@ -782,9 +779,9 @@ public class Database implements DatabaseInterface {
 						else
 							letter = words[j].substring(0, 1);
 						if (!index.containsKey(letter))
-							rowindex = new Hashtable();
+							rowindex = new Hashtable<Integer, String>();
 						else
-							rowindex = (Hashtable) index.get(letter);
+							rowindex = (Hashtable<Integer, String>) index.get(letter);
 						rowindex.put(Integer.valueOf(i), "");
 						index.put(letter, rowindex);
 					}
@@ -798,8 +795,8 @@ public class Database implements DatabaseInterface {
 	// the string vector resulting from the union of the
 	// two strings formats
 	public String[] getOutputFormat(String old[], String newfmt[]) {
-		Hashtable hash = new Hashtable();
-		ArrayList out = new ArrayList();
+		Hashtable<String, String> hash = new Hashtable<String, String>();
+		ArrayList<String> out = new ArrayList<String>();
 		for (int i = 0; i < newfmt.length; i++) {
 			if (!hash.containsKey(newfmt[i])) {
 				hash.put(newfmt[i], "");
@@ -853,7 +850,6 @@ public class Database implements DatabaseInterface {
 		current = 0;
 		String tmp[] = null;
 		String oldrow[] = null;
-		String val = null;
 		for (int i = 0; i < data.size(); i++) {
 			oldrow = (String[]) data.get(i);
 			tmp = new String[outformat.length];
@@ -990,8 +986,8 @@ public class Database implements DatabaseInterface {
 				break;
 			}
 		}
-		long init = System.currentTimeMillis();
-		TreeMap treemap = new TreeMap(new Comp(criteria));
+
+		TreeMap<String[], String[]> treemap = new TreeMap<String[], String[]>(new Comp(criteria));
 		String row[] = null;
 		for (int i = 0; i < data.size(); i++) {
 			row = (String[]) data.get(i);
@@ -1013,12 +1009,12 @@ public class Database implements DatabaseInterface {
 		// System.out.println((System.currentTimeMillis()-init)+" ms to reorder!");
 
 		// extract all the rows in the correct order, and form the ordered list!
-		Set set = treemap.entrySet();
-		Iterator iterator = set.iterator();
+		Set<Map.Entry<String[], String[]>> set = treemap.entrySet();
+		Iterator<Map.Entry<String[], String[]>> iterator = set.iterator();
 		statMessage = "Rebuilding Database ...";
 		int i = 0;
 		while (iterator.hasNext()) {
-			Map.Entry elem = (Map.Entry) iterator.next();
+			Map.Entry<String[], String[]> elem = (Map.Entry<String[], String[]>) iterator.next();
 			data.set(i, elem.getValue());
 			i++;
 		}
@@ -1053,8 +1049,8 @@ public class Database implements DatabaseInterface {
 				break;
 			}
 		}
-		long init = System.currentTimeMillis();
-		TreeMap treemap = new TreeMap(new defaultComp());
+
+		TreeMap<String[], String[]> treemap = new TreeMap<String[], String[]>(new defaultComp());
 		String row[] = null;
 		for (int i = 0; i < data.size(); i++) {
 			row = (String[]) data.get(i);
@@ -1076,12 +1072,12 @@ public class Database implements DatabaseInterface {
 		// System.out.println((System.currentTimeMillis()-init)+" ms to reorder!");
 
 		// extract all the rows in the correct order, and form the ordered list!
-		Set set = treemap.entrySet();
-		Iterator iterator = set.iterator();
+		Set<Map.Entry<String[], String[]>> set = treemap.entrySet();
+		Iterator<Map.Entry<String[], String[]>> iterator = set.iterator();
 		statMessage = "Rebuilding Database ...";
 		int i = 0;
 		while (iterator.hasNext()) {
-			Map.Entry elem = (Map.Entry) iterator.next();
+			Map.Entry<String[], String[]> elem = (Map.Entry<String[], String[]>) iterator.next();
 			data.set(i, elem.getValue());
 			i++;
 		}
@@ -1200,8 +1196,7 @@ public class Database implements DatabaseInterface {
 		if (existentfields == null)
 			return false;
 
-		StringBuffer query = new StringBuffer("");
-		Hashtable nowcols = new Hashtable();
+		Hashtable<String, String> nowcols = new Hashtable<String, String>();
 		for (int i = 0; i < existentfields.length; i++)
 			nowcols.put(existentfields[i], "");
 		/*
@@ -1221,7 +1216,7 @@ public class Database implements DatabaseInterface {
 					}
 		}
 
-		filterdata = new ArrayList();
+		filterdata = new ArrayList<String[]>();
 		tasklength = getRowCount();
 		current = 0;
 

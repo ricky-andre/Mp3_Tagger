@@ -1,11 +1,8 @@
 package tagger;
 
-import javax.swing.tree.*;
-import javax.swing.table.*;
 import java.util.*;
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.Timer;
 import java.io.*;
 import java.util.jar.*;
 
@@ -21,9 +18,9 @@ public abstract class Utils {
 
 	private static final String WIN_ID = new String("Windows");
 	// The default system browser under windows.
-	private static final String WIN_PATH = "rundll32";
+	// private static final String WIN_PATH = "rundll32";
 	// The flag to display a url.
-	private static final String WIN_FLAG = "url.dll,FileProtocolHandler";
+	// private static final String WIN_FLAG = "url.dll,FileProtocolHandler";
 	// The default browser under unix.
 	private static final String UNIX_PATH = "netscape";
 	// The flag to display a url.
@@ -379,6 +376,7 @@ public abstract class Utils {
 			bais.mark(len); // mark the read ahead
 			bais.read(b, 0, len); // read in in!!!
 			is.close(); // clean up however you want to
+			jf.close();
 			return b;
 		} catch (Exception e) {
 			// System.out.println("Could not find "+filename+"in jar "+jarpath);
@@ -451,15 +449,15 @@ public abstract class Utils {
 	}
 
 	public static String[][] findMatch(String orig, String match) {
-		ArrayList fields = new ArrayList();
-		ArrayList values = new ArrayList();
+		ArrayList<String> fields = new ArrayList<String>();
+		ArrayList<String> values = new ArrayList<String>();
 		// input a string with the interested fields between brackets! < field >
 		String tmp = new String(match);
 		String tmporig = new String(orig);
 		int nfs;
 		int nfe;
 		int currentMatch = 0;
-		int currentString = 0;
+		// int currentString = 0;
 		// System.out.println("orig "+orig);
 		// System.out.println("match "+match);
 
@@ -533,8 +531,8 @@ public abstract class Utils {
 		if (cases == CASE_SENSITIVE)
 			return findMatch(orig, match);
 		else {
-			ArrayList fields = new ArrayList();
-			ArrayList values = new ArrayList();
+			ArrayList<String> fields = new ArrayList<String>();
+			ArrayList<String> values = new ArrayList<String>();
 			// input a string with the interested fields between brackets! < field >
 			String tmp = (new String(match)).toLowerCase();
 			String tmporig = (new String(orig)).toLowerCase();
@@ -542,7 +540,7 @@ public abstract class Utils {
 			int nfs;
 			int nfe;
 			int currentMatch = 0;
-			int currentString = 0;
+			// int currentString = 0;
 			// System.out.println("orig "+orig);
 			// System.out.println("match "+tmp);
 
@@ -698,7 +696,7 @@ public abstract class Utils {
 	}
 
 	public static String[] split(String str, String sep) {
-		ArrayList stringlist = new ArrayList();
+		ArrayList<String> stringlist = new ArrayList<String>();
 		if (str.indexOf(sep) == -1) {
 			return (new String[] { str });
 		} else {
@@ -783,7 +781,7 @@ public abstract class Utils {
 		}
 	}
 
-	public static Object[] getVectorFromArray(ArrayList obj) {
+	public static Object[] getVectorFromArray(ArrayList<Object> obj) {
 		Object vect[] = new Object[obj.size()];
 		for (int i = 0; i < vect.length; i++)
 			vect[i] = obj.get(i);
@@ -1018,15 +1016,15 @@ public abstract class Utils {
 
 		// for (int i=0;i<keys.length;i++)
 		// System.out.print(keys[i]);
-		int m = 0, i = 0, j = 0, temp = 0, temp2 = 0, right1 = 0, right2 = 0, left = 0, right = 0, looping[] = null;
-		int cbcleft = 0, cbcleft2 = 0, cbcright = 0, cbcright2 = 0;
+		int m = 0, i = 0, j = 0, temp = 0, right1 = 0, right2 = 0, left = 0, right = 0, looping[] = null;
+		// int cbcleft = 0, cbcleft2 = 0, cbcright = 0, cbcright2 = 0;
 		int endloop = 0, loopinc = 0;
 		int len = 0;
 		int chunk = 0;
 
 		String message = null;
 		byte bytes[] = null;
-		int ints[] = null;
+		// int ints[] = null;
 		if ((obj.getClass()).equals(String.class)) {
 			message = (String) obj;
 			len = message.length();
@@ -1080,7 +1078,7 @@ public abstract class Utils {
 		} else if (bytes != null) {
 			bresult = new byte[len];
 		}
-		int iresult[] = new int[len];
+		// int iresult[] = new int[len];
 
 		// loop through each 64 bit chunk of the message
 		// int varcounter=0;
@@ -1370,52 +1368,4 @@ public abstract class Utils {
 			// return the keys we've created
 		return keys;
 	} // end of des_createKeys
-
-	/*
-	 * //This method picks good column sizes.
-	 * //If all column heads are wider than the column's cells'
-	 * //contents, then you can just use column.sizeWidthToFit().
-	 * 
-	 * private void initColumnSizes(MyJTable table, MyTableModel model)
-	 * {
-	 * TableColumn column = null;
-	 * Component comp = null;
-	 * int headerWidth = 0;
-	 * int cellWidth = 0;
-	 * Object[] longValues = model.longValues;
-	 * 
-	 * for (int i = 0; i < 5; i++)
-	 * {
-	 * column = table.getColumnModel().getColumn(i);
-	 * 
-	 * try {
-	 * comp = column.getHeaderRenderer().
-	 * getTableCellRendererComponent(
-	 * null, column.getHeaderValue(),
-	 * false, false, 0, 0);
-	 * headerWidth = comp.getPreferredSize().width;
-	 * } catch (NullPointerException e) {
-	 * System.err.println("Null pointer exception!");
-	 * System.err.println("  getHeaderRenderer returns null in 1.3.");
-	 * System.err.println("  The replacement is getDefaultRenderer.");
-	 * }
-	 * 
-	 * comp = table.getDefaultRenderer(model.getColumnClass(i)).
-	 * getTableCellRendererComponent(
-	 * table, longValues[i],
-	 * false, false, 0, i);
-	 * cellWidth = comp.getPreferredSize().width;
-	 * 
-	 * if (DEBUG) {
-	 * System.out.println("Initializing width of column "
-	 * + i + ". "
-	 * + "headerWidth = " + headerWidth
-	 * + "; cellWidth = " + cellWidth);
-	 * }
-	 * 
-	 * //XXX: Before Swing 1.1 Beta 2, use setMinWidth instead.
-	 * column.setPreferredWidth(Math.max(headerWidth, cellWidth));
-	 * }
-	 * }
-	 */
 }

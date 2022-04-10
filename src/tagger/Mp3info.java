@@ -8,12 +8,8 @@ package tagger;
 import java.io.*;
 import java.util.*;
 
-import javax.swing.*;
-
-import java.awt.*;
-
 public class Mp3info {
-	final static Hashtable languagesstring = new Hashtable();
+	final static Hashtable<String, String> languagesstring = new Hashtable<String, String>();
 	final private static String languagesfullstring[] = new String[] {
 			"afr - Afrikaans", "aka - Akan", "alb - Albanian", "ara - Arabic",
 			"arc - Aramaic", "arm - Armenian", "aze - Azerbaijani", "bat Baltic - ",
@@ -31,137 +27,8 @@ public class Mp3info {
 			"rus - Russian", "scr - Serbo-Croatian", "slk - Slovak", "sun - Sudanese",
 			"swe - Swedish", "tog Tonga - ", "tur - Turkish",
 			"und - Undetermined", "vie - Vietnamese", "zho - Chinese" };
-	final static JComboBox languages = new MyCombo(languagesfullstring);
+	final static MyCombo languages = (MyCombo) new MyCombo(languagesfullstring);
 	static {
-		/*
-		 * String lan[]=new String[] {
-		 * "aar - Afar","abk - Abkhazian","ace - Achinese","ach - Acoli","ada - Adangme"
-		 * ,
-		 * "afa Afro-Asiatic - ","afh - Afrihili","afr - Afrikaans","aka - Akan",
-		 * "akk - Akkadian","alb - Albanian","ale - Aleut","alg Algonquian - Languages",
-		 * "amh - Amharic","ang - English, Old (ca. - 450-1100)"
-		 * ,"apa Apache - Languages","ara - Arabic",
-		 * "arc - Aramaic","arm - Armenian","arn - Araucanian","arp - Arapaho",
-		 * "art Artificial - ","arw - Arawak","asm - Assamese"
-		 * ,"ath Athapascan - Languages",
-		 * "ava - Avaric","ave - Avestan","awa - Awadhi","aym - Aymara",
-		 * "aze - Azerbaijani","bad - Banda","bai Bamileke - Languages","bak - Bashkir",
-		 * "bal - Baluchi","bam - Bambara","ban - Balinese","baq - Basque",
-		 * "bas - Basa","bat Baltic - ","bej - Beja","bel - Byelorussian",
-		 * "bem - Bemba","ben - Bengali","ber Berber - ","bho - Bhojpuri",
-		 * "bih - Bihari","bik - Bikol","bin - Bini","bis - Bislama",
-		 * "bla - Siksika","bnt Bantu - ","bod - Tibetan","bra - Braj",
-		 * "bre - Breton","bua - Buriat","bug - Buginese","bul - Bulgarian",
-		 * "bur - Burmese","cad - Caddo","cai Central American Indian - ","car - Carib",
-		 * "cat - Catalan","cau Caucasian - ","ceb - Cebuano","cel Celtic - ",
-		 * "ces - Czech","cha - Chamorro","chb - Chibcha","che - Chechen",
-		 * "chg - Chagatai","chi - Chinese","chm - Mari","chn Chinook - jargon",
-		 * "cho - Choctaw","chr - Cherokee","chu Church - Slavic","chv - Chuvash",
-		 * "chy - Cheyenne","cop - Coptic","cor - Cornish","cos - Corsican",
-		 * "cpe Creoles and Pidgins, English-based - "
-		 * ,"cpf Creoles and Pidgins, French-based - "
-		 * ,"cpp Creoles and Pidgins, Portuguese-based - ","cre - Cree",
-		 * "crp Creoles and Pidgins - ","cus Cushitic - ","cym - Welsh","cze - Czech",
-		 * "dak - Dakota","dan - Danish","del - Delaware","deu - German",
-		 * "din - Dinka","div - Divehi","doi - Dogri","dra Dravidian - ",
-		 * "dua - Duala","dum Dutch, Middle (ca. - 1050-1350)","dut - Dutch"
-		 * ,"dyu - Dyula",
-		 * "dzo - Dzongkha","efi - Efik","egy Egyptian - ","eka - Ekajuk",
-		 * "ell Greek, - Modern","elx - Elamite","eng - English"
-		 * ,"enm English, Middle (ca. - 1100-1500)",
-		 * "epo - Esperanto","esk Eskimo - ","esl - Spanish","est - Estonian",
-		 * "eus - Basque","ewe - Ewe","ewo - Ewondo","fan - Fang",
-		 * "fao - Faroese","fas - Persian","fat - Fanti","fij - Fijian",
-		 * "fin - Finnish","fiu Finno-Ugrian - ","fon - Fon","fra - French",
-		 * "fre - French","frm French, Middle (ca. - 1400-1600)"
-		 * ,"fro French, Old (842- ca. - 1400)","fry - Frisian",
-		 * "ful - Fulah","gaa - Ga","gae Gaelic - ","gai - Irish",
-		 * "gay - Gayo","gdh Gaelic - ","gem Germanic - ","geo - Georgian",
-		 * "ger - German","gez - Geez","gil - Gilbertese","glg - Gallegan",
-		 * "grb - Grebo","gre Greek, Modern - ","grn - Guarani",
-		 * "guj - Gujarati","hai - Haida","hau - Hausa","haw - Hawaiian",
-		 * "heb - Hebrew","her - Herero","hil - Hiligaynon","him - Himachali",
-		 * "hin - Hindi","hmo Hiri - Motu","hun - Hungarian","hup - Hupa",
-		 * "hye - Armenian","iba - Iban","ibo - Igbo","ice - Icelandic",
-		 * "ijo - Ijo","iku - Inuktitut","ilo - Iloko"
-		 * ,"ina Interlingua (International Auxiliary language - Association)",
-		 * "inc Indic - ","ind - Indonesian","ine Indo-European - ","ine - Interlingue",
-		 * "ipk - Inupiak","ira Iranian - ","iri - Irish","iro Iroquoian - uages",
-		 * "isl - Icelandic","ita - Italian","jav - Javanese","jaw - Javanese",
-		 * "jpn - Japanese","jpr - Judeo-Persian","jrb - Judeo-Arabic"
-		 * ,"kaa - Kara-Kalpak",
-		 * "kab - Kabyle","kac - Kachin","kal - Greenlandic","kam - Kamba",
-		 * "kan - Kannada","kar - Karen","kas - Kashmiri","kat - Georgian",
-		 * "kau - Kanuri","kaw - Kawi","kaz - Kazakh","kha - Khasi",
-		 * "khi Khoisan - ","khm - Khmer","kho - Khotanese","kik - Kikuyu",
-		 * "kin - Kinyarwanda","kir - Kirghiz","kok - Konkani","kom - Komi",
-		 * "kon - Kongo","kor - Korean","kpe - Kpelle","kro - Kru",
-		 * "kru - Kurukh","kua - Kuanyama","kum - Kumyk","kur - Kurdish",
-		 * "kus - Kusaie","kut - Kutenai","lad - Ladino","lah - Lahnda",
-		 * "lam - Lamba","lao - Lao","lat - Latin","lav - Latvian",
-		 * "lez - Lezghian","lin - Lingala","lit - Lithuanian","lol - Mongo",
-		 * "loz - Lozi","ltz - Letzeburgesch","lub - Luba-Katanga","lug - Ganda",
-		 * "lui - Luiseno","lun - Lunda","luo Luo (Kenya and - Tanzania)"
-		 * ,"mac - Macedonian",
-		 * "mad - Madurese","mag - Magahi","mah - Marshall","mai - Maithili",
-		 * "mak - Macedonian","mak - Makasar","mal - Malayalam","man - Mandingo",
-		 * "mao - Maori","map Austronesian - ","mar - Marathi","mas - Masai",
-		 * "max - Manx","may - Malay","men - Mende","mga Irish, Middle (900 - - 1200)",
-		 * "mic - Micmac","min - Minangkabau","mis Miscellaneous - ","mkh Mon-Kmer - ",
-		 * "mlg - Malagasy","mlt - Maltese","mni - Manipuri","mno Manobo - Languages",
-		 * "moh - Mohawk","mol - Moldavian","mon - Mongolian","mos - Mossi",
-		 * "mri - Maori","msa - Malay","mul Multiple - Languages"
-		 * ,"mun Munda - Languages",
-		 * "mus - Creek","mwr - Marwari","mya - Burmese","myn Mayan - Languages",
-		 * "nah - Aztec","nai North American Indian - ","nau - Nauru","nav - Navajo",
-		 * "nbl Ndebele, - South","nde Ndebele, - North","ndo - Ndongo","nep - Nepali",
-		 * "new - Newari","nic Niger-Kordofanian - ","niu - Niuean","nla - Dutch",
-		 * "nno Norwegian - ","non Norse, - Old","nor - Norwegian"
-		 * ,"nso Sotho, - Northern ",
-		 * "nub Nubian - Languages","nya - Nyanja","nym - Nyamwezi","nyn - Nyankole",
-		 * "nyo - Nyoro","nzi - Nzima","oci Langue d'Oc (post - 1500)","oji - Ojibwa",
-		 * "ori - Oriya","orm - Oromo","osa - Osage","oss - Ossetic",
-		 * "ota Turkish, Ottoman (1500 - - 1928)","oto Otomian - Languages"
-		 * ,"paa Papuan-Australian - ","pag - Pangasinan",
-		 * "pal - Pahlavi","pam - Pampanga","pan - Panjabi","pap - Papiamento",
-		 * "pau - Palauan","peo Persian, Old (ca 600 - 400 - B.C.)","per - Persian"
-		 * ,"phn - Phoenician",
-		 * "pli - Pali","pol - Polish","pon - Ponape","por - Portuguese",
-		 * "pra Prakrit - uages","pro Provencal, Old (to - 1500)","pus - Pushto"
-		 * ,"que - Quechua",
-		 * "raj - Rajasthani","rar - Rarotongan","roa Romance - ","roh - Rhaeto-Romance"
-		 * ,
-		 * "rom - Romany","ron - Romanian","rum - Romanian","run - Rundi",
-		 * "rus - Russian","sad - Sandawe","sag - Sango","sah - Yakut",
-		 * "sai South American Indian - ","sal Salishan - Languages"
-		 * ,"sam Samaritan - Aramaic","san - Sanskrit",
-		 * "sco - Scots","scr - Serbo-Croatian","sel - Selkup","sem Semitic - ",
-		 * "sga Irish, Old (to - 900)","shn - Shan","sid - Sidamo","sin - Singhalese",
-		 * "sio Siouan - Languages","sit Sino-Tibetan - ","sla Slavic - ","slk - Slovak"
-		 * ,
-		 * "slo - Slovak","slv - Slovenian","smi Sami - Languages","smo - Samoan",
-		 * "sna - Shona","snd - Sindhi","sog - Sogdian","som - Somali",
-		 * "son - Songhai","sot Sotho, - Southern","spa - Spanish","sqi - Albanian",
-		 * "srd - Sardinian","srr - Serer","ssa Nilo-Saharan - ","ssw - Siswant",
-		 * "ssw - Swazi","suk - Sukuma","sun - Sudanese","sus - Susu",
-		 * "sux - Sumerian","sve - Swedish","swa - Swahili","swe - Swedish",
-		 * "syr - Syriac","tah - Tahitian","tam - Tamil","tat - Tatar",
-		 * "tel - Telugu","tem - Timne","ter - Tereno","tgk - Tajik",
-		 * "tgl - Tagalog","tha - Thai","tib - Tibetan","tig - Tigre",
-		 * "tir - Tigrinya","tiv - Tivi","tli - Tlingit","tmh - Tamashek",
-		 * "tog Tonga - ","ton Tonga (Tonga - Islands)","tru - Truk","tsi - Tsimshian",
-		 * "tsn - Tswana","tso - Tsonga","tuk - Turkmen","tum - Tumbuka",
-		 * "tur - Turkish","tut Altaic - ","twi - Twi","tyv - Tuvinian",
-		 * "uga - Ugaritic","uig - Uighur","ukr - Ukrainian","umb - Umbundu",
-		 * "und - Undetermined","urd - Urdu","uzb - Uzbek","vai - Vai",
-		 * "ven - Venda","vie - Vietnamese","vol - Volapk","vot - Votic",
-		 * "wak Wakashan - Languages","wal - Walamo","war - Waray","was - Washo",
-		 * "wel - Welsh","wen Sorbian - Languages","wol - Wolof","xho - Xhosa",
-		 * "yao - Yao","yap - Yap","yid - Yiddish","yor - Yoruba",
-		 * "zap - Zapotec","zen - Zenaga","zha - Zhuang","zho - Chinese","zul - Zulu"
-		 * ,"zun - Zuni"};
-		 */
-
 		for (int i = 0; i < languagesfullstring.length; i++) {
 			languagesstring.put(languagesfullstring[i].substring(0, 3), languagesfullstring[i]);
 		}
@@ -194,23 +61,23 @@ public class Mp3info {
 
 	final static String orderedGenreList[] = new String[genreList.length];
 	static {
-		TreeMap genrelist = new TreeMap();
+		TreeMap<String, String> genrelist = new TreeMap<String, String>();
 		for (int i = 0; i < genreList.length; i++) {
 			genrelist.put(genreList[i], "");
 		}
 
-		Set set = genrelist.entrySet();
-		Iterator iterator = set.iterator();
+		Set<Map.Entry<String, String>> set = genrelist.entrySet();
+		Iterator<Map.Entry<String, String>> iterator = set.iterator();
 		int count = 0;
 		while (iterator.hasNext()) {
-			Map.Entry elem = (Map.Entry) iterator.next();
+			Map.Entry<String, String> elem = (Map.Entry<String, String>) iterator.next();
 			orderedGenreList[count] = (String) elem.getKey();
 			count++;
 
 		}
 	}
 
-	final static Hashtable fromGenreToIntegerHash = new Hashtable();
+	final static Hashtable<String, Integer> fromGenreToIntegerHash = new Hashtable<String, Integer>();
 	static {
 		for (int i = 0; i < genreList.length; i++) {
 			fromGenreToIntegerHash.put(genreList[i], Integer.valueOf(i));
@@ -487,7 +354,7 @@ public class Mp3info {
 						}
 	}
 
-	private long end, start;
+	// private long end, start;
 	private RandomAccessFile song = null, id3tag = null;
 	private String filenamestr;
 	private boolean ismp3 = false;
@@ -514,8 +381,8 @@ public class Mp3info {
 	final private static int TYPE = 4;
 	final private static int NUMEROSITY = 5;
 
-	private static Hashtable fieldsString = new Hashtable();
-	private static Hashtable fieldsId = new Hashtable();
+	private static Hashtable<String, Integer> fieldsString = new Hashtable<String, Integer>();
+	private static Hashtable<String, Integer> fieldsId = new Hashtable<String, Integer>();
 	/**
 	 * The fields are saved to the file in the same order they are listed
 	 * here. This is done to solve some problems with tag v2 readers that
@@ -682,8 +549,8 @@ public class Mp3info {
 		return utilmp3.id3v2.getElem(str);
 	}
 
-	private static Hashtable settableFields = new Hashtable();
-	private static Hashtable tableFields = new Hashtable();
+	private static Hashtable<String, String[]> settableFields = new Hashtable<String, String[]>();
+	private static Hashtable<String, String[]> tableFields = new Hashtable<String, String[]>();
 	static {
 		settableFields.put("comment", new String[] { "explain", "language", "value" });
 		settableFields.put("user url", new String[] { "explain", "value" });
@@ -692,21 +559,19 @@ public class Mp3info {
 	}
 
 	public final static String[] getSettableFields(String str) {
-		String fld = getAliasField(str);
 		String ret[] = (String[]) settableFields.get(str);
 		return ret;
 	}
 
 	public final static String[] getTableFields(String str) {
-		String fld = getAliasField(str);
 		String ret[] = (String[]) tableFields.get(str);
 		return ret;
 	}
 
 	private final static String stringend = new String(new char[] { (char) 0 });
 
-	private static Hashtable fieldsAlias = new Hashtable();
-	private static Hashtable aliasfields = new Hashtable();
+	private static Hashtable<String, String> fieldsAlias = new Hashtable<String, String>();
+	private static Hashtable<String, String> aliasfields = new Hashtable<String, String>();
 
 	final static String getFieldType(String str) {
 		String orig = getOrigField(str);
@@ -770,7 +635,7 @@ public class Mp3info {
 		}
 	}
 
-	private static Hashtable flagsconfig = new Hashtable();
+	private static Hashtable<String, Id3v2frameflags> flagsconfig = new Hashtable<String, Id3v2frameflags>();
 
 	final static boolean setFlagsConfigObject(String id, Id3v2frameflags obj) {
 		if (fieldsAlias.containsKey(id) || fieldsString.containsKey(id)) {
@@ -797,7 +662,7 @@ public class Mp3info {
 	}
 
 	final static void printAlias() {
-		Enumeration hash_keys = fieldsAlias.keys();
+		Enumeration<String> hash_keys = fieldsAlias.keys();
 		// to be changed with elem.getLength, sommo tutti i valori e vedo se
 		// supero real_sync_start ...in quel caso riscrivo tutto il file!
 		while (hash_keys.hasMoreElements()) {
@@ -806,7 +671,7 @@ public class Mp3info {
 		}
 	}
 
-	private static Hashtable fieldGroups = new Hashtable();
+	private static Hashtable<String, String[]> fieldGroups = new Hashtable<String, String[]>();
 
 	final static boolean setFieldGroup(String name, String fields[]) {
 		StringBuffer err = new StringBuffer();
@@ -827,9 +692,8 @@ public class Mp3info {
 		// return them back!
 		if (fieldGroups.containsKey(id)) {
 			String tmp[] = (String[]) fieldGroups.get(id);
-			ArrayList ret = new ArrayList();
+			ArrayList<String> ret = new ArrayList<String>();
 			String read = "";
-			String orig = "";
 			for (int i = 0; i < tmp.length; i++) {
 				read = tmp[i];
 				int index = 0;
@@ -963,7 +827,7 @@ public class Mp3info {
 		// {"commercial frame","","COMR","COMR","",""}
 	}
 
-	private final static Hashtable tagv1fieldshash = new Hashtable();
+	private final static Hashtable<String, String> tagv1fieldshash = new Hashtable<String, String>();
 	static {
 		String tmp[] = new String[] { "artist", "title", "album", "year", "genre", "comment", "track" };
 		for (int i = 0; i < tmp.length; i++)
@@ -974,24 +838,26 @@ public class Mp3info {
 	final static int UNFORCED = 1;
 
 	public class id3tagv2 {
-		private class Id3v2Comparator implements Comparator {
-			public int compare(Object fir, Object sec) {
-				if (fir instanceof String || sec instanceof String) {
-					System.out.println(fir + " sec " + sec);
-				}
-				id3v2_elem a = (id3v2_elem) fir;
-				id3v2_elem b = (id3v2_elem) sec;
-				if (a.index >= b.index)
-					return 1;
-				else
-					return -1;
-			}
-		}
+		/*
+		 * private class Id3v2Comparator implements Comparator {
+		 * public int compare(Object fir, Object sec) {
+		 * if (fir instanceof String || sec instanceof String) {
+		 * System.out.println(fir + " sec " + sec);
+		 * }
+		 * id3v2_elem a = (id3v2_elem) fir;
+		 * id3v2_elem b = (id3v2_elem) sec;
+		 * if (a.index >= b.index)
+		 * return 1;
+		 * else
+		 * return -1;
+		 * }
+		 * }
+		 */
 
 		int version = -1;
 		boolean exists = false;
 		// hash from wich you can get elem from field identifier
-		TreeMap hash_elem = new TreeMap();// new Id3v2Comparator());
+		TreeMap<String, id3v2_elem> hash_elem = new TreeMap<String, id3v2_elem>();// new Id3v2Comparator());
 		// contains the association between the field used in the setElem function
 		// and the corresponing code used in the standard, for example
 		// "comment"->"COMM",
@@ -1005,15 +871,15 @@ public class Mp3info {
 
 		final static int DEFAULT_VERSION = 3;
 
-		private Hashtable unsupported = new Hashtable();
-		private Hashtable lostFields = new Hashtable();
+		private Hashtable<String, String> unsupported = new Hashtable<String, String>();
+		private Hashtable<String, String> lostFields = new Hashtable<String, String>();
 
 		public void removeLostFields() {
-			lostFields = new Hashtable();
+			lostFields = new Hashtable<String, String>();
 		}
 
 		public void removeUnsupportedFields() {
-			unsupported = new Hashtable();
+			unsupported = new Hashtable<String, String>();
 		}
 
 		public void addConvUnsupported(String fld) {
@@ -1027,13 +893,14 @@ public class Mp3info {
 		// returns all the existend fields that are not present in tag v1
 		// and are supported
 		public String[] getOtherFields() {
-			ArrayList arr = new ArrayList();
+			ArrayList<String> arr = new ArrayList<String>();
 			id3v2_elem elem = null;
-			Set set = hash_elem.entrySet();
-			Iterator iterator = set.iterator();
+			Set<Map.Entry<String, Mp3info.id3tagv2.id3v2_elem>> set = hash_elem.entrySet();
+			Iterator<Map.Entry<String, Mp3info.id3tagv2.id3v2_elem>> iterator = set.iterator();
 			String str = null;
 			while (iterator.hasNext()) {
-				Map.Entry hashpair = (Map.Entry) iterator.next();
+				Map.Entry<String, Mp3info.id3tagv2.id3v2_elem> hashpair = (Map.Entry<String, Mp3info.id3tagv2.id3v2_elem>) iterator
+						.next();
 				elem = (id3v2_elem) hashpair.getValue();
 				if (!(elem instanceof id3v2_unsupported)) {
 					// field_ID is the symbol of the field (COMM, TPE1, ...)
@@ -1056,11 +923,12 @@ public class Mp3info {
 		// returns all the unsupported fields that are not present in tag v1
 		public String[] getOtherUnsupportedFields() {
 			id3v2_elem elem = null;
-			ArrayList arr = new ArrayList();
-			Set set = hash_elem.entrySet();
-			Iterator iterator = set.iterator();
+			ArrayList<String> arr = new ArrayList<String>();
+			Set<Map.Entry<String, Mp3info.id3tagv2.id3v2_elem>> set = hash_elem.entrySet();
+			Iterator<Map.Entry<String, Mp3info.id3tagv2.id3v2_elem>> iterator = set.iterator();
 			while (iterator.hasNext()) {
-				Map.Entry hashpair = (Map.Entry) iterator.next();
+				Map.Entry<String, Mp3info.id3tagv2.id3v2_elem> hashpair = (Map.Entry<String, Mp3info.id3tagv2.id3v2_elem>) iterator
+						.next();
 				elem = (id3v2_elem) hashpair.getValue();
 				if (elem instanceof id3v2_unsupported) {
 					// field_ID is the symbol of the field (COMM, TPE1, ...)
@@ -1082,7 +950,7 @@ public class Mp3info {
 			if (row == null)
 				return new String[0];
 			int index = row.intValue();
-			ArrayList tmp = new ArrayList();
+			ArrayList<String> tmp = new ArrayList<String>();
 			if (!fieldsTable[index][V22].equals("")) {
 				tmp.add("2.2");
 			}
@@ -1100,7 +968,7 @@ public class Mp3info {
 
 		String[] getUnsupportedFields() {
 			String ret[] = new String[unsupported.size()];
-			Enumeration hash_keys = unsupported.keys();
+			Enumeration<String> hash_keys = unsupported.keys();
 			int i = 0;
 			while (hash_keys.hasMoreElements()) {
 				ret[i] = (String) hash_keys.nextElement();
@@ -1111,7 +979,7 @@ public class Mp3info {
 
 		String[] getlostFields() {
 			String ret[] = new String[lostFields.size()];
-			Enumeration hash_keys = lostFields.keys();
+			Enumeration<String> hash_keys = lostFields.keys();
 			int i = 0;
 			while (hash_keys.hasMoreElements()) {
 				ret[i] = (String) hash_keys.nextElement();
@@ -1137,8 +1005,8 @@ public class Mp3info {
 			// call the convert function to every element in hash_elem ...
 			// every one will check if it is supported in the new version and
 			// append the error to the buffer!
-			Set set = hash_elem.entrySet();
-			Iterator iterator = set.iterator();
+			Set<Map.Entry<String, Mp3info.id3tagv2.id3v2_elem>> set = hash_elem.entrySet();
+			Iterator<Map.Entry<String, Mp3info.id3tagv2.id3v2_elem>> iterator = set.iterator();
 
 			boolean ret = true;
 			// if the mode is FORCED, than this function has to remove
@@ -1148,7 +1016,8 @@ public class Mp3info {
 			// the single elements will put into the error object the
 			// field identifier and the supporting version(s)
 			while (iterator.hasNext()) {
-				Map.Entry elem = (Map.Entry) iterator.next();
+				Map.Entry<String, Mp3info.id3tagv2.id3v2_elem> elem = (Map.Entry<String, Mp3info.id3tagv2.id3v2_elem>) iterator
+						.next();
 				String field_id = (String) elem.getKey();
 				if (!((id3v2_elem) elem.getValue()).convertVersion(vers, mode)) {
 					ret = false;
@@ -1207,14 +1076,7 @@ public class Mp3info {
 			if (vers == -1)
 				vers = DEFAULT_VERSION;
 			String id3v2_id = fieldsTable[index][vers];
-			String numer = fieldsTable[index][NUMEROSITY];
-			/*
-			 * if (!numer.equals("vector"))
-			 * {
-			 * System.out.println("Array request for wrong field "+str);
-			 * return null;
-			 * }
-			 */
+			// String numer = fieldsTable[index][NUMEROSITY];
 
 			id3v2_array tmp = new id3v2_array();
 			tmp.arrayfields.fieldName = str;
@@ -2134,14 +1996,14 @@ public class Mp3info {
 			// stores the array of id3v2_ elements
 			// the other object is an Id3v2array object
 			// from which the values are retrieved!
-			ArrayList array = new ArrayList();
+			ArrayList<id3v2_elem> array = new ArrayList<id3v2_elem>();
 			Id3v2array arrayfields = new Id3v2array();
-			// the two arrays above have always to be sincronized,
-			// same number of elements and same references ...
 
-			Class getObjectClass() {
-				return arrayfields.cloneobj.getClass();
-			}
+			/*
+			 * Class getObjectClass() {
+			 * return arrayfields.cloneobj.getClass();
+			 * }
+			 */
 
 			Id3v2elem get_elem() {
 				return arrayfields;
@@ -2195,8 +2057,8 @@ public class Mp3info {
 				copyarray();
 			}
 
-			ArrayList getFrameBytes() {
-				ArrayList tmp = new ArrayList();
+			ArrayList<byte[]> getFrameBytes() {
+				ArrayList<byte[]> tmp = new ArrayList<byte[]>();
 				for (int i = 0; i < array.size(); i++) {
 					tmp.add(((id3v2_elem) array.get(i)).get_frame_bytes());
 				}
@@ -2210,7 +2072,7 @@ public class Mp3info {
 				if (array.size() == 0)
 					return true;
 
-				String fld = ((id3v2_elem) array.get(0)).field_ID;
+				// String fld = ((id3v2_elem) array.get(0)).field_ID;
 				Integer row = (Integer) fieldsId.get(field_ID);
 				if (row == null)
 					return false;
@@ -2225,24 +2087,14 @@ public class Mp3info {
 			}
 
 			/*
-			 * int write_field (byte tmptag[],int pos)
-			 * {
-			 * int old_pos=pos;
-			 * for (int i=0;i<array.size();i++)
-			 * {
-			 * pos+=((id3v2_elem)array.get(i)).write_field(tmptag,pos);
+			 * int length() {
+			 * int len = 0;
+			 * for (int i = 0; i < array.size(); i++) {
+			 * len += ((id3v2_elem) array.get(i)).total_field_length();
 			 * }
-			 * return (pos-old_pos);
+			 * return len;
 			 * }
 			 */
-
-			int length() {
-				int len = 0;
-				for (int i = 0; i < array.size(); i++) {
-					len += ((id3v2_elem) array.get(i)).total_field_length();
-				}
-				return len;
-			}
 
 			void update_length() {
 				for (int i = 0; i < array.size(); i++) {
@@ -2307,7 +2159,7 @@ public class Mp3info {
 			// reads the field parsing it in the correct mode since
 			// the element has been converted!
 
-			String type = fieldsTable[tableindex][TYPE];
+			// String type = fieldsTable[tableindex][TYPE];
 			// if the type is unsupported, the field should NOT be read
 			// and should be put in an "unsupported array" ...
 			if (fieldsTable[tableindex][NUMEROSITY].equals("single")) {
@@ -2378,22 +2230,25 @@ public class Mp3info {
 		 * }
 		 */
 
-		private byte[] get_frame_bytes_from_array(byte buf[], int pos) {
-			// called when an unsupported frame is found ... this should return the frame AS
-			// IS
-			// all included with the header!
-			try {
-				int field_len = id3v2_read_field_length(buf, pos);
-
-				// shift to the pure field value
-				byte[] tmpbuf = new byte[field_header_length(version) + field_len];
-				System.arraycopy(buf, pos, tmpbuf, 0, tmpbuf.length);
-				return (buf);
-			} catch (Exception e) {
-				System.out.println("Wrong reading the field from file " + e);
-				return null;
-			}
-		}
+		/*
+		 * private byte[] get_frame_bytes_from_array(byte buf[], int pos) {
+		 * // called when an unsupported frame is found ... this should return the frame
+		 * AS
+		 * // IS
+		 * // all included with the header!
+		 * try {
+		 * int field_len = id3v2_read_field_length(buf, pos);
+		 * 
+		 * // shift to the pure field value
+		 * byte[] tmpbuf = new byte[field_header_length(version) + field_len];
+		 * System.arraycopy(buf, pos, tmpbuf, 0, tmpbuf.length);
+		 * return (buf);
+		 * } catch (Exception e) {
+		 * System.out.println("Wrong reading the field from file " + e);
+		 * return null;
+		 * }
+		 * }
+		 */
 
 		// to be revised
 		/*
@@ -2579,8 +2434,8 @@ public class Mp3info {
 			try {
 				int pos = 0;
 				byte byte_buf[] = new byte[header_length()];
-				int field_length;
-				int start = 0;
+				// int field_length;
+				// int start = 0;
 				int end = 0;
 				id3tag.seek(0);
 				id3tag.read(byte_buf);
@@ -2653,8 +2508,8 @@ public class Mp3info {
 			try {
 				id3tag = new RandomAccessFile(filenamestr, "rw");
 
-				Set set = hash_elem.entrySet();
-				Iterator iterator = set.iterator();
+				Set<Map.Entry<String, Mp3info.id3tagv2.id3v2_elem>> set = hash_elem.entrySet();
+				Iterator<Map.Entry<String, Mp3info.id3tagv2.id3v2_elem>> iterator = set.iterator();
 
 				// here write the flags.text_encoding mode if it can be changed, and THEN
 				// calculate the header length! Unicode occupies double characters!
@@ -2666,10 +2521,11 @@ public class Mp3info {
 				// nor in none of the frames (most of the times) a byte array with the correct
 				// size
 				// can be created, using the function below ...
-				ArrayList frames = new ArrayList();
+				ArrayList<byte[]> frames = new ArrayList<byte[]>();
 				while (iterator.hasNext()) {
-					Map.Entry elem = (Map.Entry) iterator.next();
-					String field_id = (String) elem.getKey();
+					Map.Entry<String, Mp3info.id3tagv2.id3v2_elem> elem = (Map.Entry<String, Mp3info.id3tagv2.id3v2_elem>) iterator
+							.next();
+					// String field_id = (String) elem.getKey();
 					id3v2_elem tmpelem = (id3v2_elem) elem.getValue();
 
 					if (miodebug > WRITEDEBUG)
@@ -2677,7 +2533,7 @@ public class Mp3info {
 								" field ID " + tmpelem.field_ID + " value " + tmpelem.getData().getValue());
 
 					if (tmpelem instanceof id3v2_array) {
-						ArrayList tmparr = ((id3v2_array) tmpelem).getFrameBytes();
+						ArrayList<byte[]> tmparr = ((id3v2_array) tmpelem).getFrameBytes();
 						for (int i = 0; i < tmparr.size(); i++)
 							frames.add(tmparr.get(i));
 					} else
@@ -2920,12 +2776,13 @@ public class Mp3info {
 
 		void clear() {
 			id3v2_elem tmp;
-			Set set = hash_elem.entrySet();
-			Iterator iterator = set.iterator();
+			Set<Map.Entry<String, Mp3info.id3tagv2.id3v2_elem>> set = hash_elem.entrySet();
+			Iterator<Map.Entry<String, Mp3info.id3tagv2.id3v2_elem>> iterator = set.iterator();
 
 			while (iterator.hasNext()) {
-				Map.Entry elem = (Map.Entry) iterator.next();
-				String id = (String) elem.getKey();
+				Map.Entry<String, Mp3info.id3tagv2.id3v2_elem> elem = (Map.Entry<String, Mp3info.id3tagv2.id3v2_elem>) iterator
+						.next();
+				// String id = (String) elem.getKey();
 				tmp = (id3v2_elem) elem.getValue();
 				tmp.clear();
 			}
@@ -3196,8 +3053,8 @@ public class Mp3info {
 		private int genre = -1;
 		private int track_num = 0;
 		private int version = -1;
-		Hashtable hash_elem = new Hashtable();
-		Hashtable hash_length = new Hashtable();
+		Hashtable<String, StringBuffer> hash_elem = new Hashtable<String, StringBuffer>();
+		Hashtable<String, Integer> hash_length = new Hashtable<String, Integer>();
 
 		id3tagv1() {
 			hash_elem.put("artist", artist);
@@ -3568,7 +3425,7 @@ public class Mp3info {
 	}
 
 	private void create_object() {
-		int i;
+		// int i;
 		initialize_variables();
 		// this function opens the file and gets tag info
 		// and mp3 informations!
@@ -3623,7 +3480,8 @@ public class Mp3info {
 		try {
 			song = new RandomAccessFile(filenamestr, "r");
 			song.seek((long) start + 1);
-			int codbitrate, oldcodbitrate, samprcode, counter = 0, pad_bit, oldbitrate;
+			int codbitrate, oldcodbitrate;
+			int samprcode, pad_bit, oldbitrate;
 			int read = ((int) song.read()) & 0x00ff;
 			if ((read & 0x18) >> 3 != mpgver) {
 				System.out.println("wrong read the version");
@@ -3654,7 +3512,6 @@ public class Mp3info {
 			pad_bit = (read & 0x02) >> 1;
 
 			boolean changedrate = false;
-			int jumpfact = 1;
 
 			// take two points in the file, one at 1/3 of file length and
 			// at 2/3 of file length, go there and find the sync, then compare the rate
@@ -3786,9 +3643,7 @@ public class Mp3info {
 		// If the sync is found, start jumping in the file to retrieve the
 		// syncronization
 		try {
-			int read_int = 0;
 			int sinc = 0;
-			int aux = 0;
 			boolean found = false;
 			long pos = 0, suplimit = 0, inflimit = 0, lasthop = 0;
 			byte buf[] = new byte[5000];
@@ -3905,10 +3760,6 @@ public class Mp3info {
 		int frames_number = 0;
 		int pad_bit;
 		// length of the current frame
-		int frame_length = 0;
-		int i;
-		int buf[] = new int[10];
-		int bitratesum = 0;
 		int codbitrate = 0;
 		int samprcode = 0;
 
@@ -4020,8 +3871,10 @@ public class Mp3info {
 			song.seek((long) start);
 			Runtime.getRuntime().gc();
 			int mem = (int) Runtime.getRuntime().freeMemory();
-			if (mem < limit)
+			if (mem < limit) {
+				song.close();
 				return false;
+			}
 			if ((int) song.length() - start > mem - limit) {
 				file = new byte[mem - limit];
 			} else

@@ -5,18 +5,11 @@ package tagger;
  */
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.tree.*;
 import javax.swing.event.*;
 import javax.swing.Timer;
-import javax.swing.JSplitPane.*;
-
 import java.io.*;
-import java.util.*;
-
-import javax.swing.ToolTipManager;
 
 public class MainWindow extends JFrame implements ActionListener {
 	MainWindow window = null;
@@ -945,10 +938,9 @@ public class MainWindow extends JFrame implements ActionListener {
 	}
 
 	public class scanDirMonitor extends JFrame {
-		private ProgressMonitor progressMonitor;
 		private Timer timer;
 		private MainWindowTask task;
-		private JPanel contentPane = new JPanel();
+		// private JPanel contentPane = new JPanel();
 
 		// this constructor is used to open a window
 		scanDirMonitor(String command) {
@@ -971,13 +963,6 @@ public class MainWindow extends JFrame implements ActionListener {
 				System.out.println("error for command" + command);
 				System.exit(0);
 			}
-			// should set the position in which the window appears, it should not be
-			// over the information window!
-
-			// progressMonitor = new ProgressMonitor(this,"Loading file info","", 0,
-			// task.getLengthOfTask());
-			// progressMonitor.setProgress(0);
-			// progressMonitor.setMillisToDecideToPopup(1000);
 		}
 
 		scanDirMonitor(String command, String dirs[]) {
@@ -994,18 +979,9 @@ public class MainWindow extends JFrame implements ActionListener {
 				System.out.println("error for command" + command);
 				System.exit(0);
 			}
-
-			// should set the position in which the window appears, it should not be
-			// over the information window!
-
-			// progressMonitor = new ProgressMonitor(this,"Loading file info","", 0,
-			// task.getLengthOfTask());
-			// progressMonitor.setProgress(0);
-			// progressMonitor.setMillisToDecideToPopup(1000);
 		}
 
 		void stopTask() {
-			// progressMonitor.close();
 			task.stop();
 			timer.stop();
 			taskActive = false;
