@@ -1,22 +1,29 @@
 package tagger;
+
 import javax.swing.SwingUtilities;
 
-
-public abstract class SwingWorker
-    {
-	private Object value;  // see getValue(), setValue()
-	private Thread thread;
+public abstract class SwingWorker {
+	private Object value; // see getValue(), setValue()
+	// private Thread thread;
 
 	/*
 	 * Class to maintain reference to current worker thread
 	 * under separate synchronization control.
 	 */
-	private static class ThreadVar
-	{
-	    private Thread thread;
-	    ThreadVar(Thread t) { thread = t; }
-	    synchronized Thread get() { return thread; }
-	    synchronized void clear() { thread = null; }
+	private static class ThreadVar {
+		private Thread thread;
+
+		ThreadVar(Thread t) {
+			thread = t;
+		}
+
+		synchronized Thread get() {
+			return thread;
+		}
+
+		synchronized void clear() {
+			thread = null;
+		}
 	}
 
 	private ThreadVar threadVar;
@@ -25,17 +32,15 @@ public abstract class SwingWorker
 	 * Get the value produced by the worker thread, or null if it
 	 * hasn't been constructed yet.
 	 */
-	protected synchronized Object getValue()
-	{
-	    return value;
+	protected synchronized Object getValue() {
+		return value;
 	}
 
 	/*
 	 * Set the value produced by worker thread
 	 */
-	private synchronized void setValue(Object x)
-	{
-	    value = x;
+	private synchronized void setValue(Object x) {
+		value = x;
 	}
 
 	/*
@@ -47,22 +52,19 @@ public abstract class SwingWorker
 	 * Called on the event dispatching thread (not on the worker thread)
 	 * after the <code>construct</code> method has returned.
 	 */
-	public void finished()
-	{
+	public void finished() {
 	}
 
 	/*
-	 * A new method that interrupts the worker thread.  Call this method
+	 * A new method that interrupts the worker thread. Call this method
 	 * to force the worker to stop what it's doing.
 	 */
-	public void interrupt()
-	{
-	    Thread t = threadVar.get();
-	    if (t != null)
-		{
-		    t.interrupt();
+	public void interrupt() {
+		Thread t = threadVar.get();
+		if (t != null) {
+			t.interrupt();
 		}
-	    threadVar.clear();
+		threadVar.clear();
 	}
 
 	/*
@@ -72,23 +74,17 @@ public abstract class SwingWorker
 	 *
 	 * @return the value created by the <code>construct</code> method
 	 */
-	public Object get()
-	{
-	    while (true)
-		{
-		    Thread t = threadVar.get();
-		    if (t == null)
-			{
-			    return getValue();
+	public Object get() {
+		while (true) {
+			Thread t = threadVar.get();
+			if (t == null) {
+				return getValue();
 			}
-		    try
-			{
-			    t.join();
-			}
-		    catch (InterruptedException e)
-			{
-			    Thread.currentThread().interrupt(); // propagate
-			    return null;
+			try {
+				t.join();
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt(); // propagate
+				return null;
 			}
 		}
 	}
@@ -97,43 +93,36 @@ public abstract class SwingWorker
 	 * Start a thread that will call the <code>construct</code> method
 	 * and then exit.
 	 */
-	public SwingWorker()
-	{
-	    final Runnable doFinished = new Runnable()
-		{
-		    public void run() { finished(); }
+	public SwingWorker() {
+		final Runnable doFinished = new Runnable() {
+			public void run() {
+				finished();
+			}
 		};
 
-	    Runnable doConstruct = new Runnable()
-		{
-		    public void run()
-		    {
-			try
-			    {
-				setValue(construct());
-			    }
-			finally
-			    {
-				threadVar.clear();
-			    }
+		Runnable doConstruct = new Runnable() {
+			public void run() {
+				try {
+					setValue(construct());
+				} finally {
+					threadVar.clear();
+				}
 
-			SwingUtilities.invokeLater(doFinished);
-		    }
+				SwingUtilities.invokeLater(doFinished);
+			}
 		};
 
-	    Thread t = new Thread(doConstruct);
-	    threadVar = new ThreadVar(t);
+		Thread t = new Thread(doConstruct);
+		threadVar = new ThreadVar(t);
 	}
 
-    /*
-     * Start the worker thread.
-     */
-    public void start()
-	{
-	    Thread t = threadVar.get();
-	    if (t != null)
-		{
-		    t.start();
+	/*
+	 * Start the worker thread.
+	 */
+	public void start() {
+		Thread t = threadVar.get();
+		if (t != null) {
+			t.start();
 		}
 	}
-    }
+}

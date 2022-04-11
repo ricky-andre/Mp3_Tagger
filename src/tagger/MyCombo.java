@@ -4,7 +4,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-class MyCombo extends JComboBox {
+class MyCombo extends JComboBox<Object> {
 	private int saveconf = 0x1;
 	final static int SAVE_NOTHING = 0;
 	final static int SAVE_SELECTED_ITEM = 0x1;

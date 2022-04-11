@@ -847,7 +847,7 @@ public class Help extends JFrame implements ActionListener, TreeExpansionListene
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		String command = e.getActionCommand();
+		e.getActionCommand();
 	}
 
 	private void readConfig() {

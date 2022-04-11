@@ -96,6 +96,7 @@ public class Mp3info {
 
 	static final int COPY_OF_ORIGINAL = 0;
 	static final int ORIGINAL = 1;
+	@SuppressWarnings("unused")
 
 	/*
 	 * Always remember to check also the constructor if

@@ -226,6 +226,7 @@ public class MainWindow extends JFrame implements ActionListener {
 				int minIndex = lsm.getMinSelectionIndex();
 				int maxIndex = lsm.getMaxSelectionIndex();
 				int nowIndex = -2;
+
 				for (int i = minIndex; i <= maxIndex && i < total; i++) {
 					if (lsm.isSelectedIndex(i)) {
 						selected++;

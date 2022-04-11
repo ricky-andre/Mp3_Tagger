@@ -6,9 +6,11 @@ public class Id3v2array extends Id3v2elem {
 	Object cloneobj = null;
 	private ArrayList<Id3v2elem> array = new ArrayList<Id3v2elem>();
 
-	Class getObjectClass() {
-		return cloneobj.getClass();
-	}
+	/*
+	 * Class getObjectClass() {
+	 * return cloneobj.getClass();
+	 * }
+	 */
 
 	Id3v2elem getConfigObject() {
 		// create a new array with a copy of ALL its elements!

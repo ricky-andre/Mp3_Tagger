@@ -5407,7 +5407,7 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 		return str.toString();
 	}
 
-	private class myComp implements Comparator {
+	private class myComp implements Comparator<Object> {
 		public int compare(Object fir, Object sec) {
 			String a[] = (String[]) fir;
 			String b[] = (String[]) sec;
@@ -6156,8 +6156,8 @@ public class UtilsWindow extends JFrame implements TreeModelListener {
 				winampwindow.dirtree.removeListener();
 				databasewindow.dirtree.removeListener();
 				organizerwindow.dirtree.removeListener();
-				ComboSyncronizer.removeListener((JComboBox<String>) databasewindow.patheditcombo);
-				ComboSyncronizer.removeListener((JComboBox<String>) organizerwindow.outputpath);
+				ComboSyncronizer.removeListener((JComboBox) databasewindow.patheditcombo);
+				ComboSyncronizer.removeListener((JComboBox) organizerwindow.outputpath);
 
 				writeConfig();
 				window.windowOpen[windowId] = false;

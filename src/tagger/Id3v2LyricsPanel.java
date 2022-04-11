@@ -1,12 +1,7 @@
 package tagger;
 
-import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
-import javax.swing.event.*;
-
-import java.util.*;
 
 // this class creates the correct GUI component basing on the passed field_id
 // for example if the field id is "comment" the created component is a

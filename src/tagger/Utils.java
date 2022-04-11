@@ -809,11 +809,11 @@ public abstract class Utils {
 		if (windows) {
 			// couldn't exec browser
 			try {
-				Process p = Runtime.getRuntime().exec(new String[] { "iexplore.exe " + url });
+				Runtime.getRuntime().exec(new String[] { "iexplore.exe " + url });
 			} catch (Exception xe) {
 				System.out.println(xe);
 				try {
-					Process p = Runtime.getRuntime().exec(new String[] { "start " + url });
+					Runtime.getRuntime().exec(new String[] { "start " + url });
 				} catch (Exception x2) {
 					JOptionPane.showMessageDialog(null,
 							"Could not invoke browser, command=" + cmd,

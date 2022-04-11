@@ -17,6 +17,7 @@ public class KnapsackFile extends MyFile implements KnapsackItem, ContainerItem,
     int tasklength = 0;
     boolean finished = false;
     String statMessage = "";
+    Hashtable<String, ArrayList<error>> hasherror = new Hashtable<String, ArrayList<error>>();
 
     KnapsackFile(String dir) {
         super(dir);

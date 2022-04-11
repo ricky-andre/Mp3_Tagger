@@ -765,11 +765,11 @@ public class TagWindow extends JFrame {
 		String value = null;
 
 		int tot = values.length;
-		int colindex = -1;
-		int genreindex = -1;
+		int colIndex = -1;
+		int genreIndex = -1;
 		for (int i = 0; i < tot; i++) {
 			if (values[i][0].equals("genre")) {
-				genreindex = i;
+				genreIndex = i;
 				break;
 			}
 		}
@@ -783,15 +783,15 @@ public class TagWindow extends JFrame {
 					if (exec) {
 						mp3elem.id3v1.setElem(elem, value);
 					} else {
-						colindex = masstag.table.getColumnIndex(elem + " v1");
-						setGenreInTable(row, colindex, value);
+						colIndex = masstag.table.getColumnIndex(elem + " v1");
+						setGenreInTable(row, colIndex, value);
 					}
 					if (writev2) {
 						if (exec)
 							mp3elem.id3v2.setElem(elem, value);
 						else {
-							colindex = masstag.table.getColumnIndex(elem + " v2");
-							setGenreInTable(row, colindex, value);
+							colIndex = masstag.table.getColumnIndex(elem + " v2");
+							setGenreInTable(row, colIndex, value);
 						}
 					} else if (mp3elem.id3v1.getMaxFieldLength(elem) < value.length()) {
 						writev2 = true;
@@ -804,8 +804,8 @@ public class TagWindow extends JFrame {
 								if (exec)
 									mp3elem.id3v2.setElem(fields[count], tmpv1);
 								else {
-									colindex = masstag.table.getColumnIndex(elem + " v2");
-									masstag.data[row][colindex] = tmpv1;
+									colIndex = masstag.table.getColumnIndex(elem + " v2");
+									masstag.data[row][colIndex] = tmpv1;
 								}
 							}
 						// write the field again, it is necessary if value is longer than
@@ -813,8 +813,8 @@ public class TagWindow extends JFrame {
 						if (exec)
 							mp3elem.id3v2.setElem(elem, value);
 						else {
-							colindex = masstag.table.getColumnIndex(elem + " v2");
-							setGenreInTable(row, colindex, value);
+							colIndex = masstag.table.getColumnIndex(elem + " v2");
+							setGenreInTable(row, colIndex, value);
 						}
 					}
 				}
@@ -831,8 +831,8 @@ public class TagWindow extends JFrame {
 					if (exec)
 						mp3elem.id3v1.setElem(elem, value);
 					else {
-						colindex = masstag.table.getColumnIndex(elem + " v1");
-						setGenreInTable(row, colindex, value);
+						colIndex = masstag.table.getColumnIndex(elem + " v1");
+						setGenreInTable(row, colIndex, value);
 					}
 				}
 				if (exec)
@@ -845,8 +845,8 @@ public class TagWindow extends JFrame {
 				if (exec)
 					mp3elem.id3v2.setElem(elem, value);
 				else {
-					colindex = masstag.table.getColumnIndex(elem + " v2");
-					setGenreInTable(row, colindex, value);
+					colIndex = masstag.table.getColumnIndex(elem + " v2");
+					setGenreInTable(row, colIndex, value);
 				}
 			}
 			if (exec)
@@ -859,10 +859,10 @@ public class TagWindow extends JFrame {
 					mp3elem.id3v1.setElem(elem, value);
 					mp3elem.id3v2.setElem(elem, value);
 				} else {
-					colindex = masstag.table.getColumnIndex(elem + " v1");
-					setGenreInTable(row, colindex, value);
-					colindex = masstag.table.getColumnIndex(elem + " v2");
-					setGenreInTable(row, colindex, value);
+					colIndex = masstag.table.getColumnIndex(elem + " v1");
+					setGenreInTable(row, colIndex, value);
+					colIndex = masstag.table.getColumnIndex(elem + " v2");
+					setGenreInTable(row, colIndex, value);
 				}
 			}
 			if (exec) {
@@ -881,15 +881,15 @@ public class TagWindow extends JFrame {
 						if (exec)
 							mp3elem.id3v1.setElem(elem, value);
 						else {
-							colindex = masstag.table.getColumnIndex(elem + " v1");
-							setGenreInTable(row, colindex, value);
+							colIndex = masstag.table.getColumnIndex(elem + " v1");
+							setGenreInTable(row, colIndex, value);
 						}
 						if (writev2) {
 							if (exec)
 								mp3elem.id3v2.setElem(elem, value);
 							else {
-								colindex = masstag.table.getColumnIndex(elem + " v2");
-								setGenreInTable(row, colindex, value);
+								colIndex = masstag.table.getColumnIndex(elem + " v2");
+								setGenreInTable(row, colIndex, value);
 							}
 						} else if (mp3elem.id3v1.getMaxFieldLength(elem) < value.length()) {
 							writev2 = true;
@@ -902,8 +902,8 @@ public class TagWindow extends JFrame {
 									if (exec)
 										mp3elem.id3v2.setElem(fields[count], tmpv1);
 									else {
-										colindex = masstag.table.getColumnIndex(elem + " v2");
-										masstag.data[row][colindex] = tmpv1;
+										colIndex = masstag.table.getColumnIndex(elem + " v2");
+										masstag.data[row][colIndex] = tmpv1;
 									}
 								}
 							// write the field again, it is necessary if value is longer than
@@ -911,8 +911,8 @@ public class TagWindow extends JFrame {
 							if (exec)
 								mp3elem.id3v2.setElem(elem, value);
 							else {
-								colindex = masstag.table.getColumnIndex(elem + " v2");
-								setGenreInTable(row, colindex, value);
+								colIndex = masstag.table.getColumnIndex(elem + " v2");
+								setGenreInTable(row, colIndex, value);
 							}
 						}
 					}
@@ -923,8 +923,8 @@ public class TagWindow extends JFrame {
 						if (exec)
 							mp3elem.id3v1.setElem(elem, value);
 						else {
-							colindex = masstag.table.getColumnIndex(elem + " v1");
-							setGenreInTable(row, colindex, value);
+							colIndex = masstag.table.getColumnIndex(elem + " v1");
+							setGenreInTable(row, colIndex, value);
 						}
 					}
 				}
@@ -937,8 +937,8 @@ public class TagWindow extends JFrame {
 					if (exec)
 						mp3elem.id3v2.setElem(elem, value);
 					else {
-						colindex = masstag.table.getColumnIndex(elem + " v2");
-						setGenreInTable(row, colindex, value);
+						colIndex = masstag.table.getColumnIndex(elem + " v2");
+						setGenreInTable(row, colIndex, value);
 					}
 				}
 			}
@@ -2282,7 +2282,7 @@ public class TagWindow extends JFrame {
 								if (exec)
 									mp3field.id3v2.setElem(toset[j], source);
 								else {
-									// colindex=table.getColumnIndex(toset[j]+" v2");
+									// colIndex=table.getColumnIndex(toset[j]+" v2");
 									data[row][fieldsToSetIndexes[j]] = source;
 								}
 								warningArea.append(", field ");
@@ -2305,7 +2305,7 @@ public class TagWindow extends JFrame {
 								if (exec)
 									mp3field.id3v2.setElem(toset[j], source);
 								else {
-									// colindex=table.getColumnIndex(toset[j]+" v2");
+									// colIndex=table.getColumnIndex(toset[j]+" v2");
 									data[row][fieldsToSetIndexes[j]] = source;
 								}
 								warningArea.append(", field ");
@@ -2325,7 +2325,7 @@ public class TagWindow extends JFrame {
 								if (exec)
 									mp3field.id3v2.setElem(toset[j], source);
 								else {
-									// colindex=table.getColumnIndex(toset[j]+" v2");
+									// colIndex=table.getColumnIndex(toset[j]+" v2");
 									data[row][fieldsToSetIndexes[j]] = source;
 								}
 								warningArea.append(", field ");
@@ -2343,7 +2343,7 @@ public class TagWindow extends JFrame {
 							if (exec)
 								mp3field.id3v2.setElem(toset[j], source);
 							else {
-								// colindex=table.getColumnIndex(toset[j]+" v2");
+								// colIndex=table.getColumnIndex(toset[j]+" v2");
 								data[row][fieldsToSetIndexes[j]] = source;
 							}
 							warningArea.append(", field ");
@@ -2364,7 +2364,7 @@ public class TagWindow extends JFrame {
 								if (exec)
 									mp3field.id3v1.setElem(toset[j], source);
 								else {
-									// colindex=table.getColumnIndex(toset[j]+" v1");
+									// colIndex=table.getColumnIndex(toset[j]+" v1");
 									data[row][fieldsToSetIndexes[j]] = source;
 								}
 								warningArea.append(", field ");
@@ -2387,7 +2387,7 @@ public class TagWindow extends JFrame {
 								if (exec)
 									mp3field.id3v1.setElem(toset[j], source);
 								else {
-									// colindex=table.getColumnIndex(toset[j]+" v1");
+									// colIndex=table.getColumnIndex(toset[j]+" v1");
 									data[row][fieldsToSetIndexes[j]] = source;
 								}
 								warningArea.append(", field ");
@@ -2407,7 +2407,7 @@ public class TagWindow extends JFrame {
 								if (exec)
 									mp3field.id3v1.setElem(toset[j], source);
 								else {
-									// colindex=table.getColumnIndex(toset[j]+" v1");
+									// colIndex=table.getColumnIndex(toset[j]+" v1");
 									data[row][fieldsToSetIndexes[j]] = source;
 								}
 								warningArea.append(", field ");
@@ -2425,7 +2425,7 @@ public class TagWindow extends JFrame {
 							if (exec)
 								mp3field.id3v1.setElem(toset[j], source);
 							else {
-								// colindex=table.getColumnIndex(toset[j]+" v1");
+								// colIndex=table.getColumnIndex(toset[j]+" v1");
 								data[row][fieldsToSetIndexes[j]] = source;
 							}
 							warningArea.append(", field ");
@@ -2975,7 +2975,7 @@ public class TagWindow extends JFrame {
 		// private JTextField tagv2othval1 = null, tagv2othval2 = null;
 		private JTextField singlerename = new JTextField();
 		private JPanel tagv2otherfields = null, tagv2otherfieldsson = null;
-		private ArrayList<String> v2otherfieldsins = new ArrayList<String>();
+		private ArrayList<String> v2OtherFieldSins = new ArrayList<String>();
 		private Mp3info mp3elem = null;
 		private MyFile fileelem = null;
 
@@ -3763,10 +3763,10 @@ public class TagWindow extends JFrame {
 		/*
 		 * private void updatetagv2othfieldpanel() {
 		 * // remove the old field from the hash ...
-		 * for (int i = 0; i < v2otherfieldsins.size(); i++)
-		 * tagv2fields.remove((String) v2otherfieldsins.get(i));
+		 * for (int i = 0; i < v2OtherFieldSins.size(); i++)
+		 * tagv2fields.remove((String) v2OtherFieldSins.get(i));
 		 * // field added to the hash are again 0, so create a new hash!
-		 * v2otherfieldsins = new ArrayList<String>();
+		 * v2OtherFieldSins = new ArrayList<String>();
 		 * // tagv2otherfields,tagv2otherfieldsson;
 		 * int div = edittagSplitPane.getDividerLocation();
 		 * tagv2otherfields.remove(tagv2otherfieldsson);
@@ -3783,7 +3783,7 @@ public class TagWindow extends JFrame {
 		 * tmpelems[counter] = mp3elem.id3v2.getElem(elems[i]).getValue();
 		 * tmpfield[counter] = elems[i];
 		 * if (tmpelems[counter].trim().length() > 0) {
-		 * v2otherfieldsins.add(elems[i]);
+		 * v2OtherFieldSins.add(elems[i]);
 		 * counter++;
 		 * if (counter == 2) {
 		 * // here it is added the new row ...

@@ -38,8 +38,8 @@ public class Database implements DatabaseInterface {
 	private DatabaseFilter lastfilter = null;
 
 	private String separator = null;
-	private boolean headerok = false;
-	private Hashtable<Object, Object> index = null;
+	private boolean headerOk = false;
+	private Hashtable<String, Hashtable<Integer, String>> index = null;
 	private int artistindex = -1;
 	private int titleindex = -1;
 	private int lengthindex = -1;
@@ -81,21 +81,21 @@ public class Database implements DatabaseInterface {
 	}
 
 	public int getColumnCount() {
-		if (!headerok)
+		if (!headerOk)
 			if (!checkHeader())
 				return -1;
 		return existentfields.length;
 	}
 
 	public String[] getColumns() {
-		if (!headerok)
+		if (!headerOk)
 			if (!checkHeader())
 				return null;
 		return existentfields;
 	}
 
 	public int getColumnIndexByName(String str) {
-		if (!headerok)
+		if (!headerOk)
 			if (!checkHeader())
 				return -1;
 		for (int i = 0; i < existentfields.length; i++)
@@ -119,7 +119,7 @@ public class Database implements DatabaseInterface {
 	}
 
 	private void initVariables() {
-		headerok = false;
+		headerOk = false;
 		data = null;
 		separator = null;
 		index = null;
@@ -147,7 +147,7 @@ public class Database implements DatabaseInterface {
 	}
 
 	public String getSeparator() {
-		if (headerok)
+		if (headerOk)
 			return separator;
 		else
 			return null;
@@ -214,7 +214,7 @@ public class Database implements DatabaseInterface {
 	}
 
 	public boolean loadDatabase() {
-		if (!headerok)
+		if (!headerOk)
 			if (!checkHeader())
 				return false;
 		if (data != null && data.size() > 0)
@@ -456,7 +456,7 @@ public class Database implements DatabaseInterface {
 			else if (existentfields[i].equals("song length"))
 				lengthindex = i;
 		}
-		headerok = true;
+		headerOk = true;
 		totaltime = 0;
 		for (int i = 1; i < datas.length; i++) {
 			if (datas[i].length != existentfields.length) {
@@ -560,7 +560,7 @@ public class Database implements DatabaseInterface {
 				else if (existentfields[i].equals("song length"))
 					lengthindex = i;
 			}
-			headerok = true;
+			headerOk = true;
 			return true;
 		} catch (Exception e) {
 			try {
@@ -654,9 +654,9 @@ public class Database implements DatabaseInterface {
 			String artist = (fixField(origartist.toLowerCase().trim())).toString();
 			String letter = null;
 			String words[] = null;
-			Hashtable<Object, Object> hashindex = null;
-			Set<Map.Entry<Object, Object>> set = null;
-			Iterator<Map.Entry<Object, Object>> iterator = null;
+			Hashtable<Integer, String> hashindex = null;
+			Set<Map.Entry<Integer, String>> set = null;
+			Iterator<Map.Entry<Integer, String>> iterator = null;
 			int rowindex = 0;
 
 			words = Utils.split(artist, " ");
@@ -666,13 +666,13 @@ public class Database implements DatabaseInterface {
 				if (!dontput.containsKey(words[j]) && words[j].length() > 0) {
 					if (hashmode == VERY_FAST) {
 						letter = words[j].substring(0, Math.min(words[j].length(), ARTIST_MATCH));
-						hashindex = (Hashtable<Object, Object>) index.get(letter);
+						hashindex = (Hashtable<Integer, String>) index.get(letter);
 						if (hashindex == null)
 							continue;
 						set = hashindex.entrySet();
 						iterator = set.iterator();
 						while (iterator.hasNext()) {
-							Map.Entry<Object, Object> elem = (Map.Entry<Object, Object>) iterator.next();
+							Map.Entry<Integer, String> elem = (Map.Entry<Integer, String>) iterator.next();
 							rowindex = ((Integer) elem.getKey()).intValue();
 							if (checkRow(rowindex, origtitle)) {
 								return rowindex;
@@ -680,13 +680,13 @@ public class Database implements DatabaseInterface {
 						}
 					} else {
 						letter = words[j].substring(0, 1);
-						hashindex = (Hashtable<Object, Object>) index.get(letter);
+						hashindex = (Hashtable<Integer, String>) index.get(letter);
 						if (hashindex == null)
 							continue;
 						set = hashindex.entrySet();
 						iterator = set.iterator();
 						while (iterator.hasNext()) {
-							Map.Entry<Object, Object> elem = (Map.Entry<Object, Object>) iterator.next();
+							Map.Entry<Integer, String> elem = (Map.Entry<Integer, String>) iterator.next();
 							rowindex = ((Integer) elem.getKey()).intValue();
 							if (checkRow(rowindex, artist, origtitle)) {
 								return rowindex;
@@ -712,7 +712,7 @@ public class Database implements DatabaseInterface {
 		Runtime.getRuntime().gc();
 	}
 
-	private class defaultComp implements Comparator {
+	private class defaultComp implements Comparator<Object> {
 		public int compare(Object fir, Object sec) {
 			String a[] = (String[]) fir;
 			String b[] = (String[]) sec;
@@ -726,7 +726,7 @@ public class Database implements DatabaseInterface {
 		}
 	}
 
-	private class Comp implements Comparator {
+	private class Comp implements Comparator<Object> {
 		int criteria[] = null;
 
 		Comp(int crit[]) {
@@ -760,7 +760,7 @@ public class Database implements DatabaseInterface {
 			String words[] = null;
 			String letter = null;
 			Hashtable<Integer, String> rowindex = null;
-			index = new Hashtable<Object, Object>();
+			index = new Hashtable<String, Hashtable<Integer, String>>();
 			for (int i = 0; i < data.size(); i++) {
 				// fix the artist name, cut initial "the " and all that is
 				// not a letter, a digit or a space!
@@ -818,7 +818,7 @@ public class Database implements DatabaseInterface {
 	// newformat is the new column order
 	public boolean setNewColumnsFormat(String newformat[]) {
 		// check the header before performing this operation
-		if (!headerok)
+		if (!headerOk)
 			if (!checkHeader())
 				return false;
 		if (data == null)
